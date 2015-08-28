@@ -1,0 +1,15 @@
+\documentclass{article}%
+\usepackage{preamble}
+
+\begin{document}
+\bigskip
+\input{e1/ex_i.tex}
+\setcounter{equation}{0}
+\input{e2/ex_ii.tex}
+\setcounter{equation}{0}
+\input{e3/ex_iii.tex}
+\setcounter{equation}{0}
+\input{e4/RANS.tex}
+\input{e4/ReynoldStress.tex}
+\input{e4/kee.tex}
+\end{document}

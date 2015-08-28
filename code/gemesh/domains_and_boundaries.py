@@ -3,8 +3,8 @@ import numpy as np
 set_log_active(False)
 mesh = Mesh('cord_w_csc.xml')
 
-mesh = refine(mesh)
-mesh = refine(mesh)	
+#mesh = refine(mesh)
+#mesh = refine(mesh)	
 
 rho = 1.0
 nu = 10**-3

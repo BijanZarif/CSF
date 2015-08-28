@@ -27,8 +27,7 @@ csc_bnd.mark(boundaries,1)
 
 plot(boundaries)
 interactive()
-import sys
-sys.exit()
+a = kjfdjfds
 noslip = Constant((0.0,0.0))
 
 pb = Constant(0.0)
