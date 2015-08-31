@@ -27,7 +27,8 @@ csc_bnd.mark(boundaries,1)
 
 plot(boundaries)
 interactive()
-a = kjfdjfds
+import sys
+sys.exit()
 noslip = Constant((0.0,0.0))
 
 pb = Constant(0.0)
@@ -68,7 +69,7 @@ t = 0
 T = 0.2
 dt = 0.001
 
-u0 = Function(V)#project(u0,V)
+u0 = Function(V)
 u1 = Function(V)
 p1 = Function(Q)
 
@@ -134,12 +135,13 @@ while t < T + DOLFIN_EPS:
     ufile << u1
     pfile << p1
     
-    d = Expression(('-x[0]/std::abs(x[0])*0.0015*p/P*(-2*std::abs(x[0]) + 0.014)','0.0'),p=p1,t=t,P=P)
-    
-    #d = Expression(('-1000*p*abs(x[0]-0.007)*(x-0.007)*abs(x+0.007)*(x[0]+0.007)','0.0'),p=p1)
-    
-    
 
+	d = Function(V)
+	pI = Identity(2)*p
+	viscous = mu*(grad(u1)+(grad(u1)).T)
+	tau = -pI + viscous
+	disp = dot(tau,n)
+	print disp
     disp = interpolate(d,V)
     CSF_mesh.move(disp)
 

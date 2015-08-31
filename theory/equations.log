@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.1.30)  28 AUG 2015 17:12
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.1.30)  31 AUG 2015 16:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -179,7 +179,14 @@ File: pppdftex.def 2013/08/25 v0.4v Pdfpages driver for pdfTeX (AM)
 \c@AM@survey=\count104
 \AM@templatesizebox=\box29
 )
-(./equations.aux)
+(/home/vegard/texmf/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen116
+\WF@size=\dimen117
+\c@WF@wrappedlines=\count105
+\WF@box=\box30
+\WF@everypar=\toks21
+Package: wrapfig 2003/01/31  v 3.6
+) (./equations.aux)
 \openout1 = `equations.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
@@ -194,19 +201,20 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
- (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+
+(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count105
-\scratchdimen=\dimen116
-\scratchbox=\box30
-\nofMPsegments=\count106
-\nofMParguments=\count107
-\everyMPshowfont=\toks21
-\MPscratchCnt=\count108
-\MPscratchDim=\dimen117
-\MPnumerator=\count109
-\makeMPintoPDFobject=\count110
-\everyMPtoPDFconversion=\toks22
+\scratchcounter=\count106
+\scratchdimen=\dimen118
+\scratchbox=\box31
+\nofMPsegments=\count107
+\nofMParguments=\count108
+\everyMPshowfont=\toks22
+\MPscratchCnt=\count109
+\MPscratchDim=\dimen119
+\MPnumerator=\count110
+\makeMPintoPDFobject=\count111
+\everyMPtoPDFconversion=\toks23
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -251,51 +259,107 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\AtBeginShipoutBox=\box31
+\AtBeginShipoutBox=\box32
 
-Underfull \hbox (badness 10000) in paragraph at lines 7--9
-
- []
-
+(./Introduction.tex) (./Problem_def.tex
 <mesh.png, id=1, 863.225pt x 985.6825pt>
 File: mesh.png Graphic file (type png)
  <use mesh.png>
-Package pdftex.def Info: mesh.png used on input line 12.
+Package pdftex.def Info: mesh.png used on input line 5.
 (pdftex.def)             Requested size: 172.64194pt x 197.133pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 11--15
+Underfull \hbox (badness 2818) in paragraph at lines 11--17
+\OT1/cmr/m/n/10 The cord has a di-am-e-ter of 10
+ []
+
+
+Underfull \hbox (badness 2376) in paragraph at lines 11--17
+\OT1/cmr/m/n/10 am-e-ter of 18 mm. The model
+ []
+
+
+Underfull \hbox (badness 5652) in paragraph at lines 11--17
+\OT1/cmr/m/n/10 also has a in-ner cen-tral spinal
+ []
+
+
+Underfull \hbox (badness 1655) in paragraph at lines 11--17
+\OT1/cmr/m/n/10 canal, 2 mm in di-am-e-ter. The
+ []
+
+
+Underfull \hbox (badness 1655) in paragraph at lines 11--17
+\OT1/cmr/m/n/10 cen-tral spinal canal has height 4
+ []
+
+
+Underfull \hbox (badness 2828) in paragraph at lines 11--17
+\OT1/cmr/m/n/10 cm and is placed in the cen-ter
+ []
+
+
+Underfull \hbox (badness 1810) in paragraph at lines 11--17
+\OT1/cmr/m/n/10 of the mesh which has heigth 6
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 11--17
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 11--15
+Underfull \hbox (badness 10000) in paragraph at lines 11--17
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 11--15
+Underfull \hbox (badness 10000) in paragraph at lines 11--17
 
  []
 
-[1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./mesh.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 11--17
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 11--17
+
+ []
+
+LaTeX Font Info:    Try loading font information for U+msa on input line 20.
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 20.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [1
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./mesh.png (PNG copy)>]) [
+2]
 (./equations.aux) ) 
 Here is how much of TeX's memory you used:
- 3643 strings out of 495028
- 48823 string characters out of 6181497
- 111773 words of memory out of 5000000
- 6817 multiletter control sequences out of 15000+600000
- 4245 words of font info for 16 fonts, out of 8000000 for 9000
+ 3745 strings out of 495028
+ 50201 string characters out of 6181497
+ 117985 words of memory out of 5000000
+ 6896 multiletter control sequences out of 15000+600000
+ 6549 words of font info for 26 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 38i,6n,39p,860b,123s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,10n,39p,885b,232s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr1
-0.pfb>
-Output written on equations.pdf (1 page, 203841 bytes).
+m/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex
+10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on equations.pdf (2 pages, 261007 bytes).
 PDF statistics:
- 17 PDF objects out of 1000 (max. 8388607)
- 10 compressed objects within 1 object stream
+ 44 PDF objects out of 1000 (max. 8388607)
+ 30 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

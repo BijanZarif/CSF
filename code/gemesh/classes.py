@@ -13,22 +13,24 @@ CSF_s = CSF_space()
 
 CSF_mesh = SubMesh(mesh,CSF_s)
 
-boundaries = FacetFunction('size_t',mesh) # CSF_mesh
+boundaries = FacetFunction('size_t',CSF_mesh) # CSF_mesh
 boundaries.set_all(0)
 
 
 out_wall.mark(boundaries,1)
-in_wall.mark(boundaries,1)
-top_out.mark(boundaries,1)
-bot_out.mark(boundaries,1)
-bot_in.mark(boundaries,1)
-top_in.mark(boundaries,1)
-csc_bnd.mark(boundaries,1)
+in_wall.mark(boundaries,2)
+top_out.mark(boundaries,3)
+bot_out.mark(boundaries,4)
+bot_in.mark(boundaries,5)
+top_in.mark(boundaries,6)
+csc_bnd.mark(boundaries,7)
 
+'''
 plot(boundaries)
 interactive()
 import sys
 sys.exit()
+'''
 noslip = Constant((0.0,0.0))
 
 pb = Constant(0.0)
@@ -41,6 +43,8 @@ flow = Expression(('0.0','(x[0]-x0)*(x[0]+x0)*(x[0]-x1)*(x[0]+x1)*pow(10,10)'),x
 
 V = VectorFunctionSpace(CSF_mesh,'CG',2)
 Q = FunctionSpace(CSF_mesh,'CG',1)
+W = TensorFunctionSpace(CSF_mesh,'CG',2)
+
 u = TrialFunction(V)
 v = TestFunction(V)
 p = TrialFunction(Q)
@@ -50,6 +54,9 @@ q = TestFunction(Q)
 inflow = DirichletBC(V,flow,boundaries, 3)
 bcu0 = DirichletBC(V,noslip,boundaries, 1)
 bcu1 = DirichletBC(V,noslip,boundaries, 2)
+
+bcU0 = DirichletBC(V,noslip,boundaries,4)
+bcU1 = DirichletBC(V,noslip,boundaries,3)
 
 bcp1 = DirichletBC(Q,pt,boundaries, 3)
 bcp2 = DirichletBC(Q, pb, boundaries ,4)
@@ -69,7 +76,7 @@ t = 0
 T = 0.2
 dt = 0.001
 
-u0 = Function(V)#project(u0,V)
+u0 = Function(V)
 u1 = Function(V)
 p1 = Function(Q)
 
@@ -99,12 +106,7 @@ A3 = assemble(a3)
 # Use amg preconditioner if available
 prec = "amg" if has_krylov_solver_preconditioner("amg") else "default"
 
-n = FacetNormal(CSF_mesh)
-n = FacetNormal(mesh)
-n1 = as_vector((1.0,0))
-n2 = as_vector((0,1.0))
-nx = dot(n1,n)
-ny = dot(n2,n)
+disp = Function(V)
 
 while t < T + DOLFIN_EPS:
     pt.t = t
@@ -135,13 +137,25 @@ while t < T + DOLFIN_EPS:
     ufile << u1
     pfile << p1
     
-    d = Expression(('-x[0]/std::abs(x[0])*0.0015*p/P*(-2*std::abs(x[0]) + 0.014)','0.0'),p=p1,t=t,P=P)
-    
-    #d = Expression(('-1000*p*abs(x[0]-0.007)*(x-0.007)*abs(x+0.007)*(x[0]+0.007)','0.0'),p=p1)
-    
-    
 
-    disp = interpolate(d,V)
+    pI = Identity(2)*p1
+    viscous = mu*(grad(u1)+(grad(u1)).T)
+
+    T = -pI + viscous
+    T = project(T,W)
+
+    class MyEx(Expression):
+        def eval(self,values,x,c):
+            tau = T(x)
+            n = c.normal
+            values[0] = dot(tau[0],n)
+            values[1] = dot(tau[1],n)
+    d = MyEx()
+    disp = Function(V)
+    F = inner(grad(u),grad(v))*dx
+    bcwall = DirichletBC(V,d,boundaries,2)
+    bcDisp = [bcu0,bcU0,bcU1,bcwall]
+    
     CSF_mesh.move(disp)
 
     t += dt

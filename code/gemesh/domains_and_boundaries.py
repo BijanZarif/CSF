@@ -3,11 +3,13 @@ import numpy as np
 set_log_active(False)
 mesh = Mesh('cord_w_csc.xml')
 
-#mesh = refine(mesh)
+mesh = refine(mesh)
 #mesh = refine(mesh)	
 
-rho = 1.0
-nu = 10**-3
+rho = 1./1000
+nu = 0.658
+mu = 0.653*10**3
+
 h = 0.06
 x0 = 0.005
 x1 = 0.009
@@ -42,21 +44,21 @@ class top_inner(SubDomain):
 class csc_boundary(SubDomain):
         def inside(self,x,on_boundary):
                 xval = s-tol < abs(x[0]) < s+tol
-                yval = 0.01-tol < abs(x[1]) < 0.05 + tol
+                yval = h/6.0-tol < abs(x[1]) < h*5/6.0 + tol
                 xin = -s - tol < x[0] < s + tol
-                yb = 0.01 - tol < x[1] < 0.01 + tol
-                yt = 0.05 - tol < x[1] < 0.05 + tol
+                yb = h/6.0 - tol < x[1] < h/6.0 + tol
+                yt = 5*h/6.0 - tol < x[1] < 5*h/6.0 + tol
                 return (xin and (yb or yt)) or (yval and xval)
 
 class inside_csc(SubDomain):
         def inside(self,x,on_boundary):
-                return (abs(x[0]) < s + tol and (0.01 - tol < x[1] < 0.05 + tol))
+                return (abs(x[0]) < s + tol and (h/6.0 - tol < x[1] < 5*h/6.0 + tol))
 
 class cord(SubDomain):
         def inside(self,x,on_boundary):
-                csc = (abs(x[0]) < s + tol and (0.01 - tol < x[1] < 0.05 + tol))
+                csc = (abs(x[0]) < s + tol and (h/6.0 - tol < x[1] < 5*h/6.0 + tol))
                 return abs(x[0]) < x0 and not csc
 
 class CSF_space(SubDomain):
         def inside(self,x,on_bounary):
-                return 0.005-tol < abs(x[0]) < 0.009+tol
+                return x0-tol < abs(x[0]) < x1+tol
