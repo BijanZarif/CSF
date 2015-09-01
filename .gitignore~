@@ -58,7 +58,7 @@ docs/_build/
 target/
 
 # Back-up files
-*.py~
+*.~
 
 #vtu
 *.vtu
