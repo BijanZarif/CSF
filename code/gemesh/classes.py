@@ -1,4 +1,7 @@
 from domains_and_boundaries import *
+import numpy as np
+parameters['allow_extrapolation'] = True
+
 
 bot_out = bottom_outer()
 bot_in = bottom_inner()
@@ -34,7 +37,7 @@ sys.exit()
 noslip = Constant((0.0,0.0))
 
 pb = Constant(0.0)
-P = 1
+P = 1000
 pt = Expression(('P*(sin(2*pi*t) + 0.2*sin(8*pi*t))'),t=0,P=P)
 
 flow = Expression(('0.0','(x[0]-x0)*(x[0]+x0)*(x[0]-x1)*(x[0]+x1)*pow(10,10)'),x0=x0,x1=x1)
@@ -65,15 +68,12 @@ bcp2 = DirichletBC(Q, pb, boundaries ,4)
 bcu = [bcu0,bcu1]#,bcu2,bcu3,bcu4]
 bcp = [bcp1,bcp2]
 
-eps = 1E-5
-m_iter = 10
-
 
 ufile = File('results/vel.pvd')
 pfile = File('results/pr.pvd')
 
 t = 0
-T = 0.2
+T = 0.4
 dt = 0.001
 
 u0 = Function(V)
@@ -108,7 +108,20 @@ prec = "amg" if has_krylov_solver_preconditioner("amg") else "default"
 
 disp = Function(V)
 
-while t < T + DOLFIN_EPS:
+class MyEx(Expression):
+    def __init__(self,mesh,tau):
+        self.mesh = mesh
+        self.tau = tau
+    def eval_cell(self,values,x,c):
+        tau = self.tau(x)
+        cell = Cell(self.mesh,c.index)
+        n = cell.normal(c.local_facet)
+        values[0] = (tau[0]*n[0] + tau[1]*n[1])*0.001/P
+        values[1] = (tau[2]*n[0] + tau[3]*n[1])*0.001/P
+    def value_shape(self):
+        return (2,)
+
+while t < T:
     pt.t = t
 
     # Update pressure boundary condition
@@ -141,26 +154,20 @@ while t < T + DOLFIN_EPS:
     pI = Identity(2)*p1
     viscous = mu*(grad(u1)+(grad(u1)).T)
 
-    T = -pI + viscous
-    T = project(T,W)
-
-    class MyEx(Expression):
-        def eval(self,values,x,c):
-            tau = T(x)
-            n = c.normal
-            values[0] = dot(tau[0],n)
-            values[1] = dot(tau[1],n)
-    d = MyEx()
-    disp = Function(V)
-    F = inner(grad(u),grad(v))*dx
+    tau = -pI + viscous
+    tau = project(tau,W)
+    d = MyEx(CSF_mesh,tau)
     bcwall = DirichletBC(V,d,boundaries,2)
-    bcDisp = [bcu0,bcU0,bcU1,bcwall]
-    
-    CSF_mesh.move(disp)
+    bcDisp = [bcu0,bcwall]
+    F = inner(grad(u),grad(v))*dx + inner(Constant(('0.0','0.0')),v)*dx
+    solve(lhs(F) == rhs(F), disp, bcs=bcDisp)
 
+    CSF_mesh.move(disp)
+    CSF_mesh.bounding_box_tree().build(CSF_mesh)
+    plot(boundaries)
     t += dt
     print "t =", t
     u0.assign(u1)
 File('initial_data/u_double_refine.xml') << u0
 
-
+interactive()

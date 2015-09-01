@@ -1,7 +1,7 @@
 from dolfin import *
 import numpy as np
 set_log_active(False)
-mesh = Mesh('cord_w_csc.xml')
+mesh = Mesh('meshes/cord_w_csc_mm.xml')
 
 mesh = refine(mesh)
 #mesh = refine(mesh)	
@@ -10,9 +10,9 @@ rho = 1./1000
 nu = 0.658
 mu = 0.653*10**3
 
-h = 0.06
-x0 = 0.005
-x1 = 0.009
+h = 0.06*1000
+x0 = 0.005*1000
+x1 = 0.009*1000
 s = 0.001
 
 tol = 1e-12

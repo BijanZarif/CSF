@@ -1,4 +1,5 @@
 from domains_and_boundaries import *
+import numpy as np
 
 bot_out = bottom_outer()
 bot_in = bottom_inner()
@@ -13,26 +14,28 @@ CSF_s = CSF_space()
 
 CSF_mesh = SubMesh(mesh,CSF_s)
 
-boundaries = FacetFunction('size_t',mesh) # CSF_mesh
+boundaries = FacetFunction('size_t',CSF_mesh) # CSF_mesh
 boundaries.set_all(0)
 
 
 out_wall.mark(boundaries,1)
-in_wall.mark(boundaries,1)
-top_out.mark(boundaries,1)
-bot_out.mark(boundaries,1)
-bot_in.mark(boundaries,1)
-top_in.mark(boundaries,1)
-csc_bnd.mark(boundaries,1)
+in_wall.mark(boundaries,2)
+top_out.mark(boundaries,3)
+bot_out.mark(boundaries,4)
+bot_in.mark(boundaries,5)
+top_in.mark(boundaries,6)
+csc_bnd.mark(boundaries,7)
 
+'''
 plot(boundaries)
 interactive()
 import sys
 sys.exit()
+'''
 noslip = Constant((0.0,0.0))
 
 pb = Constant(0.0)
-P = 1
+P = 1000
 pt = Expression(('P*(sin(2*pi*t) + 0.2*sin(8*pi*t))'),t=0,P=P)
 
 flow = Expression(('0.0','(x[0]-x0)*(x[0]+x0)*(x[0]-x1)*(x[0]+x1)*pow(10,10)'),x0=x0,x1=x1)
@@ -41,6 +44,8 @@ flow = Expression(('0.0','(x[0]-x0)*(x[0]+x0)*(x[0]-x1)*(x[0]+x1)*pow(10,10)'),x
 
 V = VectorFunctionSpace(CSF_mesh,'CG',2)
 Q = FunctionSpace(CSF_mesh,'CG',1)
+W = TensorFunctionSpace(CSF_mesh,'CG',2)
+
 u = TrialFunction(V)
 v = TestFunction(V)
 p = TrialFunction(Q)
@@ -51,6 +56,9 @@ inflow = DirichletBC(V,flow,boundaries, 3)
 bcu0 = DirichletBC(V,noslip,boundaries, 1)
 bcu1 = DirichletBC(V,noslip,boundaries, 2)
 
+bcU0 = DirichletBC(V,noslip,boundaries,4)
+bcU1 = DirichletBC(V,noslip,boundaries,3)
+
 bcp1 = DirichletBC(Q,pt,boundaries, 3)
 bcp2 = DirichletBC(Q, pb, boundaries ,4)
 
@@ -58,15 +66,12 @@ bcp2 = DirichletBC(Q, pb, boundaries ,4)
 bcu = [bcu0,bcu1]#,bcu2,bcu3,bcu4]
 bcp = [bcp1,bcp2]
 
-eps = 1E-5
-m_iter = 10
-
 
 ufile = File('results/vel.pvd')
 pfile = File('results/pr.pvd')
 
 t = 0
-T = 0.2
+T = 0.4
 dt = 0.001
 
 u0 = Function(V)
@@ -99,14 +104,9 @@ A3 = assemble(a3)
 # Use amg preconditioner if available
 prec = "amg" if has_krylov_solver_preconditioner("amg") else "default"
 
-n = FacetNormal(CSF_mesh)
-n = FacetNormal(mesh)
-n1 = as_vector((1.0,0))
-n2 = as_vector((0,1.0))
-nx = dot(n1,n)
-ny = dot(n2,n)
+disp = Function(V)
 
-while t < T + DOLFIN_EPS:
+while t < T:
     pt.t = t
 
     # Update pressure boundary condition
@@ -136,13 +136,26 @@ while t < T + DOLFIN_EPS:
     pfile << p1
     
 
-	d = Function(V)
-	pI = Identity(2)*p
-	viscous = mu*(grad(u1)+(grad(u1)).T)
-	tau = -pI + viscous
-	disp = dot(tau,n)
-	print disp
-    disp = interpolate(d,V)
+    pI = Identity(2)*p1
+    viscous = mu*(grad(u1)+(grad(u1)).T)
+
+    Tau = -pI + viscous
+    Tau = project(Tau,W)
+
+    class MyEx(Expression):
+        def eval_cell(self,values,x,c):
+            tau = Tau(x)
+            print type(c)
+            n = c.cell_normal()
+            values[0] = dot(tau[0],n)
+            values[1] = dot(tau[1],n)
+        def value_shape(self):
+            return (2,)
+    d = MyEx()
+    disp = Function(V)
+    F = inner(grad(u),grad(v))*dx + inner(Constant(('0.0','0.0')),v)*dx
+    bcwall = DirichletBC(V,d,boundaries,2)
+    bcDisp = [bcu0,bcU0,bcU1,bcwall]
     CSF_mesh.move(disp)
 
     t += dt
