@@ -1,0 +1,20 @@
+\subsection{Weak form}
+Equations (3) and (5) will be multiplied by a vector test function, v, and equations (4) and (6) with a scalar test function, q. The equations are then integrated over the entire domain. By using two different test functions the coupled equations can be written as one equation combining the two. \\	
+\subsection{Stationary problem, Stokes}
+In stokes flow, a steady state pattern have developed for the flow, and convection is neglected. We start with coupling the Stokes flow with a stationary Biot problem. In the CSF the governing equations are
+\begin{align}
+	- \mu_f \nabla ^2 u_f
+	+ \nabla p_f
+	= 0 \nonumber \\
+	\nabla \cdot u_f = 0
+\end{align}
+And in the cord
+\begin{align}
+	- \mu_s \nabla^2 u_s 
+	- (\mu_s + \lambda_s) \nabla \nabla \cdot u_s
+	+ \nabla p_s = 0 \nonumber \\ 
+	- \nabla \cdot \frac{\kappa}{\mu_f} \nabla p_s = 0
+\end{align}
+
+Since this is a stationary problem, the first lines of the two equations can be written $-\nabla \cdot \sigma_f = 0$ in $\Omega_f$ and $-\nabla \cdot \sigma_s = 0$ in $\Omega_s$ 
+

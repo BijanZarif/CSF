@@ -1,0 +1,103 @@
+\chapter{Mathematical background}
+The flow of CSF around the spinal cord requires equations for fluid flow to be coupled with equations for poroelasticity. The underlying concepts of these kinds of problems were originally developed somewhat independently within petroleum engineering, geomechanics and hydrogeology. The equations will first be presented separately. Later in the chapter, coupling conditions will be discussed. 
+\section{Fluid flow}
+The most fundamental equations in fluid flow are conservation laws. These equations are based on classical mechanics and states conservation of mass, momentum and energy. 
+
+\subsection{Reynolds Transport Theorem}
+The famous engineer and scientist Osbourne Reynold stated the general conservation law the following way \cite{Reynolds1903}:
+\\
+\\
+Any change whatsoever in the quantity of any entity within a closed surface can only be effected in one or other of two distinct ways:
+\begin{enumerate}
+\item it may be effected by the production or destruction of the entity within the surface, or
+\item by the passage of the entity across the surface.
+\end{enumerate}
+
+Now, consider a control volume, $V_0$ and some fluid property $Q(\mathbf{x},t)$. The rate of change of $Q$ within the control volume can be written
+\begin{align}
+\frac{\mathrm{d}}{\mathrm{d}t} \int_{V_0} Q(\mathbf{x},t) \, \mathrm{d}V \label{Rate_of_change}
+\end{align}
+The net change of $Q$ must be equal the rate of change in $Q$ within the control volume plus the net rate of mass flow out of the volume. In other words
+\begin{align}
+\frac{\mathrm{d}}{\mathrm{d}t} \int_{V_0} Q(\mathbf{x},t) \, \mathrm{d}V = \int_{V_0} \pdi{Q(\mathbf{x},t)}{t} \mathrm{d}V + \int_{S_0} Q(\mathbf{x},t) \mathbf{u} \cdot \mathbf{n} \mathrm{d}S \label{Reynolds}
+\end{align}
+Here, $\mathbf{u}$ denotes the fluid velocity. This equation is known as the Reynold's transport theorem. The right hand side could be rewritten by using Gauss' theorem on the last term. 
+\begin{align}
+\frac{\mathrm{d}}{\mathrm{d}t} \int_{V_0} Q(\mathbf{x},t) \, \mathrm{d}V = \int_{V_0} \big{[}\pdi{Q(\mathbf{x},t)}{t} + \nabla \cdot (Q(\mathbf{x},t) \mathbf{u}) \big{]}\mathrm{d}V
+\end{align}
+where \[ \nabla = \mathbf{i}_j\pdi{}{x_j} \]
+
+\subsection{Conservation of mass and momentum}
+Choose $Q(\mathbf{x},t) = \rho$. Conservation of mass means that
+\begin{align*} 
+\frac{\mathrm{d}}{\mathrm{d}t} \int_{V_0} \rho \, \mathrm{d}V = 0
+\end{align*}
+Which in turn implies
+\begin{align}
+\int_{V_0} \big{[}\pdi{\rho}{t} + \nabla \cdot (\rho \mathbf{u}) \big{]}\mathrm{d}V = 0
+\end{align}
+This should hold for any volume $V_0$, hence the integrand has to be zero:
+\begin{align} 
+\pdi{\rho}{t} + \nabla \cdot (\rho \mathbf{u}) = 0 \label{Continuity}
+\end{align}
+(\ref{Continuity}) is known as the continuity equation and states conservation of mass. 
+\\
+\\
+To derive a simliar property for the momentum, Newtons second law of motion is used. The net change of momentum must be equal to the applied forces to the system. The forces can be divided into volume forces, acting on the entire control volume, and forces acting only on the control surface. The forces acting on the surface can be written $\sigma \cdot n$, where $\sigma = \sigma(\mathbf{u}, p)$ is the tensor denoting the total stress. By inserting $Q(\mathbf{x},t) = \rho \mathbf{u} $, and using Gauss' theorem again we end up with
+\begin{align}
+\pdi{\rho \mathbf{u}}{t} + \nabla \cdot (\rho \mathbf{u}\mathbf{u} ) = \nabla \cdot \sigma + \mathbf{F}_v \label{Momentum}
+\end{align} 
+The stress tensor, $\sigma$, depends on fluid properties and will be defined in the next subsection. Equation \ref{Momentum} is known as the momentum equation as it states conservation of momentum.
+\subsection{Incompressible Newtonian fluids}
+In this text we will only consider incompressible fluid flow for a Newtonian fluid. 
+The assumption of a Newtonian fluid requires the viscous stresses to be linear functions of the components of the strain-rate tensor, denoted by $\epsilon_{ij} = \pdi{u_i}{x_j}$. These assumptions were first made by Stokes in 1845. These assumptions have later proven to be quite accurate for all gases and most common fluids. Stokes' three postulates regarding the deformation laws are: \cite{White}
+\begin{enumerate}
+\item The fluid is continuous, and its stress tensor, $\sigma_{ij}$ is at most a linear function of the strain rates, $\epsilon_{ij}$ 
+\item The fluid is isotropic, i.e., its properties are independent of direction, and therefore the deformation law is independent of the coordinate axes in which it is expressed. 
+\item When the strain rates are zero, the deformation law must reduce to the hydrostatic pressure condition, $\sigma_{ij} = -p\delta_{ij}$, where $\delta_{ij}$ is the Kroenecker delta function. 
+\end{enumerate}
+From the first and third conition the following assumption can be made
+\begin{align}
+\sigma_{ij} = -p\delta_{ij} + K_{ijkl}\epsilon_{kl} \label{Hookes}
+\end{align}
+It can be shown that symmetry of $\sigma$ and $\epsilon$ also requires symmetry of $K$. This assumption reduces the number of coefficients in \ref{Hookes} from 36 to 21. If Stokes' second condition is also taken into account and the fluid properties are identical in each direction the number of coefficients are further reduced to 2. These simplifications allow us to denote the stress tensor the following way:
+\begin{align}
+\sigma_{ij} = -p\delta_{ij} + 2\mu\epsilon_{ij} + \lambda \nabla \cdot \mathbf{u} \label{Stress}
+\end{align}
+where $\epsilon = \frac{1}{2}(\pdi{u_i}{x_j} + \pdi{u_j}{x_i})$, $p$ is the fluid pressure and $\mu$ and $\lambda$ are known as Lame's constants. In the present study we only consider incompressible flow where $\rho$ is constant. From \ref{Continuity}, this implies $\nabla \cdot \mathbf{u} = 0$ and the last term in \ref{Stress} vanishes. Furthermore, 
+\begin{align*}
+\nabla \cdot \epsilon = \pdi{}{x_j}(\pdi{u_j}{x_i} + \pdi{u_i}{x_j})\mathbf{i}_i = (\pdi{}{x_i}\pdi{u_j}{x_j} + \pdi{u_i}{x_j \partial x_j})\mathbf{i}_i = \pdi{u_i}{x_j \partial x_j} \mathbf{i}_i
+\end{align*}
+Which simplifies the representation of $\nabla \cdot \sigma$ in \ref{Momentum} for an incompressible fluid
+
+\subsection{Navier-Stokes equations for incompressible flow}
+Stating both conservation of mass and momentum of a fluid together with suitable boundary conditions gives us all the information we need to be able to define the flow field and the corresponding pressure. This requires a solution to the system (\ref{Continuity}-\ref{Momentum}), equations which are commonly referred to as the Navier-Stokes equations. With the simplifications described in the previous section the system of equations can be written
+\begin{align}
+\pdi{\mathbf{u}}{t} + (\mathbf{u} \cdot \nabla) \mathbf{u} = -\frac{1}{\rho}\nabla p + \nu\nabla^2 \mathbf{u} + \mathbf{F}_v \label{Navier}
+\end{align}
+\begin{align}
+\nabla \cdot \mathbf{u} = 0 \label{Stokes}
+\end{align}
+These equations are coupled and non-linear and can generally not be solved analytically. Hence, numerical solutions are a necessity to obtain useful solutions to real-life problems. Such metods will be discussed in chapter xxx. 
+
+
+\section{Linear Poroelasticity}
+In this section, the equations describing fluid flowing trough a elastic medium is presented. For a more detailed discussion, derivation and history within the field we refer to \cite{Wang} on Linear Poroelasticity. To keep the mathematics as similar to the fluid case as possible, we use $\mu$ and $\lambda$ instead of the possion ratio. Many of the same considerations as for the free fluid flow still applies. The most noteably difference is that $\mathbf{u}$ now represents the displacement in the solid rather than the velocity. The reason for such a notation will be more clear as different numerical solution strategies are presented in chapter xxx. \\
+\subsection{Biot's Equations}
+The stress tensor for the Biot problem is 
+\[ \sigma = -\alpha pI + 2\mu \epsilon(\mathbf{u}) + (\mu + \lambda)\text{tr}(\epsilon(\mathbf{u}))I  \]
+Here $\mu$ and $\lambda$ are Lame's parameters for the solid. The parameter $\alpha = \frac{K}{H}$ is known as the Biot-Willis coefficient. $K$ is known as the drained bulk modulus, and $\frac{1}{K}$ denotes compressibility. $H$ is a poroelastic parameter describing how much the bulk volume changes due to a change in pore pressure while holding the applied stress constant. Again, conservation of momentum and mass, respectively, yields
+\begin{align}
+	 - \mu \nabla ^2 \mathbf{u}
+	 - \lambda \nabla \nabla \cdot \mathbf{u}
+	 + \nabla p = 0 \label{MomentumS}
+\end{align}
+\begin{align}
+	 (\nabla \cdot \mathbf{u})_t
+	 - \nabla \cdot (\frac{\kappa}{\mu_f} \nabla p) 
+	 = 0 \label{ContinuityS}
+\end{align}
+Where $\mu_f$ is the dynamic viscosity of the fluid. Here, $-\frac{\kappa}{\mu_f} \nabla p$ represents the fluid velocity in the porous medium relative to the solid movement. In other words, the total fluid movement in the poroelastic medium is $\mathbf{u}_t - \frac{\kappa}{\mu_f} \nabla p$. $\kappa$ is known as the permeability, with units $m^2$.
+
+
+

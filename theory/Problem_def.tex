@@ -1,4 +1,4 @@
-\section{Problem definition}
+\chapter{Problem definition}
 \begin{wrapfigure}{r}{0.5\textwidth}
 	\vspace{-60pt}
 	\begin{center}
@@ -17,19 +17,19 @@ The model consists of a spinal cord surrounded by space filled with CSF. The cor
 
 
 
-\subsection{Governing equations}
+\section{Governing equations}
 
 
 
-\subsection*{Fluid Space}
+\subsection{Fluid Space}
 The fluid in the SAS as well as the central spinal canal is governed by the Navier-Stokes equations
 \begin{align}
-	\pdi{u_f}{t} + u\cdot \nabla u = -\frac{1}{\rho_f}\nabla p_f + \frac{1}{\rho} \nabla \cdot 		\tau + F&& \text{ in } \Omega_f 
+	\pdi{u_f}{t} + u\cdot \nabla u = -\frac{1}{\rho_f}\nabla p_f + \frac{1}{\rho} \nabla \cdot 		\tau + F&& \text{ in } \Omega_f \label{N-S_m1}
 	\\
-	\pdi{\rho}{t} +\nabla \cdot(\rho u_f) = 0 && \text{ in } \Omega_f
+	\pdi{\rho}{t} +\nabla \cdot(\rho u_f) = 0 && \text{ in } \Omega_f \label{N-S_c1}
 \end{align}
 
-where $u_f$ is the fluid velocity, $\rho_f$ is the fluid denisty, $\tau$ is the stress tensor and $F$ are all external volume forces. In addition to the equations (1)-(2) comes boundary conditions at the domain boundary. When solving the euqations numerically, manipulation of the coupled equations into simpler equations may lead to problems involving the boundary conditions. Therefore a proper choice of boundary conditions is crucial for stability and existence. 
+where $u_f$ is the fluid velocity, $\rho_f$ is the fluid denisty, $\tau$ is the stress tensor and $F$ are all external volume forces. In addition to the equations (\ref{N-S_m1}-\ref{N-S_c1}) comes boundary conditions at the domain boundary. When solving the euqations numerically, manipulation of the coupled equations into simpler equations may lead to problems involving the boundary conditions. Therefore a proper choice of boundary conditions is crucial for stability and existence. 
 \\
 In this case we will consider incompressible flows, where $\rho$ is constant and $\nabla \cdot u_f = 0$. The stress tensor is given by
 \[ \tau_f = -pI + 2 \mu_f \epsilon(u_f) \]
@@ -44,20 +44,8 @@ When taking the divergence of the stress tensor the Navier-Stokes equations for 
 
 
 
-\subsection*{Spinal Cord}
-The spinal cord is modeled as a poroelastic medium, which allows for some fluid to flow from the SAS to the central spinal canal. In this case the Biot-equations have been used to include both elasticity and flow in the spinal cord. The stress tensor for the Biot problem is 
-\[ \tau_s = -pI + 2\mu_s\epsilon(u_s) + (\mu + \lambda)\text{tr}(\epsilon(u_s))I  \]
-Here $\mu_s$ and $\lambda_s$ are Lame's parameters
-\begin{align}
-	 - \mu \nabla ^2 u_s
-	 - (\lambda + \mu)\nabla \nabla \cdot u_s
-	 + \nabla p_s = 0 		&& \text{ in } \Omega_s \\
-	 (\nabla \cdot u_s)_t
-	 - \nabla \cdot (\frac{\kappa}{\mu_f} \nabla p_s) 
-	 = 0 && \text{ in } \Omega_s
-\end{align}
-Here, $\frac{\kappa}{\mu_f} \nabla p_s$ represents the fluid velocity in the porous medium. $p_s$ is the pressure in the fluid occupying the pores. $\kappa$ is known as the permeability, with units $m^2$.
-
+\subsection{Spinal Cord}
+The spinal cord is modeled as a poroelastic medium, which allows for some fluid to flow from the SAS to the central spinal canal. In this case the Biot-equations have been used to include both elasticity and flow in the spinal cord. 
  
 \subsection{Weak form}
 Equations (3) and (5) will be multiplied by a vector test function, v, and equations (4) and (6) with a scalar test function, q. The equations are then integrated over the entire domain. By using two different test functions the coupled equations can be written as one equation combining the two. \\	
@@ -82,7 +70,7 @@ Since this is a stationary problem, the first lines of the two equations can be 
 
 
 
-\subsection*{Boundary conditions}
+\subsection{Boundary conditions}
 We denote the outer wall, $\partial \Omega_f,$, interface $\Gamma$, the top of the cord, $\partial \Omega_{s_t}$, the bottom of the cord $\partial \Omega_{s_b}$, the top of the fluid space $\partial \Omega_{f_t}$ and the bottom of the fluid space $\partial \Omega_{f_b}$. The boundary conditions are as follows: \\
 No-slip on the outer walls
 \begin{align} u = 0 \text{ on } \partial \Omega_{f_o} \end{align}
@@ -103,9 +91,7 @@ Prescribed stress on the top and bottom
 \subsection{Weak form}
 Equations (7) and (8) will be multiplied with testFunctions and integrated over their respective domains. The vector equations are multiplied with a vector testFunction, v, and the scalar equations with a scalar testFunction, q. By using two different test functions the coupled equations can be written as one equation combining the two. 
 \\
-now, we denote the inner product
-\[ (u,v)_{\Omega_f} = \int_{\Omega_f} u \, v \mathrm{d}x \]
-And integrate the simplified versions of 7-8. Both stress terms and the continuity equation in the Biot problem are integrated by parts. 
+We now integrate the simplified versions of 7-8. Both stress terms and the continuity equation in the Biot problem are integrated by parts. 
 \begin{align} (\sigma_f, \nabla v)_{\Omega_f} 
 	- (v,\sigma_f \cdot n)_{\partial \Omega_f} 
 	= 0 \nonumber \\

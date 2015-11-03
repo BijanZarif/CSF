@@ -1,8 +1,15 @@
-\documentclass{article}%
+\documentclass{book}%
 \usepackage{preamble}
 \usepackage[final]{pdfpages}
 \usepackage{wrapfig}
 \begin{document}
 \input{Introduction.tex}
 \input{Problem_def.tex}
+\input{Mathematical_background.tex}
+\input{Numerical_methods.tex}
+\input{material_parameters.tex}
+%\input{Biblio.tex}
+
+\bibliographystyle{ieeetr}
+\bibliography{bib}{}
 \end{document}

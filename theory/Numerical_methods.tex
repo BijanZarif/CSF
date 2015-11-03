@@ -1,0 +1,61 @@
+\chapter{Numerical Methods}
+\section{The finite element Method}
+Consider the Poisson-equation
+\begin{align}
+\Delta u = f & \quad \text{ in } \Omega \label{Poisson}\\
+u = u_0 & \quad \text{ on } \partial \label{Poisson_D}\Omega_D \\
+\pdi{u}{n} = g & \quad \text{ on } \partial \Omega_N \label{Poisson_N}
+\end{align}
+where $\Omega \in \mathbb{R}^d$ is a domain, $ u = u(x)$ is an unknown field and $f$ is a source function. The boundary, $\partial \Omega$ is divided into two parts. $\partial \Omega_D$ for the Dirichlet boundary condition, and $\partial \Omega_N$ for the Neumann condition. 
+\\
+\\
+\subsection{Weak formulation}
+(\ref{Poisson}) is known as the strong form of the equation. To reformulate the problem and state a weak formulation we multiply (\ref{Poisson}) with a test function $v \in V$, where $V$ is a function space, and integrate over the domain. Weak formulations are important in the sense that differential equations can be transformed into a system of linear equations. In the rest of this text the following notation is used for the inner product of two functions
+\begin{align} (u,v)_{\Omega} = \int_{\Omega} u \, v \mathrm{d}x \end{align}
+
+By multiplying \ref{Poisson} with a test function, $v$ and integrating over the domain, the weak form is obtained
+\begin{align}
+(\Delta u - f, v)_\Omega = 0 & \quad \forall v \in V \label{Projection}
+\end{align}
+or, after integrating by parts \\ \\
+\begin{align}
+-(\nabla u, v)_\Omega + (g, v)_{\partial \Omega_N} = (f,v)_\Omega & \quad \forall v \in V \label{Weak_form}
+\end{align}
+\\
+The formulation (\ref{Projection}) is known as the projection of a function $u - f$ onto the function space $V$. In other words, the error is orthogonal to all functions in $V$. 
+
+\subsection{Finite elements}
+The next step is to approximate $u$ with a sum of basisfunctions in a finite-dimensional function space, $V = \text{span}\{\psi_0, \psi_1, ..., \psi_N\}$. Here, $\psi_i$ represents the basis functions and we search for a solution $u_h \in V$ such that $u_h$ can be written as a linear combination of the basis functions. 
+The first step in the finite element method consists of dividing the domain into smaller parts
+\begin{align*}
+\Omega = \Omega_0 \cup \Omega_1 \cup ... \cup \Omega_{N_e}
+\end{align*}
+where $N_e$ is the number of elements. Each element have a number of nodes within them depending on what type of basis functions to be used. Let's first consider the continuous Galerkin basis functions, $\phi_i$, in a one-dimensional domain. There is exactly one basisfunction for each node located at $x_i$. These basis functions have the property that
+\begin{align*}
+\phi_i(x_j) = \begin{cases}
+				1 \quad \text{ for } i=j \\
+				0 \quad \text{ for } i\neq j
+		 		\end{cases}
+\end{align*}
+That is, the basis functions $\phi_i$ are zero on all nodes except at node $i$. Each basis function is constructed by taking the Lagrange-polynomial which is 1 at the given node and 0 on all other nodes within the same element. Note that the basis functions for a node on the boundary of an element will have two Lagrange-polynomials "pieced together" depending on at which element the basis function is considered. For the rest of the domain the basis functions are defined to be 0. \\ \\
+
+\begin{figure}
+  \begin{center}
+    \includegraphics[scale=0.4]{figures/hats.png}
+  \end{center}
+	\caption{The three first linear basis functions on the unit interval divided uniformly into 5 elements}
+\end{figure}
+Now, let's return to the original problem (\ref{Poisson}-\ref{Poisson_N}). We start by approximating u as a linear combination of all the basis functions. 
+\begin{align}
+u_h = \sum_{i=0}^N c_i \phi_i \label{u_hsum}
+\end{align}
+The definitions of $u_h$ and $V$ now give rise to a linear system. Using the summation convention $x_i\,y_i = \sum_0^N x_i y_i $ the system (\ref{Weak_form})
+\begin{align}
+-c_i(\nabla \phi_i, \phi_j)_\Omega = (f,\phi_j) - (g, \phi_j)_{\partial \Omega_N} \label{Linear_system}
+\end{align}
+\\
+\\
+
+The right hand side of (\ref{Linear_system}) is known as the bilinear form while the left hand side is the linear form, assuming the normal derivative is known on the boundary. In the case of Dirichlet boundary conditions all test functions $\phi_j$ will take the value 0 on $\partial \Omega_D$ and the linear system will be adjusted to take these boundary conditions into account. \\
+The system can be written in matrix form, and in the end the problem consists of solving the linear system
+\begin{align} A_{i,j}c_i = b_j \label{Matrix_1} \end{align}

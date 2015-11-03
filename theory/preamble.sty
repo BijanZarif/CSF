@@ -3,6 +3,13 @@
 \usepackage{amsfonts}%
 \usepackage{amssymb}%
 \usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
 %\usepackage{listings}
 %TCIDATA{OutputFilter=latex2.dll}
 %TCIDATA{Version=5.50.0.2960}
@@ -41,3 +48,6 @@
 \newtheorem{solution}[theorem]{Solution}
 \newtheorem{summary}[theorem]{Summary}
 \newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+\numberwithin{equation}{chapter}
+\numberwithin{figure}{chapter}
+

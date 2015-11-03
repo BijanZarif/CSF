@@ -1,0 +1,22 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [0][-]{chapter.2}{Problem definition}{}% 2
+\BOOKMARK [1][-]{section.2.1}{Governing equations}{chapter.2}% 3
+\BOOKMARK [2][-]{subsection.2.1.1}{Fluid Space}{section.2.1}% 4
+\BOOKMARK [2][-]{subsection.2.1.2}{Spinal Cord}{section.2.1}% 5
+\BOOKMARK [2][-]{subsection.2.1.3}{Weak form}{section.2.1}% 6
+\BOOKMARK [2][-]{subsection.2.1.4}{Stationary problem, Stokes}{section.2.1}% 7
+\BOOKMARK [2][-]{subsection.2.1.5}{Boundary conditions}{section.2.1}% 8
+\BOOKMARK [2][-]{subsection.2.1.6}{Weak form}{section.2.1}% 9
+\BOOKMARK [0][-]{chapter.3}{Mathematical background}{}% 10
+\BOOKMARK [1][-]{section.3.1}{Fluid flow}{chapter.3}% 11
+\BOOKMARK [2][-]{subsection.3.1.1}{Reynolds Transport Theorem}{section.3.1}% 12
+\BOOKMARK [2][-]{subsection.3.1.2}{Conservation of mass and momentum}{section.3.1}% 13
+\BOOKMARK [2][-]{subsection.3.1.3}{Incompressible Newtonian fluids}{section.3.1}% 14
+\BOOKMARK [2][-]{subsection.3.1.4}{Navier-Stokes equations for incompressible flow}{section.3.1}% 15
+\BOOKMARK [1][-]{section.3.2}{Linear Poroelasticity}{chapter.3}% 16
+\BOOKMARK [2][-]{subsection.3.2.1}{Biot's Equations}{section.3.2}% 17
+\BOOKMARK [0][-]{chapter.4}{Numerical Methods}{}% 18
+\BOOKMARK [1][-]{section.4.1}{The finite element Method}{chapter.4}% 19
+\BOOKMARK [2][-]{subsection.4.1.1}{Weak formulation}{section.4.1}% 20
+\BOOKMARK [2][-]{subsection.4.1.2}{Finite elements}{section.4.1}% 21
+\BOOKMARK [0][-]{chapter.5}{Material parameters}{}% 22

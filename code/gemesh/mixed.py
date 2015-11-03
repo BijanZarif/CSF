@@ -34,6 +34,8 @@ v, q = TestFunctions(VQ)
 
 
 noslip = Constant((0.0,0.0))
+slip = Expression(('0.01*x[0]','0.05'))
+
 P = 1
 p0 = Expression(('P*(cos(2*pi*t) + 0.2*cos(8*pi*t))'),t=0,P=P)
 pb = Constant(0)
@@ -54,12 +56,12 @@ bcU0 = DirichletBC(VQ.sub(0),noslip,boundaries,4)   # bot CSF
 bcU1 = DirichletBC(VQ.sub(0),noslip,boundaries,3)   # top CSF
 
 bcp1 = DirichletBC(VQ.sub(1),p0,boundaries, 3)      # top CSF
-bcp2 = DirichletBC(VQ.sub(1),pb, boundaries ,4)     # bot CSF
-bcp3 = DirichletBC(VQ.sub(1),p0, boundaries, 6)     # top cord
-bcp4 = DirichletBC(VQ.sub(1),pb, boundaries, 5)     # bottom cord
+bcp2 = DirichletBC(VQ.sub(1),0, boundaries ,4)     # bot CSF
+bcp3 = DirichletBC(VQ.sub(1),1.2, boundaries, 6)     # top cord
+bcp4 = DirichletBC(VQ.sub(1),0, boundaries, 5)     # bottom cord
 
 
-bcs = [bcu0]
+bcs = [bcu0,bcp2,bcp4]
 
 ###
 
@@ -115,13 +117,12 @@ B_2 =  inner(q,dot(u,n))*ds(5) + \
        inner(q,dot(u,n))*ds(6)
 
 B_3 = -kappa*inner(q,dot(grad(p),n))*ds(5) - \
-      kappa*inner(q,dot(grad(p),n))*ds(6)
-
-B_t = 1./k*inner(dot(u-u1,n),q)*ds(5) + \
+      kappa*inner(q,dot(grad(p),n))*ds(6) + \
+      1./k*inner(dot(u-u1,n),q)*ds(5) + \
       1./k*inner(dot(u-u1,n),q)*ds(6)
       
 
-B_c += B_t
+B_c += B_3
 
 
 # should be ('-')???
@@ -146,7 +147,7 @@ S_c1 = inner(div(u),q)*dx(0, subdomain_data=subdomains)
 
 S_c = -inner(u,grad(q))*dx(0,subdomain_data=subdomains) + \
       inner(q,dot(u,n))*ds(3) + \
-      inner(q,dot(u,n))*ds(4) #- \
+      inner(q,dot(u,n))*ds(4) 
       #kappa*inner(q('+'),dot(grad(p('+')),n('+')))*dS(2) - \
       #kappa*inner(q('+'),dot(grad(p('+')),n('+')))*dS(7)
         
@@ -157,7 +158,7 @@ S_c = -inner(u,grad(q))*dx(0,subdomain_data=subdomains) + \
 
 S_t = rho_f/k*inner(u-u1,v)*dx
 
-F_STOKES = S_m + S_c#+ S_t
+F_STOKES = S_m + S_c + S_t
 
 
 F = F_STOKES + F_Cord
