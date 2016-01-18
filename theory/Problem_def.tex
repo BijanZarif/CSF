@@ -29,7 +29,7 @@ The fluid in the SAS as well as the central spinal canal is governed by the Navi
 	\pdi{\rho}{t} +\nabla \cdot(\rho u_f) = 0 && \text{ in } \Omega_f \label{N-S_c1}
 \end{align}
 
-where $u_f$ is the fluid velocity, $\rho_f$ is the fluid denisty, $\tau$ is the stress tensor and $F$ are all external volume forces. In addition to the equations (\ref{N-S_m1}-\ref{N-S_c1}) comes boundary conditions at the domain boundary. When solving the euqations numerically, manipulation of the coupled equations into simpler equations may lead to problems involving the boundary conditions. Therefore a proper choice of boundary conditions is crucial for stability and existence. 
+where $u_f$ is the fluid velocity, $\rho_f$ is the fluid denisty, $\tau$ is the stress tensor and $F$ are all external volume forces. In addition to the equations (\eqref{N-S_m1}-\eqref{N-S_c1}) comes boundary conditions at the domain boundary. When solving the euqations numerically, manipulation of the coupled equations into simpler equations may lead to problems involving the boundary conditions. Therefore a proper choice of boundary conditions is crucial for stability and existence. 
 \\
 In this case we will consider incompressible flows, where $\rho$ is constant and $\nabla \cdot u_f = 0$. The stress tensor is given by
 \[ \tau_f = -pI + 2 \mu_f \epsilon(u_f) \]

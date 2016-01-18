@@ -14,4 +14,13 @@ H.~F. Wang, {\em Theory of Linear Poroelasticity with Applications to
   Geomechanics and Hydrogeology}.
 \newblock Princeton University Press, 2000.
 
+\bibitem{PorousMedia}
+D.~A. Nield and A.~Bejan, {\em Convection in Porous Media}.
+\newblock Springer, 4~ed., 2013.
+
+\bibitem{Riviere2005}
+B.~Riviere and I.~Yotov, ``Locally conservative coupling of stokes and darcy
+  flows,'' {\em SIAM Journal on Numerical Analysis}, vol.~42, no.~5,
+  pp.~1959--1977, 2005.
+
 \end{thebibliography}

@@ -3,7 +3,7 @@ import numpy as np
 set_log_active(False)
 mesh = Mesh('meshes/cord_w_csc_mm.xml')
 
-mesh = Mesh('meshes/drosdal2D.xml')
+#mesh = Mesh('meshes/drosdal2D.xml')
 
 #mesh = refine(mesh)
 #mesh = refine(mesh)	
@@ -80,7 +80,7 @@ class cord(SubDomain):
                 yb = h/6.0 - tol < x[1] < h/6.0 + tol
                 yt = 5*h/6.0 - tol < x[1] < 5*h/6.0 + tol
                 csc_bnd = (xin and (yb or yt)) or (yval and xval)
-                return abs(x[0]) < x0 + tol# and (not csc or csc_bnd)   
+                return abs(x[0]) < x0 + tol and (not csc or csc_bnd)   
 
 class CSF_space(SubDomain):
         def inside(self,x,on_bounary):

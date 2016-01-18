@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.1.30)  3 NOV 2015 12:47
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2015.1.30)  11 JAN 2016 10:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -6,10 +6,10 @@ entering extended mode
 (./equations.tex
 LaTeX2e <2011/06/27>
 Babel <3.9h> and hyphenation patterns for 2 languages loaded.
-(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
-Document Class: book 2007/10/19 v1.4h Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo
-File: bk10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+(/usr/share/texlive/texmf-dist/tex/latex/base/report.cls
+Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
+File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@chapter=\count80
@@ -239,27 +239,45 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip46
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 12.
-\c@theorem=\count111
-)
-(/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pdfpages.sty
-Package: pdfpages 2013/08/25 v0.4v Insert pages of external PDF documents (AM)
+(/usr/share/texlive/texmf-dist/tex/latex/mh/mathtools.sty
+Package: mathtools 2013/02/12 v1.13 mathematical typesetting tools
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
-Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
-)
 (/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count112
-\calc@Bcount=\count113
+\calc@Acount=\count111
+\calc@Bcount=\count112
 \calc@Adimen=\dimen118
 \calc@Bdimen=\dimen119
 \calc@Askip=\skip47
 \calc@Bskip=\skip48
 LaTeX Info: Redefining \setlength on input line 76.
 LaTeX Info: Redefining \addtolength on input line 77.
-\calc@Ccount=\count114
+\calc@Ccount=\count113
 \calc@Cskip=\skip49
+)
+(/usr/share/texlive/texmf-dist/tex/latex/mh/mhsetup.sty
+Package: mhsetup 2010/01/21 v1.2a programming setup (MH)
+)
+LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
+LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
+\g_MT_multlinerow_int=\count114
+\l_MT_multwidth_dim=\dimen120
+\origjot=\skip50
+\l_MT_shortvdotswithinadjustabove_dim=\dimen121
+\l_MT_shortvdotswithinadjustbelow_dim=\dimen122
+\l_MT_above_intertext_sep=\dimen123
+\l_MT_below_intertext_sep=\dimen124
+\l_MT_above_shortintertext_sep=\dimen125
+\l_MT_below_shortintertext_sep=\dimen126
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 14.
+\c@theorem=\count115
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+Package: pdfpages 2013/08/25 v0.4v Insert pages of external PDF documents (AM)
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 )
 (/usr/share/texlive/texmf-dist/tex/latex/eso-pic/eso-pic.sty
 Package: eso-pic 2013/10/06 v2.0d eso-pic (RN)
@@ -286,13 +304,13 @@ File: pppdftex.def 2013/08/25 v0.4v Pdfpages driver for pdfTeX (AM)
 )
 \AM@pagebox=\box28
 \AM@toc@title=\toks20
-\c@AM@survey=\count115
+\c@AM@survey=\count116
 \AM@templatesizebox=\box29
 )
 (/home/vegard/texmf/tex/latex/wrapfig/wrapfig.sty
-\wrapoverhang=\dimen120
-\WF@size=\dimen121
-\c@WF@wrappedlines=\count116
+\wrapoverhang=\dimen127
+\WF@size=\dimen128
+\c@WF@wrappedlines=\count117
 \WF@box=\box30
 \WF@everypar=\toks21
 Package: wrapfig 2003/01/31  v 3.6
@@ -316,16 +334,16 @@ LaTeX Font Info:    ... okay on input line 5.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count117
-\scratchdimen=\dimen122
+\scratchcounter=\count118
+\scratchdimen=\dimen129
 \scratchbox=\box31
-\nofMPsegments=\count118
-\nofMParguments=\count119
+\nofMPsegments=\count119
+\nofMParguments=\count120
 \everyMPshowfont=\toks22
-\MPscratchCnt=\count120
-\MPscratchDim=\dimen123
-\MPnumerator=\count121
-\makeMPintoPDFobject=\count122
+\MPscratchCnt=\count121
+\MPscratchDim=\dimen130
+\MPnumerator=\count122
+\makeMPintoPDFobject=\count123
 \everyMPtoPDFconversion=\toks23
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
@@ -351,7 +369,7 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count123
+\c@section@level=\count124
 )
 LaTeX Info: Redefining \ref on input line 5.
 LaTeX Info: Redefining \pageref on input line 5.
@@ -361,119 +379,77 @@ LaTeX Info: Redefining \nameref on input line 5.
 \@outlinefile=\write3
 \openout3 = `equations.out'.
 
- (./Introduction.tex
-Chapter 1.
-) (./Problem_def.tex [1
+ (./equations.toc
+LaTeX Font Info:    Try loading font information for U+msa on input line 2.
 
-
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-[2
-
-]
-Chapter 2.
-<mesh.png, id=104, 863.225pt x 985.6825pt>
-File: mesh.png Graphic file (type png)
- <use mesh.png>
-Package pdftex.def Info: mesh.png used on input line 5.
-(pdftex.def)             Requested size: 172.64194pt x 197.133pt.
-
-Underfull \hbox (badness 2818) in paragraph at lines 11--17
-\OT1/cmr/m/n/10 The cord has a di-am-e-ter of 10
- []
-
-
-Underfull \hbox (badness 2376) in paragraph at lines 11--17
-\OT1/cmr/m/n/10 am-e-ter of 18 mm. The model
- []
-
-
-Underfull \hbox (badness 5652) in paragraph at lines 11--17
-\OT1/cmr/m/n/10 also has a in-ner cen-tral spinal
- []
-
-
-Underfull \hbox (badness 1655) in paragraph at lines 11--17
-\OT1/cmr/m/n/10 canal, 2 mm in di-am-e-ter. The
- []
-
-
-Underfull \hbox (badness 1655) in paragraph at lines 11--17
-\OT1/cmr/m/n/10 cen-tral spinal canal has height 4
- []
-
-
-Underfull \hbox (badness 2828) in paragraph at lines 11--17
-\OT1/cmr/m/n/10 cm and is placed in the cen-ter
- []
-
-
-Underfull \hbox (badness 1810) in paragraph at lines 11--17
-\OT1/cmr/m/n/10 of the mesh which has heigth 6
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 11--17
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 11--17
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 11--17
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 11--17
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 11--17
-
- []
-
-LaTeX Font Info:    Try loading font information for U+msa on input line 26.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 26.
+LaTeX Font Info:    Try loading font information for U+msb on input line 2.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [3 <./mesh.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 51--52
+))
+\tf@toc=\write4
+\openout4 = `equations.toc'.
+
+ (./Introduction.tex [1
+
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Chapter 1.
+) (./Medical_background.tex [2
+
+]
+Chapter 2.
+<figures/Ida_CSF.png, id=112, 446.66875pt x 170.6375pt>
+File: figures/Ida_CSF.png Graphic file (type png)
+
+<use figures/Ida_CSF.png>
+Package pdftex.def Info: figures/Ida_CSF.png used on input line 8.
+(pdftex.def)             Requested size: 357.33548pt x 136.51016pt.
+
+Overfull \hbox (12.33548pt too wide) in paragraph at lines 8--9
+[][] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 6--12
 
  []
 
-[4]
-Underfull \hbox (badness 10000) in paragraph at lines 107--112
+) (./Mathematical_background.tex [3
 
- []
-
-[5]) (./Mathematical_background.tex [6]
+ <./figures/Ida_CSF.png>]
 Chapter 3.
 
 Underfull \hbox (badness 10000) in paragraph at lines 7--11
 
  []
 
-[7
+[4
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 42--47
 
  []
 
-[8] [9]
-Underfull \hbox (badness 10000) in paragraph at lines 85--86
+[5]
+Underfull \hbox (badness 10000) in paragraph at lines 89--92
 
  []
 
-) (./Numerical_methods.tex [10]
+
+Underfull \hbox (badness 10000) in paragraph at lines 89--92
+
+ []
+
+[6]
+Underfull \hbox (badness 10000) in paragraph at lines 106--111
+
+ []
+
+) (./Numerical_methods.tex [7]
 Chapter 4.
 
 Underfull \hbox (badness 10000) in paragraph at lines 8--12
@@ -495,7 +471,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 19--21
 
  []
 
-[11
+[8
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 39--41
@@ -507,7 +483,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 39--41
 
  []
 
-<figures/hats.png, id=208, 865.0719pt x 560.8152pt>
+<figures/hats.png, id=206, 865.0719pt x 560.8152pt>
 File: figures/hats.png Graphic file (type png)
  <use figures/hats.png>
 Package pdftex.def Info: figures/hats.png used on input line 44.
@@ -527,48 +503,118 @@ Underfull \hbox (badness 10000) in paragraph at lines 55--58
 
  []
 
-[12]) (./material_parameters.tex [13 <./figures/hats.png>] [14
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 61--64
 
-]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 61--64
+
+ []
+
+[10 <./figures/hats.png>]
+Overfull \hbox (20.6752pt too wide) in paragraph at lines 81--81
+[] 
+ []
+
+) (./material_parameters.tex [11]
 Chapter 5.
-) (./equations.bbl [15] [16
+) (./equations.bbl [12
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 14.
- [17]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 14.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 15.
+ [13
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 15.
  (./equations.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 14.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 14.
-Package rerunfilecheck Info: File `equations.out' has not changed.
-(rerunfilecheck)             Checksum: 2A8D43F04FF9F043EACEBBB225B0BD79;1494.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 14.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 15.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 15.
+
+
+Package rerunfilecheck Warning: File `equations.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `equations.out':
+(rerunfilecheck)             Before: C0A91B9F2324D3AE56A4C29D6B01334B;1338
+(rerunfilecheck)             After:  01392EEF1B0A47A8D9F1E57A8756B442;1392.
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 15.
  ) 
 Here is how much of TeX's memory you used:
- 7354 strings out of 495028
- 104273 string characters out of 6181497
- 197230 words of memory out of 5000000
- 10379 multiletter control sequences out of 15000+600000
- 9387 words of font info for 35 fonts, out of 8000000 for 9000
+ 7827 strings out of 495028
+ 112725 string characters out of 6181497
+ 207893 words of memory out of 5000000
+ 10853 multiletter control sequences out of 15000+600000
+ 9034 words of font info for 34 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 37i,16n,39p,886b,352s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmsl10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cms
-y10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on equations.pdf (17 pages, 406902 bytes).
+ 37i,16n,39p,886b,408s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{equation.2.7} has been referenced but does not ex
+ist, replaced by a fixed one
+
+pdfTeX warning (dest): name{equation.2.6} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{equation.2.5} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{equation.2.4} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{equation.2.3} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{equation.2.2} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{equation.2.1} has been referenced but does not exis
+t, replaced by a fixed one
+
+pdfTeX warning (dest): name{section.2.3} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.2.2.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.2.1.4} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.2.1.3} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.2.1.2} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{subsection.2.1.1} has been referenced but does not 
+exist, replaced by a fixed one
+
+pdfTeX warning (dest): name{section.1.2} has been referenced but does not exist
+, replaced by a fixed one
+
+pdfTeX warning (dest): name{section.1.1} has been referenced but does not exist
+, replaced by a fixed one
+
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts/t
+ype1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></
+usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on equations.pdf (13 pages, 322866 bytes).
 PDF statistics:
- 315 PDF objects out of 1000 (max. 8388607)
- 276 compressed objects within 3 object streams
- 85 named destinations out of 1000 (max. 500000)
- 187 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 307 PDF objects out of 1000 (max. 8388607)
+ 271 compressed objects within 3 object streams
+ 75 named destinations out of 1000 (max. 500000)
+ 163 words of extra memory for PDF output out of 10000 (max. 10000000)
 

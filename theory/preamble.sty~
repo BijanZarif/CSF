@@ -49,5 +49,5 @@
 \newtheorem{summary}[theorem]{Summary}
 \newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
 \numberwithin{equation}{chapter}
-\numberwithin{figure}{section}
+\numberwithin{figure}{chapter}
 

@@ -19,9 +19,9 @@ Line(4) = {2, 3};
 
 Point(6) = {0, h, 0, a};
 
-Point(7) = {x0, h, 0,a*0.5};
+Point(7) = {x0, h, 0,a};
 Point(8) = {x1, h, 0,a};
-Point(9) = {-x0,h,0,a*0.5};
+Point(9) = {-x0,h,0,a};
 Point(10) = {-x1,h,0,a};
 
 Line(5) = {2,7};

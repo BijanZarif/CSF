@@ -3,14 +3,14 @@ from domains_and_boundaries import *
 #mesh =refine(mesh)
 
 subdomains = MeshFunction("uint", mesh, mesh.topology().dim())
-
+subdomains.set_all(0)
 CSF_mesh = SubMesh(mesh,CSF_s)
 Cord_mesh = SubMesh(mesh,cord)
 CSC_mesh = SubMesh(mesh,in_csc)
 
 CSF_s.mark(subdomains,0)
 cord.mark(subdomains,1)
-#in_csc.mark(subdomains,0)
+in_csc.mark(subdomains,1)
 
 #mesh = CSF_mesh
 
@@ -25,12 +25,8 @@ bot_in.mark(boundaries,5)
 top_in.mark(boundaries,6)
 csc_bnd.mark(boundaries,7)
 
-"""
-plot(mesh)
-interactive()
-import sys
-sys.exit()
-"""
+
+
 
 V = VectorFunctionSpace(mesh,'CG',2)
 Q = FunctionSpace(mesh,'CG',1)
@@ -79,8 +75,7 @@ dx = Measure("dx")[subdomains]
 ds = Measure("ds")[boundaries]
 dS = Measure("dS")[boundaries]
 
-
-bcs = [bcu1,bcw1]
+bcs = [bcu1,bcw1,bcw2,bcu2,bcu5,bcp4]
 
 ufile = File('results_mix/vel.pvd')
 pfile = File('results_mix/pr.pvd')
@@ -119,8 +114,10 @@ def sigma(u,p,mu):
 
 
 # Dummy for u:
-D1 = inner(u,r)*dx(1,subdomain_data=subdomains) + \
-     inner(Constant((0,0)),r)*dx(1,subdomain_data=subdomains)
+D1 = inner(grad(u),grad(r))*dx(1,subdomain_data=subdomains) + \
+     inner(f,r)*dx(1,subdomain_data=subdomains) + \
+	 inner(r('+'),dot(grad(u('+')),n('+')))*dS(2) - \
+	 inner(p0*n,r)*ds(6)
 
 ### Biot (momentum + continuity)
 
@@ -130,8 +127,7 @@ B_m = mu_s*inner(grad(w),grad(v))*dx(1,subdomain_data=subdomains) + \
 	  inner(p0*n,v)*ds(6) - \
 	  inner(p0*n,v)*ds(5)
 
-B_c = kappa*inner(grad(q),grad(p))*dx(1,subdomain_data=subdomains) - \
-      inner(q('+'),dot(u('+'),n('+')))*dS(2)
+B_c = -kappa*inner(grad(q),grad(p))*dx(1,subdomain_data=subdomains)
 
 
 B_t =  1./k*inner(w-w1,grad(q))*dx(1,subdomain_data=subdomains)
@@ -139,10 +135,14 @@ B_t =  1./k*inner(w-w1,grad(q))*dx(1,subdomain_data=subdomains)
 
 F_Cord = D1 + B_m + B_c
 
+up = Constant((1.0,0.0))
+down = Constant((-1.0,0.0))
 
 # Dummy for w:
 D2 = inner(grad(w),grad(v))*dx(0,subdomain_data=subdomains) + \
-     inner(dot(grad(w('-')),n('-')),v('-'))*dS(2)
+     inner(dot(grad(w('-')),n('-')),v('-'))*dS(2) - \
+	 inner(up,v)*ds(3) - \
+	 inner(down,v)*ds(4)
 
 S_m = mu_f*inner(grad(u),grad(v))*dx(0, subdomain_data=subdomains) - \
       inner(div(v),p)*dx(0, subdomain_data=subdomains) + \
@@ -150,9 +150,8 @@ S_m = mu_f*inner(grad(u),grad(v))*dx(0, subdomain_data=subdomains) - \
       inner(p0*n,v)*ds(4)
 
 S_c = inner(grad(q),u)*dx(0, subdomain_data=subdomains) - \
-      kappa*inner(q('-'),dot(grad(p('-')),n('-')))*dS(2)# - \
-      #1./k*inner(dot(w('-')-w1,n('-')),q('-'))*dS(2)
-      
+      inner(q,dot(u,n))*ds(3) - \
+	  inner(q,dot(u,n))*ds(4)
 
 
 F_STOKES = D2 + S_m + S_c
@@ -160,95 +159,14 @@ F_STOKES = D2 + S_m + S_c
 
 F = F_STOKES + F_Cord
 
+UPW_ = Function(VQR)
 
 
-L = lhs(F)
-R = rhs(F)
-UPW = Function(VQR)
-
-
-solve(F == 0, UPW,bcs=bcs,solver_parameters={"linear_solver": "lu"})
+solve(lhs(F)==rhs(F), UPW_,bcs=bcs,solver_parameters={"linear_solver": "lu"})
 print 'hi'
-u_,p_,w_ = split(UPW)
-plot(UPW)
-interactive()
-ufile << u_
-pfile << p_
-wfile << w_
-"""
-F = action(F,up_)
-J = derivative(F, up_, up)
-problem = NonlinearVariationalProblem(F,up_,bcs,J)
-solver = NonlinearVariationalSolver(problem)
-
-import time
-
-t0 = time.time()
-
-
-while t<T:
-    #pt.t = t
-    flow.t = t
-    solver.solve()
-    u_,p_ = up_.split(True)
-    u1.vector()[:] = u_.vector()
-    p1.vector()[:] = p_.vector()
-    t += dt
-    print 't = %g' %t
-    ufile << u_
-    pfile << p_
-
-V0 = FunctionSpace(mesh, 'DG', 0)
-k  = Function(V0)
-k_values = [0, 1]
-help = np.asarray(subdomains.array(), dtype=np.int32)
-k.vector()[:] = np.choose(help, k_values)
-
-U = u_*(k-1) + K*grad(p_)*k
-U = project(U,V)
-
-plot(U[0])
+u,p,w = UPW_.split(True)
+for x in w.vector().array():
+	print x
+plot(subdomains)
 interactive()
 
-
-File('initial_data/u_mixed.xml') << u_
-File('initial_data/p_mixed.xml') << p_
-
-print 'time spent: ', time.time()-t0
-
-
-while t<T:
-    pt.t = t
-
-    A = assemble(a)
-    b = assemble(L)
-    [bc.apply(A,b) for bc in bcs]
-    solve(A,up.vector(),b)
-    
-    up1.assign(up)
-    u_,p_ = up.split(True)
-    u1.assign(u_)
-    t += dt
-    print 't = %g' %t
-    ufile << u1
-    pfile << p_
-
-"""
-"""
-#a = (1./k)*inner(u,v)*dx + nu_f*inner(grad(u),grad(v))*dx - 1./rho_f*inner(div(v),p)*dx + inner(grad(u)*u1,v)*dx - inner(q,div(u))*dx
-
-#L = rho_f*(1./k)*inner(u1,v)*dx #+ inner(Constant('0'),q)*dx
-
-
-F_Cord = 2*mu_s*inner(epsilon(u),epsilon(v))*dx(1,subdomain_data=subdomains) + \
-         (mu_s+lamda_s)*inner(div(u),div(v))*dx(1,subdomain_data=subdomains) - \
-         inner(div(v),p)*dx(1,subdomain_data=subdomains) + \
-         inner(p0*n,v)*ds(6) + \
-         K*inner(grad(q),grad(p))*dx(1,subdomain_data=subdomains)  + \
-         inner(q,dot(u,n))*ds(2) + \
-         inner(q,dot(u,n))*ds(7) - \
-         K*inner(q,dot(grad(p),n))*ds(5) - \
-         K*inner(q,dot(grad(p),n))*ds(6)
-
-F_STOKES = 2*mu_f*inner(epsilon(u),epsilon(v))*dx(0, subdomain_data=subdomains) - inner(div(v),p)*dx(0, subdomain_data=subdomains) - inner(q,div(u))*dx(0, subdomain_data=subdomains)  + inner(p0*n,v)*ds(3) - mu*inner(v,dot(n,grad(u).T))*ds(3) - mu*inner(v,dot(n,grad(u).T))*ds(3)
-"""
