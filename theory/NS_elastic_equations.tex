@@ -1,0 +1,95 @@
+\documentclass{article}
+\usepackage{preamble2}
+\begin{document}
+\section{Defining physical quantities}
+We use the following notation for the physical quantities: \\
+\\
+$\mathbf{v}$ - Velocity of the material. In the fluid, $\mathbf{v}$ represents fluid velocity, and in the solid $\mathbf{v}$ denotes the velocity of the solid. 
+\\ \\
+$\mathbf{w}$ - Mesh velocity, (i.e, all points within the mesh changes position with $\Delta t \mathbf{w}$ from one time step to the next). In the solid, the mesh changes with the material velocity $\mathbf{v}$, so in the solid we have $\mathbf{v} = \mathbf{w}$ which will not neccessary hold in the fluid.
+\\
+\\
+$ \mathbf{U}$ - Total displacement of the solid. In the fluid, this quantity represents the total mesh displacement. This quantity is not generally handled as an unknown, but is updated by adding $\Delta t \mathbf{w}$ to the current $\mathbf{U}$ each time step. In an implicit shceme we can handle $\mathbf{U}$ as an unknown $\mathbf{U(w)}$ by using that $\mathbf{U} = \mathbf{U}^{(1)} + \mathbf{w}$, where $\mathbf{U}^{(1)}$ denotes the total displacement at the previous time step. 
+\\
+\\
+$p$ - Pressure in the fluid. The same pressure does not exist in the solid, but in the case of an (almost) incompressible fluid, an extra equation involving $p$ can be set up in the solid as well. 
+\\
+\\
+Subscripts f and s are used to denote fluid and solid quantities, respectively
+\section{Governing equations}
+We assume the fluid is incompressible, but up to now, no such assumption is made for the solid. The Navier Stokes equations must be satisfied in the fluid:
+\begin{align}
+\rho_f\pdi{\mathbf{v}_f}{t} + (\mathbf{v}_f\cdot\nabla) \mathbf{v}_f = & -\nabla p + \mu_f\nabla^2 \mathbf{v}_f \\
+\nabla \cdot \mathbf{v}_f = 0
+\end{align}
+\\
+And in the solid, we use the equation for linear elasticity:
+\begin{align}
+\rho_s\pdi{\mathbf{v}_s}{t} = \sigma_s(\mathbf{U}_s)
+\end{align}
+where $\sigma_s(\mathbf{U}) = 2\mu_s\epsilon(\mathbf{U}) + \lambda\text{tr}(\epsilon(\mathbf{U}))$ and $\epsilon(\mathbf{U}) = \frac{1}{2}(\nabla \mathbf{U} + (\nabla \mathbf{U})^T)$
+\\
+\\
+In addition to this, we need equations on how to update the mesh. In other words we need equations for $\mathbf{w}$. In the fluid $\mathbf{w}$, does not represent a physical quantity and we simply want to smoothen out to distribute the mesh changes smoothly over the full mesh. A common choice for such a function is a homogenuous Poisson equation for the total displacement $\mathbf{U}$. When updating the mesh we also need to account for the mesh movement in the convective term in NS. \\
+\\ The full set of equations will then be \\
+In the fluid:
+\begin{align}
+\rho_f\pdi{\mathbf{v}_f}{t} + ((\mathbf{v}_f-\mathbf{w}_f)\cdot\nabla) \mathbf{v}_f = & -\nabla p + \mu_f\nabla^2 \mathbf{v}_f \\
+\nabla \cdot \mathbf{v}_f = 0 \\
+\nabla^2 \mathbf{U}_f = 0   \label{NS}
+\end{align}
+In the solid:
+\begin{align}
+\rho_s\pdi{\mathbf{v}_s}{t} = \sigma_s(\mathbf{U}_s) \\
+\mathbf{w}_s = \mathbf{v}_s \label{LE}
+\end{align}
+\\
+\section{Boundary Conditions}
+On the inlet: $\mathbf{u} = \mathbf{u}_0$, and $\mathbf{w} = 0$ \\
+On the outlet: $\sigma_f(p,\mathbf{u})\cdot \mathbf{n} = 0$ and $\mathbf{w} = 0$\\
+On other rigid walls: $\mathbf{u} = \mathbf{w} = 0$  \\
+On the interface: $\sigma_f(p,\mathbf{u}) \cdot \mathbf{n} = \sigma_s(\mathbf{U}) \cdot\mathbf{n} $ and $\mathbf{u_f} = \mathbf{u_s} = \mathbf{w_f} = \mathbf{w_s} $ \\
+
+(In the fluid we have not used $\sigma_f$ as a function in the variational form, but calculated $\nabla \cdot \sigma_f$ and used the incompressibility constraint. Therefore the actual stress condition on the interface in the simulations will be
+$ \mu_f \pdi{\mathbf{v}_f}{n} - p\mathbf{n} = \sigma_s \cdot \mathbf{n}$ )
+
+
+\section{Discretization}
+We use three test functions, $\mathbf{\phi}$,$\chi$ and $\mathbf{\psi}$ for $\mathbf{v}$, $p$ and $\mathbf{w}$ respectively and dicretize in space by the Finite Element Method (FEM). We now let $(\mathbf{a},\mathbf{b})_\Omega = \int_\Omega(\mathbf{a},\mathbf{b}) \mathrm{d}x $ denote the inner product of two vector (or scalar) quantities. The superscript (0) denotes linearized "guess" and (1) denotes previous time step\\
+The (linearized) variational form then reads \\
+In the fluid: 
+\begin{align} 
+\frac{\rho_f}{\Delta t}(\mathbf{v},\phi)_{\Omega_f} + \rho_f(((\mathbf{v}-\mathbf{w})\cdot \nabla) \mathbf{v}^{0}, \phi)_{\Omega_f} - (p,\text{div}(\phi))_{\Omega_f} + (\nabla \mathbf{v}, \nabla \phi)_{\Omega_f} = & \\
+\frac{\rho_f}{\Delta t}(\mathbf{v}^{(1)},\phi)_{\Omega_f}
+\end{align}
+\begin{align}
+-(\text{div}(\mathbf{u}),\chi)_{\Omega_f} = 0
+\end{align}
+\begin{align}
+\Delta t(\nabla \mathbf{w}, \nabla \psi)_{\Omega_f} = - (\nabla \mathbf{U}^{(1)}, \nabla \psi)_{\Omega_f}
+\end{align}
+\\
+\\
+\\
+\\
+In the solid we have: 
+\begin{align}
+\frac{\rho_s}{\Delta t}(\mathbf{v},\phi)_{\Omega_s} + \Delta t (\sigma_s (\mathbf{v}), \nabla(\phi))_{\Omega_s} = \frac{\rho_s}{\Delta t}(\mathbf{v}^{(1)},\phi)_{\Omega_s} - (\sigma_s(\mathbf{U}^{(1)}), \nabla \phi)_{\Omega_s}
+\end{align}
+\begin{align}
+\frac{1}{\delta}(\mathbf{v},\psi)_{\Omega_s} - \frac{1}{\delta}(\mathbf{w},\psi)_{\Omega_s} = 0
+\end{align}
+The parameter $\delta $ should be small and ensures the importance of $\mathbf{v_s} = \mathbf{w_s}$ inside the solid. 
+\\
+\subsection{A note on boundary conditions}
+For the rigid walls, $\psi$ is zero due to the Dirichlet conditions on $\mathbf{w}$. From the extra equation for $\mathbf{w}_f$ in the fluid, an extra boundary condition will be imposed weakly on the interface by leaving the boudary integrals out of the equation. This condition reads:
+\begin{align}
+\nabla \mathbf{U}^{(1)} \cdot \mathbf{n} + \Delta t \nabla \mathbf{w} \cdot \mathbf{n} = \nabla \mathbf{U} \cdot \mathbf{n} = 0 
+\end{align}
+Since we also want to have
+\begin{align}
+\mathbf{u} = \mathbf{w}
+\end{align}
+on the interface, the extra condition involving $\mathbf{w}$ might also affect $\mathbf{u}$. So far, this is not taken into account other than the use of $\delta$ to underline the importance of $\mathbf{v}_s = \mathbf{w}_s$ \textit{inside} the solid. 
+
+\end{document}

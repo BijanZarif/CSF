@@ -1,5 +1,6 @@
 \chapter{Numerical Methods}
 \section{The Finite Element Method}
+The theory presented in this section is inspired by the great work of Langtangen in "Finite Element Method - INF5620 lecture notes" \cite{Langtangen}  \\
 Consider the Poisson-equation
 \begin{align}
 \nabla^2 \mathbf{u} = \mathbf{f} & \quad \text{ in } \Omega \label{Poisson}\\
@@ -10,7 +11,7 @@ where $\Omega \in \mathbb{R}^d$ is a domain, $ \mathbf{u} = \mathbf{u}(\mathbf{x
 \\
 \\
 \subsection{Weak formulation}
-(\eqref{Poisson}) is known as the strong form of the equation. To reformulate the problem and state a weak formulation we multiply (\eqref{Poisson}) with a test function $\mathbf{v} \in V$, where $V$ is a function space, and integrate over the domain. Weak formulations are important in the sense that differential equations can be transformed into a system of linear equations. In the rest of this text the following notation is used for the inner product of two functions
+\eqref{Poisson} is known as the strong form of the equation. To reformulate the problem and state a weak formulation we multiply \eqref{Poisson} with a test function $\mathbf{v} \in V$, where $V$ is a function space, and integrate over the domain. Weak formulations are important in the sense that differential equations can be transformed into a system of linear equations. In the rest of this text the following notation is used for the inner product of two functions
 \begin{align} (\mathbf{u},\mathbf{v})_{\Omega} = \int_{\Omega} \mathbf{u} : \mathbf{v} \mathrm{d}V \end{align}
 
 By multiplying \eqref{Poisson} with a test function, $\mathbf{v}$ and integrating over the domain, the weak form is obtained
@@ -22,7 +23,7 @@ or, after integrating by parts \\ \\
 -(\nabla \mathbf{u}, \mathbf{v})_\Omega + (\mathbf{g}, \mathbf{v})_{\partial \Omega_N} = (\mathbf{f},\mathbf{v})_\Omega & \quad \forall \mathbf{v} \in V \label{Weak_form}
 \end{align}
 \\
-The formulation (\eqref{Projection}) is known as the projection of a function $\mathbf{u} - \mathbf{f}$ onto the function space $V$. In other words, the error is orthogonal to all functions in $V$. 
+The formulation \eqref{Projection} is known as the projection of a function $\mathbf{u} - \mathbf{f}$ onto the function space $V$. In other words, the error is orthogonal to all functions in $V$. 
 
 \subsection{Finite elements}
 The next step is to approximate $\mathbf{u}$ with a sum of basisfunctions in a finite-dimensional function space, $V = \text{span}\{\psi_0, \psi_1, ..., \psi_N\}$. Here, $\mathbf{\psi}_i$ represents the basis functions and we search for a solution $\mathbf{u}_h \in V$ such that $\mathbf{u}_h$ can be written as a linear combination of the basis functions. 
@@ -60,6 +61,9 @@ The right hand side of \eqref{Linear_system} is known as the bilinear form while
 The system can be written in matrix form, and in the end the problem consists of solving the linear system
 \begin{align} A_{i,j}c_i = b_j \label{Matrix_1} \end{align}
 \\
+\\
+\section{Implementation in FEniCS}
+When the variational form has been carried out, implementation in FEniCS is relatively simple. We need a computational mesh, appropriate function spaces, a variational form and boundary conditions to have a well-posed problem. 
 \\
 \section{A Discontinuous Galerkin method}
 Discontinuous Galerkin (DG) methods is a relatively new tool for CFD simulations. The method itself was developed during the 1970s and has been used increasingly the last few decades. Unlike with the Continuous Galerkin elements, we now allow the solution to be discontiuous, i.e cells do not share nodes anymore. Instead of solving over the whole domain, we now seek approximate continuous solutions on each cell independently of the others. To this end it is convenient to define the average and jump of a discontinuous variable

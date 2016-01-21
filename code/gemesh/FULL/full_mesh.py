@@ -2,65 +2,86 @@ from dolfin import *
 set_log_active(False)
 import sys
 
-h = 6
-L = 60
+h = 60		# heigth
+x0 = 5		# inner wall
+x1 = 9		# outer wall
+s = 1		# central spinal canal
 
-p0 = Point(0,0)
-p1 = Point(L,2*h)
+p0 = Point(-x1,0)
+p1 = Point(x1,h)
+
 
 ufile = File("results_mono/velocity.pvd")
 pfile = File("results_mono/pressure.pvd")
 dfile = File("results_mono/dU.pvd")
 tfile = File("results_mono/U.pvd")
+#mesh = Mesh('../meshes/cord_w_csc_mm.xml')
+mesh = RectangleMesh(p0,p1,18,30)
+dt = 0.005
+T = 1.5
 
-dt = 0.001
-T = 500*dt
-
-mesh = RectangleMesh(p0,p1,10,12)
 
 eps = 1e-10
 
 class InletS(SubDomain):
 	def inside(self,x,on_bnd):
-		return on_bnd and near(x[0],0.0)  and x[1] > h - eps
+		return near(x[1],h) and on_bnd and abs(x[0]) < x0 + eps
 class OutletS(SubDomain):
 	def inside(self,x,on_bnd):
-		return on_bnd and near(x[0],L) and x[1] > h - eps
-class InletF(SubDomain):
-	def inside(self,x,on_bnd):
-		return on_bnd and near(x[0],0.0)  and x[1] < h + eps
-class OutletF(SubDomain):
-	def inside(self,x,on_bnd):
-		return on_bnd and near(x[0],L) and x[1] < h + eps
-class Top(SubDomain):
-	def inside(self,x,on_bnd):
-		return on_bnd and near(x[1],2*h)
-class Bottom(SubDomain):
-	def inside(self,x,on_bnd):
-		return on_bnd and near(x[1],0.0)
+		return near(x[1],0.0) and on_bnd and abs(x[0]) < x0 + eps
 
+class InletFLeft(SubDomain):
+	def inside(self,x,on_bnd):
+		return near(x[1],h) and on_bnd and x[0] < - x0 + eps
+class OutletFLeft(SubDomain):
+	def inside(self,x,on_bnd):
+		return near(x[1],0.0) and on_bnd and x[0] < - x0 + eps
+
+class InletFRight(SubDomain):
+	def inside(self,x,on_bnd):
+		return near(x[1],h) and on_bnd and x[0] > x0 - eps
+class OutletFRight(SubDomain):
+	def inside(self,x,on_bnd):
+		return near(x[1],0.0) and on_bnd and x[0] > x0 - eps
+
+class Walls(SubDomain):
+	def inside(self,x,on_bnd):
+		return abs(x[0]) > x1 - eps and on_bnd
+class Fluid(SubDomain):
+        def inside(self,x,on_bounary):
+                return x0-eps < abs(x[0]) < x1+eps
+class CSC_bnd(SubDomain):
+        def inside(self,x,on_bnd):
+                xval = s-eps < abs(x[0]) < s+eps
+                yval = h/6.0-eps < abs(x[1]) < h*5/6.0 + eps
+                xin = -s - eps < x[0] < s + eps
+                yb = h/6.0 - eps < x[1] < h/6.0 + eps
+                yt = 5*h/6.0 - eps < x[1] < 5*h/6.0 + eps
+                return (xin and (yb or yt)) or (yval and xval)
 class Interface(SubDomain):
 	def inside(self,x,on_bnd):
-		return near(x[1],h)
+		return near(x[0],x0) or near(x[0],-x0)
 
-class Fluid(SubDomain):
-	def inside(self,x,on_bnd):
-		return x[1] < h + eps
+class CSC(SubDomain):
+        def inside(self,x,on_bnd):
+                return (abs(x[0]) < s + eps and (h/6.0 - eps < x[1] < 5*h/6.0 + eps))
+
 
 # DOMAIN
 SD = MeshFunction('uint',mesh,mesh.topology().dim())
 SD.set_all(1)
 Fluid().mark(SD,0)
+CSC().mark(SD,0)
 
 bnd = FacetFunction("size_t",mesh)
 InletS().mark(bnd,1)
 OutletS().mark(bnd,2)
-InletF().mark(bnd,3)
-OutletF().mark(bnd,4)
-Top().mark(bnd,5)
-Bottom().mark(bnd,6)
-Interface().mark(bnd,7)
-
+InletFLeft().mark(bnd,3)
+OutletFLeft().mark(bnd,4)
+InletFRight().mark(bnd,5)
+OutletFRight().mark(bnd,6)
+Interface().mark(bnd,20	)
+Walls().mark(bnd,8)
 
 # TEST AND TRIALFUNCTIONS
 V = VectorFunctionSpace(mesh,'CG',2)
@@ -72,7 +93,12 @@ u,p,d = TrialFunctions(VQW)
 v,q,w = TestFunctions(VQW)
 
 u_in = Expression(('0.01*(std::exp(-pow((t-0.2),2)/2.0) + std::exp(-pow((t-1.2),2)/2.0) + std::exp(-pow((t-2.2),2)/2.0))','0'),t=0)
-Poiseuille = Expression(('h*x[1]*(h-x[1])','0'),h=h)
+
+
+u_in_1 = Expression(('0','0.01*sin(2*pi*t)*(x0-x[1])*(x[1]-x1)'),x0=x0,x1=x1,t=0)
+u_in_2 = Expression(('0','0.01*sin(2*pi*t)*(x0-x[1])*(x[1]-x1)'),x0=x0,x1=x1,t=0)
+
+
 #p_in = Expression('(std::exp(-pow((t-0.05),2)/0.05) + std::exp(-pow((t-1.05),2)/0.05) + std::exp(-pow((t-2.05),2)/0.05))',t=0)
 p_in = Expression(('0.05'),t=0)
 
@@ -81,15 +107,17 @@ bcd1 = DirichletBC(VQW.sub(2),noslip,bnd,1)
 bcd2 = DirichletBC(VQW.sub(2),noslip,bnd,2)
 bcd3 = DirichletBC(VQW.sub(2),noslip,bnd,3)
 bcd4 = DirichletBC(VQW.sub(2),noslip,bnd,4)
-bcd6 = DirichletBC(VQW.sub(2),noslip,bnd,6)
+bcd5 = DirichletBC(VQW.sub(2),noslip,bnd,5)
 bcd7 = DirichletBC(VQW.sub(2),noslip,bnd,7)
+bcd6 = DirichletBC(VQW.sub(2),noslip,bnd,6)
+bcd8 = DirichletBC(VQW.sub(2),noslip,bnd,8)
 
-bcu5 = DirichletBC(VQW.sub(0),noslip,bnd,5)
-bcu6 = DirichletBC(VQW.sub(0),noslip,bnd,6)
+bcu5 = DirichletBC(VQW.sub(0),u_in_2,bnd,5)
 bcu1 = DirichletBC(VQW.sub(0),noslip,bnd,1)
-bcu3 = DirichletBC(VQW.sub(0),Poiseuille,bnd,3)
+bcu3 = DirichletBC(VQW.sub(0),u_in_1,bnd,3)
 bcu2 = DirichletBC(VQW.sub(0),noslip,bnd,2)
 bcu7 = DirichletBC(VQW.sub(0),noslip,bnd,7)
+bcu8 = DirichletBC(VQW.sub(0),noslip,bnd,8)
 
 bcp1 = DirichletBC(VQW.sub(1),0,bnd,1)
 bcp2 = DirichletBC(VQW.sub(1),0,bnd,2)
@@ -99,8 +127,8 @@ bcp5 = DirichletBC(VQW.sub(1),0,bnd,5)
 bcp6 = DirichletBC(VQW.sub(1),0,bnd,6)
 
 
-bcd = [bcd1,bcd2,bcd6]    # skeleton vel
-bcu = [bcu1,bcu2,bcu3,bcu5]		# filtration vel
+bcd = [bcd1,bcd2,bcd8,bcd3,bcd5,bcd4,bcd6]    # skeleton vel
+bcu = [bcu2,bcu3,bcu5,bcu8,bcu1]		# filtration vel
 bcp = [bcp1,bcp2,bcp5]
 
 bcs = [bu for bu in bcu] + [bd for bd in bcd]# + [bp for bp in bcp]
@@ -179,9 +207,13 @@ aS = aV + aW + aQ
 LS = LV + LW + LQ
 
 # FLUID
+kappa2 = 10#Constant(1.4*10**(-15)*(10**9))
+phi2 = 1    # porosity
+K_perm2 = kappa2/mu_f
+rho_p2 = Constant(rho_s*(1-phi2) + rho_f*phi)
 
 aFW = rho_f/k*inner(u,v)*dx(0,subdomain_data=SD) + \
-	rho_f*inner(grad(u0)*(u-d),v)*dx(0,subdomain_data=SD) - \
+	rho_f*inner(grad(u0)*(u+d*k),v)*dx(0,subdomain_data=SD) - \
 	 inner(p,div(v))*dx(0,subdomain_data=SD) + \
 	mu_f*inner(grad(v),grad(u))*dx(0,subdomain_data=SD)
 LFW = rho_f/k*inner(u1,v)*dx(0,subdomain_data=SD)
@@ -191,7 +223,30 @@ LFV = inner(noslip,w)*dx(0,subdomain_data=SD)
 
 aFQ = -inner(div(u),q)*dx(0,subdomain_data=SD)
 LFQ = Constant(0)*q*dx(0,subdomain_data=SD)
+'''
+def sigma_dev2(u):
+	return mu_s*sym(grad(u)) + 0.0001*lamda*tr(sym(grad(u)))*Identity(2)
 
+
+aFW = rho_p2/k*inner(d,w)*dx(0,subdomain_data=SD) + \
+	rho_f/k*inner(u,w)*dx(0,subdomain_data=SD) + \
+	rho_f*inner(grad(u0)*(u-d),w)*dx(0,subdomain_data=SD) - \
+	inner(p,div(w))*dx(0,subdomain_data=SD) + \
+	mu_f*inner(grad(u),grad(v))*dx(0,subdomain_data=SD) #+ \
+	#k*inner(grad(w),sigma_dev2(d))*dx(0,subdomain_data=SD)
+LFW = rho_f/k*inner(d1,w)*dx(0,subdomain_data=SD) + \
+	rho_f/k*inner(u1,w)*dx(0,subdomain_data=SD)# - \
+	#inner(grad(w),sigma_dev2(eta))*dx(0,subdomain_data=SD)
+
+aFV = rho_f/k*inner(d,v)*dx(0,subdomain_data=SD) + \
+	(rho_f/(k*phi2)+1./K_perm2)*inner(u,v)*dx(0,subdomain_data=SD) - \
+	inner(p,div(v))*dx(0,subdomain_data=SD)
+LFV = rho_f/(k*phi2)*inner(u1,v)*dx(0,subdomain_data=SD) + \
+	rho_f/k*inner(d1,v)*dx(0,subdomain_data=SD)
+
+aFQ = -inner(div(u+d),q)*dx(0,subdomain_data=SD)
+LFQ = Constant(0)*q*dx(0,subdomain_data=SD)
+'''
 aF = aFV + aFW + aFQ
 LF = LFV + LFW + LFQ
 
@@ -200,10 +255,13 @@ L = LS+LF
 
 t = dt
 count = 0
+#plot(bnd)
+#interactive()
+#sys.exit()
 
-u_e = interpolate(Poiseuille,V)
 while t < T + DOLFIN_EPS:
-	u_in.t = t
+	u_in_1.t = t
+	u_in_2.t = t
 	p_in.t = t
 	b = assemble(L)
 	eps = 10
@@ -219,8 +277,6 @@ while t < T + DOLFIN_EPS:
 		k_iter += 1
 		print 'k: ',k_iter, 'error: %.3e' %eps
 		u0.assign(u_)
-
-	#print 'Poiseuille error: %.3e' % assemble(u_,u_e,degree_rise=3)
 
 	#bcu[-1] = DirichletBC(VQW.sub(0),d_,bnd,5) # interface
 	ufile << u_
@@ -239,6 +295,5 @@ while t < T + DOLFIN_EPS:
 
 	count += 1
 
-File('final_u.xml') << u_
 
 

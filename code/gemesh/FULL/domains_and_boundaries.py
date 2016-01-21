@@ -1,7 +1,12 @@
 from dolfin import *
 import numpy as np
 set_log_active(False)
+mesh = Mesh('meshes/cord_w_csc_mm.xml')
 
+#mesh = Mesh('meshes/drosdal2D.xml')
+
+#mesh = refine(mesh)
+#mesh = refine(mesh)	
 
 rho_f = Constant(1./1000)		# g/mm
 nu_f = Constant(0.658)			# mm**2/s
@@ -45,13 +50,9 @@ class inner_wall(SubDomain):
         def inside(self,x,on_boundary):
                 return abs(x[0]) < x0 + tol and abs(x[0]) > x0 - tol
 
-class top_right(SubDomain):
+class top_outer(SubDomain):
         def inside(self,x,on_boundary):
-                return x[1]>(h-tol) and on_boundary and abs(x[0]) > x0 - tol and x[0] > tol
-
-class top_left(SubDomain):
-		def inside(self,x,on_boundary):
-			    return x[1]>(h-tol) and on_boundary and abs(x[0]) > x0 - tol and x[0] < tol
+                return x[1]>(h-tol) and on_boundary and abs(x[0]) > x0 - tol
 
 class top_inner(SubDomain):
         def inside(self,x,on_boundary):
@@ -101,5 +102,15 @@ class MyEx(Expression):
 
 parameters['allow_extrapolation'] = True
 
-def epsilon(u):
-        return 0.5*(grad(u) + grad(u).T)
+
+bot_out = bottom_outer()
+bot_in = bottom_inner()
+out_wall = outer_wall()
+in_wall = inner_wall()
+top_out = top_outer()
+top_in = top_inner()
+csc_bnd = csc_boundary()
+in_csc = inside_csc()
+cord = cord()
+CSF_s = CSF_space()
+

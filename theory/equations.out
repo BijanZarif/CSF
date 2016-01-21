@@ -8,13 +8,15 @@
 \BOOKMARK [2][-]{subsection.3.1.2}{Conservation of mass and momentum}{section.3.1}% 8
 \BOOKMARK [2][-]{subsection.3.1.3}{Incompressible Newtonian fluids}{section.3.1}% 9
 \BOOKMARK [2][-]{subsection.3.1.4}{Navier-Stokes equations for incompressible flow}{section.3.1}% 10
-\BOOKMARK [1][-]{section.3.2}{Linear Poroelasticity}{chapter.3}% 11
-\BOOKMARK [2][-]{subsection.3.2.1}{Biot's Equations}{section.3.2}% 12
-\BOOKMARK [1][-]{section.3.3}{Coupling Fluid flow with Poroelasticy}{chapter.3}% 13
-\BOOKMARK [0][-]{chapter.4}{Numerical Methods}{}% 14
-\BOOKMARK [1][-]{section.4.1}{The Finite Element Method}{chapter.4}% 15
-\BOOKMARK [2][-]{subsection.4.1.1}{Weak formulation}{section.4.1}% 16
-\BOOKMARK [2][-]{subsection.4.1.2}{Finite elements}{section.4.1}% 17
-\BOOKMARK [1][-]{section.4.2}{A Discontinuous Galerkin method}{chapter.4}% 18
-\BOOKMARK [2][-]{subsection.4.2.1}{Stokes flow}{section.4.2}% 19
-\BOOKMARK [0][-]{chapter.5}{Material parameters}{}% 20
+\BOOKMARK [1][-]{section.3.2}{Linear Elasticity}{chapter.3}% 11
+\BOOKMARK [1][-]{section.3.3}{Linear Poroelasticity}{chapter.3}% 12
+\BOOKMARK [2][-]{subsection.3.3.1}{Biot's Equations}{section.3.3}% 13
+\BOOKMARK [1][-]{section.3.4}{Coupling Fluid flow with Poroelasticy}{chapter.3}% 14
+\BOOKMARK [0][-]{chapter.4}{Numerical Methods}{}% 15
+\BOOKMARK [1][-]{section.4.1}{The Finite Element Method}{chapter.4}% 16
+\BOOKMARK [2][-]{subsection.4.1.1}{Weak formulation}{section.4.1}% 17
+\BOOKMARK [2][-]{subsection.4.1.2}{Finite elements}{section.4.1}% 18
+\BOOKMARK [1][-]{section.4.2}{Implementation in FEniCS}{chapter.4}% 19
+\BOOKMARK [1][-]{section.4.3}{A Discontinuous Galerkin method}{chapter.4}% 20
+\BOOKMARK [2][-]{subsection.4.3.1}{Stokes flow}{section.4.3}% 21
+\BOOKMARK [0][-]{chapter.5}{Material parameters}{}% 22

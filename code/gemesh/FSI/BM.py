@@ -14,7 +14,7 @@ if initial_files:
     t_folder = 1500000
     folder = 'initial_data_t_%d' % t_folder
 
-dt = 0.01
+dt = 0.001
 T = 10*dt
 mesh = Mesh('../meshes/cord_w_csc_mm.xml')
 
@@ -24,19 +24,20 @@ LEN = len(mesh.coordinates())
 print 'len(mesh.coord)', LEN
 SD = MeshFunction('uint', mesh, mesh.topology().dim())
 
-SD.set_all(1)
-cord().mark(SD,0)
-inside_csc().mark(SD,0)
+SD.set_all(0)
+cord().mark(SD,1)
+inside_csc().mark(SD,1)
 
 # DEFINING BOUNDARIES
 boundaries = FacetFunction("size_t",mesh)
 outer_wall().mark(boundaries,1)
 inner_wall().mark(boundaries,2)
-top_outer().mark(boundaries,3)
+top_right().mark(boundaries,3)
 bottom_outer().mark(boundaries,4)
 bottom_inner().mark(boundaries,5)
 top_inner().mark(boundaries,6)
 csc_boundary().mark(boundaries,7)
+top_left().mark(boundaries,8)
 
 # TEST AND TRIALFUNCTIONS
 V = VectorFunctionSpace(mesh,'CG',2)
@@ -57,7 +58,6 @@ nu = 0.658
 rho_f = 1.0*1e-3
 mu_f = rho_f*nu
 
-U_ = [0.2, 1.0, 2.0][FSI-1]   # Reynolds vel
 # SOLID
 E = 5*10**3
 Pr = 0.479
@@ -71,20 +71,22 @@ kappa = Constant(1.4*10**(-15)*(10**6))
 
 # FLUID
 noslip = Constant((0.0,0.0))
-vf = Expression(('0,0','1.5*U*x[1]*(H-x[1])/pow((H/2.0),2)'),H=0.075,U=U_)
+u_in_R = Expression(('0,0','0.01*x[0]*(x[0]-x0)'),x0=x1)
+u_in_L = Expression(('0,0','0.01*x[0]*(x0-x[0])'),x0=x1)
 
 p_in = Expression('1000*cos(4*pi*t)',t=0)
 p_out = Expression('1000*sin(4*pi*t)',t=0)
 
 bcu1 = DirichletBC(VQW.sub(0),noslip,boundaries,1) 	# walls
 bcu2 = DirichletBC(VQW.sub(0),noslip,boundaries,2) 	# interface
-bcu3 = DirichletBC(VQW.sub(0),vf,boundaries,3)		# fluid inlet
+bcu3 = DirichletBC(VQW.sub(0),u_in_R,boundaries,3)		# fluid inlet right
 bcu4 = DirichletBC(VQW.sub(0),noslip,boundaries,4) 	# fluid outlet
 bcu5 = DirichletBC(VQW.sub(0),noslip,boundaries,5) 	# elastic outlet
 bcu6 = DirichletBC(VQW.sub(0),noslip,boundaries,6)      # elastic inlet
 bcu7 = DirichletBC(VQW.sub(0),noslip,boundaries,7)      # csc boundary
+bcu8 = DirichletBC(VQW.sub(0),u_in_L,boundaries,8)    # fluid inlet Left
 
-bcu = [bcu1]
+bcu = [bcu1,bcu3,bcu8,bcu6,bcu5]
 
 bcp3 = DirichletBC(VQW.sub(1),p_in,boundaries,3)
 bcp6 = DirichletBC(VQW.sub(1),p_in,boundaries,6)
@@ -104,20 +106,9 @@ bcU4 = DirichletBC(VQW.sub(2),noslip,boundaries,4)  # fluid outlet
 bcU5 = DirichletBC(VQW.sub(2),noslip,boundaries,5)  # elastic outlet
 bcU6 = DirichletBC(VQW.sub(2),noslip,boundaries,6)  # elastic inlet
 
-bcP = [bcU1,bcU3,bcU4,bcU5,bcU6]
+bcU = [bcU1,bcU5,bcU6]
 
-# CREATE FUNCTIONS
-u0 = Function(V)
-if initial_files:
-	u1 = Function(V,'%s/u.xml'%folder)
-	#plot(u1)
-else:
-	u1 = Function(V)#,'initial_data/u.xml')
-
-eta = Function(V)
-
-UPR = Function(VQW)
-
+bcs = [bu for bu in bcu] + [bU for bU in bcU]
 
 # Define coefficients
 k = Constant(dt)
@@ -134,72 +125,94 @@ ds = Measure('ds')[boundaries]
 # n('-') into solid, n('+') out of solid
 # n into circle
 
-# FLUID
+eta = Function(V)
+#u0 = Function(V,'final_u.xml')
+u0 = Function(V)
+u1 = Function(V)
+d1 = Function(V)
+UPR = Function(VQW)
+n = FacetNormal(mesh)
+k = Constant(dt)
 
-def epsilon(u):
-    return sym(grad(u))
 
-aF = rho_f/k*inner(u,v)*dx(1,subdomain_data=SD) + \
-     rho_f*inner(grad(u0)*u,v)*dx(1,subdomain_data=SD) + \
-     2*mu_f*inner(epsilon(u),epsilon(v))*dx(1,subdomain_data=SD) - \
-     inner(p,div(v))*dx(1,subdomain_data=SD) - \
-     inner(q,div(u))*dx(1,subdomain_data=SD) 
-
-#mu_f*inner(grad(u),grad(v))*dx(1,subdomain_data=SD) - \
-
-LF = rho_f/k*inner(u1,v)*dx(1,subdomain_data=SD) - \
-     inner(p_in*n,v)*ds(3)
+nu = 0.658
+rho_f = 1.0*1e-3
+mu_f = rho_f*nu
 
 # SOLID
-def sigma(u):
-    return 2*mu_s*sym(grad(u)) + lamda*tr(sym(grad(u)))*Identity(2)
-lamda = 0.001
-kappa = 1e-10
+E = 5*10**3
+Pr = 0.479
+lamda = Constant(E*Pr/((1.0+Pr)*(1.0-2*Pr)))
+mu_s = Constant(E/(2*(1.0+Pr)))
 
-aS = inner(grad(v),sigma(eta))*dx(0,subdomain_data=SD) 
-
-# u = total velocity (fluid + structural)
-# d = u-u_s (filtration velocity)
-
-aU = mu_f/kappa*inner(u-d,w)*dx(0,subdomain_data=SD) -inner(p,div(w))*dx(0,subdomain_data=SD) 
-
-aV = inner(q,div(u))*dx(0,subdomain_data=SD)
+rho_p = Constant(1.75e-3)
 
 
-# POISSON
-aP = inner(grad(d),grad(w))*dx(1,subdomain_data=SD) - inner(w('+'),grad(d('+'))*n('+'))*dS(2)
-LP = inner(f,w)*dx(1,subdomain_data=SD)
+kappa = Constant(1.4*10**(-15)*(10**9))
 
 
-a = aF + aS + aU + aP
-L = LF + LS + LU + LP
 
-if initial_files:
-	t = t_folder*1e-6
+phi = 0.2    # porosity
+K_perm = kappa/mu_f
 
-else:
-	t = dt
-
-change_vf = True
+rho_s = Constant(rho_p - rho_f*phi/(1-phi))
 
 
-xA = where(mesh.coordinates()[:,0] == 0.6)
-yA = where(mesh.coordinates()[:,1] == 0.2)
+def sigma_dev(d):
+	return 2*mu_s*sym(grad(d)) + lamda*tr(sym(grad(d)))*Identity(2)
 
-n1 = as_vector((1.0,0))
-n2 = as_vector((0,1.0))
-nx = dot(n1,n)
-ny = dot(n2,n)
-nt = as_vector((ny,-nx))
-xA = plt.where(abs(mesh.coordinates()[:,0] - 0.6) < h)
-yA = plt.where(abs(mesh.coordinates()[:,1] - 0.2) < h)
-for idx in xA[0]:
-    if idx in yA[0]:
-        coord = idx
-xA = float(mesh.coordinates()[coord,0])
-yA = float(mesh.coordinates()[coord,1])
+def sigma_f(u):
+	return 2*mu_f*sym(grad(u))
+
+
+
+aW = rho_p/k*inner(d,v)*dx(1,subdomain_data=SD) + \
+	rho_f/k*inner(u,v)*dx(1,subdomain_data=SD) - \
+	inner(p,div(v))*dx(1,subdomain_data=SD) + \
+	k*inner(grad(v),sigma_dev(d))*dx(1,subdomain_data=SD)
+
+LW = rho_f/k*inner(d1,v)*dx(1,subdomain_data=SD) + \
+	rho_f/k*inner(u1,v)*dx(1,subdomain_data=SD) - \
+	inner(grad(v),sigma_dev(eta))*dx(1,subdomain_data=SD)
+
+
+aV = rho_f/k*inner(d,w)*dx(1,subdomain_data=SD) + \
+	(rho_f/(k*phi)+1./K_perm)*inner(u,w)*dx(1,subdomain_data=SD) - \
+	inner(p,div(w))*dx(1,subdomain_data=SD)
+
+
+LV = rho_f/(k*phi)*inner(u1,w)*dx(1,subdomain_data=SD) + \
+	rho_f/k*inner(d1,w)*dx(1,subdomain_data=SD)
+
+aQ = -inner(div(u)+div(d),q)*dx(1,subdomain_data=SD)
+LQ = Constant(0)*q*dx(1,subdomain_data=SD)
+
+
+aS = aV + aW + aQ
+LS = LV + LW + LQ
+
+# FLUID
+
+aFW = rho_f/k*inner(u,v)*dx(0,subdomain_data=SD) + \
+	rho_f*inner(grad(u0)*(u-d),v)*dx(0,subdomain_data=SD) - \
+	 inner(p,div(v))*dx(0,subdomain_data=SD) + \
+	mu_f*inner(grad(v),grad(u))*dx(0,subdomain_data=SD)
+LFW = rho_f/k*inner(u1,v)*dx(0,subdomain_data=SD)
+
+aFV = inner(grad(d),grad(w))*dx(0,subdomain_data=SD)
+LFV = inner(noslip,w)*dx(0,subdomain_data=SD)
+
+aFQ = -inner(div(u),q)*dx(0,subdomain_data=SD)
+LFQ = Constant(0)*q*dx(0,subdomain_data=SD)
+
+aF = aFV + aFW + aFQ
+LF = LFV + LFW + LFQ
+
+a = aS+aF
+L = LS+LF
+
 count = 0
-
+t = dt
 while t < T + DOLFIN_EPS:
 	p_in.t = t
 	p_out.t = t
@@ -211,8 +224,7 @@ while t < T + DOLFIN_EPS:
 	while eps > 1E-7 and k_iter < max_iter:
 	    A = assemble(a)
 	    A.ident_zeros()
-	    [bc.apply(A,b) for bc in bcu]
-	    [bc.apply(A,b) for bc in bcP]
+	    [bc.apply(A,b) for bc in bcs]
 	    solve(A,UPR.vector(),b,'lu')
 	    u_,p_,d_ = UPR.split(True)
 	    eps = errornorm(u_,u0,degree_rise=3)
@@ -220,24 +232,15 @@ while t < T + DOLFIN_EPS:
 	    print 'k: ',k_iter, 'error: %.3e' %eps
 	    u0.assign(u_)
 	
-	D = interpolate(d_,V)
-	uf = interpolate(u_,V)
-	pf = interpolate(p_,Q)
-	ut = dot(uf,nt)
-
-	ut = dot(uf,nt)
-
-	#d_.assign((D - Us)*(dt/(5*U_)))
-	#bcu[-1] = DirichletBC(VQW.sub(0),d_,boundaries,5) # interface
-
 	ufile << u_
 	pfile << p_
 	dfile << d_
-	#mesh.move(d_)
-	#mesh.bounding_box_tree().build(mesh)
-	# Move to next time step
-        d1.assign(d_)
-	u1.assign(u_)
+	tfile << eta
+	d1.assign(d_)
+	d_.vector()[:] *= float(k)
+	eta.vector()[:] += d_.vector()[:]
+	mesh.move(d_)
+	mesh.bounding_box_tree().build(mesh)
         print 't=%.4f'%t
 	t += dt
 

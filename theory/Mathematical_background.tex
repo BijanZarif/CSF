@@ -85,6 +85,12 @@ Stating both conservation of mass and momentum of a fluid together with suitable
 These equations are coupled and non-linear and can generally not be solved analytically. Hence, numerical solutions are a necessity to obtain useful solutions to real-life problems. Such metods will be discussed in chapter xxx. 
 
 
+\section{Linear Elasticity}
+From the Eulerian point of view, an elastic medium is described by the balance equation for the momentum 
+\begin{align} \rho \pdi{\mathbf{u}}{t} + \rho(\nabla(\mathbf{u})) = \nabla \cdot \mathbf{\sigma}^s + \rho\mathbf{f} \label{LE}
+\end{align}
+
+
 \section{Linear Poroelasticity}
 In this section, the equations describing fluid flowing trough a elastic medium is presented. For a more detailed discussion, derivation and history within the field we refer to \cite{Wang} on Linear Poroelasticity. To keep the mathematics as similar to the fluid case as possible, we use $\mu$ and $\lambda$ instead of the possion ratio. The most noteably difference between the solid case and the fluid case is that $\mathbf{u}$ now represents the displacement in the solid rather than the velocity. The reason for such a notation will be more clear as different numerical solution strategies are presented in chapter xxx.
 \\
