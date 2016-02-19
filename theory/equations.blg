@@ -3,44 +3,51 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: equations.aux
 The style file: ieeetr.bst
 Database file #1: bib.bib
-You've used 5 entries,
+Warning--empty journal in Stov14
+Warning--empty journal in Kyls14
+Warning--empty journal in Dros11
+Warning--empty publisher in Wang00
+Warning--empty publisher in Lang2
+Warning--empty journal in Seli11
+You've used 26 entries,
             1876 wiz_defined-function locations,
-            509 strings with 4071 characters,
-and the built_in function-call counts, 1001 in all, are:
-= -- 100
-> -- 28
+            648 strings with 7779 characters,
+and the built_in function-call counts, 6060 in all, are:
+= -- 601
+> -- 214
 < -- 0
-+ -- 12
-- -- 7
-* -- 54
-:= -- 146
-add.period$ -- 9
-call.type$ -- 5
-change.case$ -- 3
++ -- 84
+- -- 58
+* -- 391
+:= -- 857
+add.period$ -- 36
+call.type$ -- 26
+change.case$ -- 18
 chr.to.int$ -- 0
-cite$ -- 5
-duplicate$ -- 54
-empty$ -- 114
-format.name$ -- 7
-if$ -- 253
+cite$ -- 32
+duplicate$ -- 326
+empty$ -- 623
+format.name$ -- 58
+if$ -- 1490
 int.to.chr$ -- 0
-int.to.str$ -- 5
-missing$ -- 9
-newline$ -- 22
-num.names$ -- 5
-pop$ -- 22
+int.to.str$ -- 26
+missing$ -- 36
+newline$ -- 91
+num.names$ -- 26
+pop$ -- 105
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 24
+skip$ -- 179
 stack$ -- 0
-substring$ -- 36
-swap$ -- 15
+substring$ -- 334
+swap$ -- 110
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 0
-while$ -- 7
-width$ -- 6
-write$ -- 52
+warning$ -- 6
+while$ -- 54
+width$ -- 28
+write$ -- 250
+(There were 6 warnings)

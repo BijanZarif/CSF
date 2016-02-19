@@ -1,2 +1,0 @@
-len(msh.coord)	Total Drag		prc change Fd		Total Lift		prc change Fl
-      1438                   -0                  nan                    0                  nan

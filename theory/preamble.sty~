@@ -12,7 +12,6 @@
     filecolor=magenta,      
     urlcolor=cyan,
 }
-\usepackage{listings}
 %TCIDATA{OutputFilter=latex2.dll}
 %TCIDATA{Version=5.50.0.2960}
 %TCIDATA{CSTFile=40 LaTeX article.cst}
@@ -27,7 +26,8 @@
 %EndMSIPreambleData
 \newcommand{\includecode}[2][c]{\lstinputlisting[caption=#2, escapechar=, style=custom#1]{#2}}
 \newcommand{\ol}{\overline}
-\newcommand{\pdi}[2]{\frac{\partial #1}{\partial #2}} 
+\newcommand{\pdi}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\textbi}[1]{\mathbf{\textit{ #1}}}
 \newtheorem{theorem}{Theorem}
 \newtheorem{acknowledgement}[theorem]{Acknowledgement}
 \newtheorem{algorithm}[theorem]{Algorithm}
@@ -52,4 +52,32 @@
 \newenvironment{proof}[1][Proof]{\noindent\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
 \numberwithin{equation}{chapter}
 \numberwithin{figure}{chapter}
+\numberwithin{theorem}{chapter}
+\usepackage{fancyvrb,newverbs,xcolor}
+\usepackage{lipsum}% just for this example
+\usepackage[hypcap]{caption}
+\definecolor{cverbbg}{gray}{0.93}
+
+\newenvironment{cverbatim}
+ {\SaveVerbatim{cverb}}
+ {\endSaveVerbatim
+  \flushleft\fboxrule=0pt\fboxsep=.5em
+  \colorbox{cverbbg}{\BUseVerbatim{cverb}}%
+  \endflushleft
+}
+\newenvironment{lcverbatim}
+ {\SaveVerbatim{cverb}}
+ {\endSaveVerbatim
+  \flushleft\fboxrule=0pt\fboxsep=.5em
+  \colorbox{cverbbg}{%
+    \makebox[\dimexpr\linewidth-2\fboxsep][l]{\BUseVerbatim{cverb}}%
+  }
+  \endflushleft
+}
+
+\newcommand{\ctexttt}[1]{\colorbox{cverbbg}{\texttt{#1}}
+\newverbcommand{\cverb}
+  {\setbox\verbbox\hbox\bgroup}
+  {\egroup\colorbox{cverbbg}{\box\verbbox}}
+}
 

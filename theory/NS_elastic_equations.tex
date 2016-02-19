@@ -2,20 +2,7 @@
 \usepackage{preamble2}
 \begin{document}
 \section{Defining physical quantities}
-We use the following notation for the physical quantities: \\
-\\
-$\mathbf{v}$ - Velocity of the material. In the fluid, $\mathbf{v}$ represents fluid velocity, and in the solid $\mathbf{v}$ denotes the velocity of the solid. 
-\\ \\
-$\mathbf{w}$ - Mesh velocity, (i.e, all points within the mesh changes position with $\Delta t \mathbf{w}$ from one time step to the next). In the solid, the mesh changes with the material velocity $\mathbf{v}$, so in the solid we have $\mathbf{v} = \mathbf{w}$ which will not neccessary hold in the fluid.
-\\
-\\
-$ \mathbf{U}$ - Total displacement of the solid. In the fluid, this quantity represents the total mesh displacement. This quantity is not generally handled as an unknown, but is updated by adding $\Delta t \mathbf{w}$ to the current $\mathbf{U}$ each time step. In an implicit shceme we can handle $\mathbf{U}$ as an unknown $\mathbf{U(w)}$ by using that $\mathbf{U} = \mathbf{U}^{(1)} + \mathbf{w}$, where $\mathbf{U}^{(1)}$ denotes the total displacement at the previous time step. 
-\\
-\\
-$p$ - Pressure in the fluid. The same pressure does not exist in the solid, but in the case of an (almost) incompressible fluid, an extra equation involving $p$ can be set up in the solid as well. 
-\\
-\\
-Subscripts f and s are used to denote fluid and solid quantities, respectively
+
 \section{Governing equations}
 We assume the fluid is incompressible, but up to now, no such assumption is made for the solid. The Navier Stokes equations must be satisfied in the fluid:
 \begin{align}
@@ -30,7 +17,7 @@ And in the solid, we use the equation for linear elasticity:
 where $\sigma_s(\mathbf{U}) = 2\mu_s\epsilon(\mathbf{U}) + \lambda\text{tr}(\epsilon(\mathbf{U}))$ and $\epsilon(\mathbf{U}) = \frac{1}{2}(\nabla \mathbf{U} + (\nabla \mathbf{U})^T)$
 \\
 \\
-In addition to this, we need equations on how to update the mesh. In other words we need equations for $\mathbf{w}$. In the fluid $\mathbf{w}$, does not represent a physical quantity and we simply want to smoothen out to distribute the mesh changes smoothly over the full mesh. A common choice for such a function is a homogenuous Poisson equation for the total displacement $\mathbf{U}$. When updating the mesh we also need to account for the mesh movement in the convective term in NS. \\
+In addition to this, we need equations on how to update the mesh. In other words we need equations for $\mathbf{w}$. In the fluid $\mathbf{w}$, does not represent a physical quantity and we simply want to distribute the mesh changes smoothly over the full mesh. A common choice for such a function is a homogenuous Poisson equation for the total displacement $\mathbf{U}$. When updating the mesh we also need to account for the mesh movement in the convective term in NS. \\
 \\ The full set of equations will then be \\
 In the fluid:
 \begin{align}

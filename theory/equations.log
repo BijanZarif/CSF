@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.1.20)  21 JAN 2016 11:42
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.1.20)  17 FEB 2016 12:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -270,18 +270,25 @@ LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
 \l_MT_above_shortintertext_sep=\dimen125
 \l_MT_below_shortintertext_sep=\dimen126
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 14.
+Package hyperref Info: Option `colorlinks' set `true' on input line 15.
 \c@theorem=\count115
-)
-(/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pdfpages.sty
-Package: pdfpages 2013/08/25 v0.4v Insert pages of external PDF documents (AM)
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
-Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
-)
-(/usr/share/texlive/texmf-dist/tex/latex/eso-pic/eso-pic.sty
-Package: eso-pic 2013/10/06 v2.0d eso-pic (RN)
+(/usr/share/texlive/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2008/02/07
 
+Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
+<2008/02/07> (tvz)
+\FV@CodeLineNo=\count116
+\FV@InFile=\read1
+\FV@TabBox=\box28
+\c@FancyVerbLine=\count117
+\FV@StepNumber=\count118
+\FV@OutFile=\write3
+)
+(/usr/share/texlive/texmf-dist/tex/latex/newverbs/newverbs.sty
+Package: newverbs 2012/05/08 v1.3a Define new 'verb' commands and short verb. c
+haracters
+)
 (/usr/share/texmf/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2007/01/21 v2.11 LaTeX color extensions (UK)
 
@@ -298,20 +305,50 @@ Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1357.
 Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1358.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1359.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1360.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/lipsum/lipsum.sty
+Package: lipsum 2011/04/14 v1.2 150 paragraphs of Lorem Ipsum dummy text
+\c@lips@count=\count119
+)
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 57.
+\captionmargin=\dimen127
+\captionmargin@=\dimen128
+\captionwidth=\dimen129
+\caption@tempdima=\dimen130
+\caption@indent=\dimen131
+\caption@parindent=\dimen132
+\caption@hangindent=\dimen133
+)
+\c@ContinuedFloat=\count120
+Package caption Info: hyperref package is loaded.
 ))
+(/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+Package: pdfpages 2013/08/25 v0.4v Insert pages of external PDF documents (AM)
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+Package: eso-pic 2013/10/06 v2.0d eso-pic (RN)
+)
 (/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pppdftex.def
 File: pppdftex.def 2013/08/25 v0.4v Pdfpages driver for pdfTeX (AM)
 )
-\AM@pagebox=\box28
+\AM@pagebox=\box29
 \AM@toc@title=\toks20
-\c@AM@survey=\count116
-\AM@templatesizebox=\box29
+\c@AM@survey=\count121
+\AM@templatesizebox=\box30
 )
 (/home/vegard/texmf/tex/latex/wrapfig/wrapfig.sty
-\wrapoverhang=\dimen127
-\WF@size=\dimen128
-\c@WF@wrappedlines=\count117
-\WF@box=\box30
+\wrapoverhang=\dimen134
+\WF@size=\dimen135
+\c@WF@wrappedlines=\count122
+\WF@box=\box31
 \WF@everypar=\toks21
 Package: wrapfig 2003/01/31  v 3.6
 ) (./equations.aux)
@@ -334,16 +371,16 @@ LaTeX Font Info:    ... okay on input line 5.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count118
-\scratchdimen=\dimen129
-\scratchbox=\box31
-\nofMPsegments=\count119
-\nofMParguments=\count120
+\scratchcounter=\count123
+\scratchdimen=\dimen136
+\scratchbox=\box32
+\nofMPsegments=\count124
+\nofMParguments=\count125
 \everyMPshowfont=\toks22
-\MPscratchCnt=\count121
-\MPscratchDim=\dimen130
-\MPnumerator=\count122
-\makeMPintoPDFobject=\count123
+\MPscratchCnt=\count126
+\MPscratchDim=\dimen137
+\MPnumerator=\count127
+\makeMPintoPDFobject=\count128
 \everyMPtoPDFconversion=\toks23
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
@@ -360,7 +397,7 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\AtBeginShipoutBox=\box32
+\AtBeginShipoutBox=\box33
 Package hyperref Info: Link coloring ON on input line 5.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
@@ -369,16 +406,19 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count124
+\c@section@level=\count129
 )
 LaTeX Info: Redefining \ref on input line 5.
 LaTeX Info: Redefining \pageref on input line 5.
 LaTeX Info: Redefining \nameref on input line 5.
 
 (./equations.out) (./equations.out)
-\@outlinefile=\write3
-\openout3 = `equations.out'.
+\@outlinefile=\write4
+\openout4 = `equations.out'.
 
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: wrapfig package is loaded.
+Package caption Info: End \AtBeginDocument code.
  (./equations.toc
 LaTeX Font Info:    Try loading font information for U+msa on input line 3.
 
@@ -389,72 +429,149 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 3.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-))
-\tf@toc=\write4
-\openout4 = `equations.toc'.
-
- (./Introduction.tex [1
+) [1
 
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Overfull \hbox (1.16615pt too wide) in paragraph at lines 38--38
+ [][] [][][]\OT1/cmr/m/n/10 Assessment of CSF ve-loc-i-ties be-fore and af-ter 
+de-com-pres-sion surgery[][] [][]  
+ []
+
+)
+\tf@toc=\write5
+\openout5 = `equations.toc'.
+
+ (./Introduction.tex [2]
 Chapter 1.
-) (./Medical_background.tex [2
+) (./Medical_background.tex [3
 
 ]
 Chapter 2.
-<figures/Ida_CSF.png, id=127, 446.66875pt x 170.6375pt>
+<figures/Spinal_Cord.png, id=215, 764.8575pt x 656.4525pt>
+File: figures/Spinal_Cord.png Graphic file (type png)
+
+<use figures/Spinal_Cord.png>
+Package pdftex.def Info: figures/Spinal_Cord.png used on input line 9.
+(pdftex.def)             Requested size: 229.45901pt x 196.93727pt.
+
+
+Package caption Warning: \label without proper \caption on input line 16.
+See the caption package documentation for explanation.
+
+
+LaTeX Warning: Reference `CSF' on page 4 undefined on input line 14.
+
+<figures/Ida_CSF.png, id=218, 446.66875pt x 170.6375pt>
 File: figures/Ida_CSF.png Graphic file (type png)
 
 <use figures/Ida_CSF.png>
-Package pdftex.def Info: figures/Ida_CSF.png used on input line 8.
+Package pdftex.def Info: figures/Ida_CSF.png used on input line 16.
 (pdftex.def)             Requested size: 357.33548pt x 136.51016pt.
 
-Overfull \hbox (12.33548pt too wide) in paragraph at lines 8--9
-[][] 
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 6--12
-
- []
-
-) (./Mathematical_background.tex [3
-
- <./figures/Ida_CSF.png>]
-Chapter 3.
-
-Underfull \hbox (badness 10000) in paragraph at lines 7--11
-
+Overfull \hbox (12.33548pt too wide) in paragraph at lines 16--17
+[][]
  []
 
 [4
 
+]) (./Mathematical_background.tex
+Underfull \hbox (badness 10000) in paragraph at lines 20--1
+
+ []
+
+[5 <./figures/Spinal_Cord.png> <./figures/Ida_CSF.png>] [6]
+Chapter 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--18
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--18
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--18
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--18
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--18
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--18
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 22--26
+
+ []
+
+[7
+
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 42--47
-
- []
-
-[5] [6]
-Underfull \hbox (badness 10000) in paragraph at lines 95--98
+Underfull \hbox (badness 10000) in paragraph at lines 57--64
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 95--98
+Underfull \hbox (badness 10000) in paragraph at lines 57--64
+
+ []
+
+[8] [9]
+Underfull \hbox (badness 10000) in paragraph at lines 121--124
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 112--117
+Underfull \hbox (badness 10000) in paragraph at lines 121--124
 
  []
 
-) (./Numerical_methods.tex [7]
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 138--143
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 145--149
+
+ []
+
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 161--171
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 161--171
+
+ []
+
+[12]
+Underfull \hbox (badness 10000) in paragraph at lines 209--213
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 209--213
+
+ []
+
+[13]) (./Numerical_methods.tex [14]
 Chapter 4.
 
-LaTeX Warning: Citation `Langtangen' on page 8 undefined on input line 3.
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 9--13
 
  []
@@ -465,96 +582,324 @@ Underfull \hbox (badness 10000) in paragraph at lines 9--13
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 20--22
+Underfull \hbox (badness 10000) in paragraph at lines 21--24
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 20--22
-
- []
-
-[8
+[15
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 40--42
+Underfull \hbox (badness 10000) in paragraph at lines 27--27
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 40--42
+Underfull \hbox (badness 10000) in paragraph at lines 37--37
 
  []
 
-<figures/hats.png, id=208, 865.0719pt x 560.8152pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--47
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 45--47
+
+ []
+
+[16]
+Underfull \hbox (badness 10000) in paragraph at lines 73--75
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 73--75
+
+ []
+
+<figures/hats.png, id=349, 865.0719pt x 560.8152pt>
 File: figures/hats.png Graphic file (type png)
  <use figures/hats.png>
-Package pdftex.def Info: figures/hats.png used on input line 45.
+Package pdftex.def Info: figures/hats.png used on input line 78.
 (pdftex.def)             Requested size: 346.02263pt x 224.3221pt.
 
-Overfull \hbox (1.02263pt too wide) in paragraph at lines 45--46
+Overfull \hbox (1.02263pt too wide) in paragraph at lines 78--79
  [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 56--59
+Underfull \hbox (badness 10000) in paragraph at lines 90--93
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 56--59
-
- []
-
-[9]
-Underfull \hbox (badness 10000) in paragraph at lines 62--65
+Underfull \hbox (badness 10000) in paragraph at lines 90--93
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 62--65
+Underfull \hbox (badness 10000) in paragraph at lines 96--99
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 66--68
+Underfull \hbox (badness 10000) in paragraph at lines 96--99
 
  []
 
-[10 <./figures/hats.png>]
-Overfull \hbox (20.6752pt too wide) in paragraph at lines 85--85
+[17]
+Underfull \hbox (badness 10000) in paragraph at lines 109--115
+
+ []
+
+[18 <./figures/hats.png>] [19]
+<figures/poisson_f_20x.png, id=371, 602.25pt x 401.5pt>
+File: figures/poisson_f_20x.png Graphic file (type png)
+
+<use figures/poisson_f_20x.png>
+Package pdftex.def Info: figures/poisson_f_20x.png used on input line 155.
+(pdftex.def)             Requested size: 301.12425pt x 200.7495pt.
+
+<figures/Hron_Turek_geometry.png, id=374, 1096.095pt x 639.38875pt>
+File: figures/Hron_Turek_geometry.png Graphic file (type png)
+
+<use figures/Hron_Turek_geometry.png>
+Package pdftex.def Info: figures/Hron_Turek_geometry.png used on input line 165
+.
+(pdftex.def)             Requested size: 328.83104pt x 191.8181pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--174
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 162--174
+
+ []
+
+[20 <./figures/poisson_f_20x.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 175--184
+
+ []
+
+[21 <./figures/Hron_Turek_geometry.png>]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[22]
+Overfull \hbox (106.81679pt too wide) in paragraph at lines 322--330
+ [] 
+ []
+
+
+Overfull \hbox (109.92697pt too wide) in paragraph at lines 336--345
+ [] 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 348--354
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 348--354
+
+ []
+
+[23]
+Underfull \hbox (badness 10000) in paragraph at lines 356--360
+
+ []
+
+[24]
+Underfull \hbox (badness 10000) in paragraph at lines 371--375
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 376--380
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 376--380
+
+ []
+
+[25]
+Underfull \hbox (badness 10000) in paragraph at lines 408--411
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 415--419
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 421--426
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 428--435
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 428--435
+
+ []
+
+[26]
+Underfull \hbox (badness 10000) in paragraph at lines 454--466
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 454--466
+
+ []
+
+[27]
+Underfull \hbox (badness 10000) in paragraph at lines 472--481
+
+ []
+
+
+Overfull \hbox (37.74675pt too wide) in paragraph at lines 494--494
+[][][][][][]  
+ []
+
+[28]
+Underfull \hbox (badness 10000) in paragraph at lines 537--542
+
+ []
+
+[29]
+Underfull \hbox (badness 10000) in paragraph at lines 560--571
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 572--573
+
+ []
+
+[30]
+Overfull \hbox (31.53134pt too wide) in paragraph at lines 596--596
 [] 
  []
 
-) (./material_parameters.tex [11]
+) (./material_parameters.tex [31]
 Chapter 5.
-) (./equations.bbl [12
-
-])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 15.
- [13
+) (./Spinal_Cord_Simulations.tex [32
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 15.
+Chapter 6.
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--6
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--6
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--6
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--22
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--22
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--22
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--22
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 7--22
+
+ []
+
+[33
+
+] [34] <figures/Syrinx_Subject.png, id=481, 73.9125pt x 151.767pt>
+File: figures/Syrinx_Subject.png Graphic file (type png)
+
+<use figures/Syrinx_Subject.png>
+Package pdftex.def Info: figures/Syrinx_Subject.png used on input line 31.
+(pdftex.def)             Requested size: 147.82462pt x 303.53323pt.
+
+<figures/Syrinx_PostOp.png, id=482, 57.816pt x 127.7865pt>
+File: figures/Syrinx_PostOp.png Graphic file (type png)
+
+<use figures/Syrinx_PostOp.png>
+Package pdftex.def Info: figures/Syrinx_PostOp.png used on input line 31.
+(pdftex.def)             Requested size: 137.31262pt x 303.49217pt.
+
+<figures/Syrinx_Levels.png, id=483, 272.01625pt x 451.6875pt>
+File: figures/Syrinx_Levels.png Graphic file (type png)
+
+<use figures/Syrinx_Levels.png>
+Package pdftex.def Info: figures/Syrinx_Levels.png used on input line 41.
+(pdftex.def)             Requested size: 163.211pt x 271.01459pt.
+) (./equations.bbl [35 <./figures/Syrinx_Subject.png> <./figures/Syrinx_PostOp.
+png>] [36 <./figures/Syrinx_Levels.png>]
+[37
+
+]
+Missing character: There is no â in font cmr10!
+Missing character: There is no € in font cmr10!
+Missing character: There is no “ in font cmr10!
+
+Underfull \hbox (badness 1424) in paragraph at lines 81--84
+[]\OT1/cmr/m/n/10 B. Rivi^^Rere, \OT1/cmr/m/it/10 Dis-con-tin-u-ous Galerkin me
+th-ods for solv-ing el-lip-tic and
+ []
+
+)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 16.
+ [38]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 16.
  (./equations.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 15.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 15.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 16.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 16.
 Package rerunfilecheck Info: File `equations.out' has not changed.
-(rerunfilecheck)             Checksum: 5E941C173C28E444031BBA14139A6DA2;1527.
+(rerunfilecheck)             Checksum: B9867402FBE453C098421DDABF064818;2823.
 
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 15.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 16.
  ) 
 Here is how much of TeX's memory you used:
- 7820 strings out of 494985
- 112610 string characters out of 6180356
- 208087 words of memory out of 5000000
- 10866 multiletter control sequences out of 15000+600000
- 9034 words of font info for 34 fonts, out of 8000000 for 9000
+ 9603 strings out of 494985
+ 142278 string characters out of 6180356
+ 339121 words of memory out of 5000000
+ 12541 multiletter control sequences out of 15000+600000
+ 9202 words of font info for 35 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 37i,16n,39p,886b,408s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,17n,43p,1124b,433s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share/texli
@@ -567,11 +912,12 @@ amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
 /cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
 10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on equations.pdf (13 pages, 324553 bytes).
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on equations.pdf (38 pages, 943520 bytes).
 PDF statistics:
- 303 PDF objects out of 1000 (max. 8388607)
- 267 compressed objects within 3 object streams
- 62 named destinations out of 1000 (max. 500000)
- 187 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 589 PDF objects out of 1000 (max. 8388607)
+ 515 compressed objects within 6 object streams
+ 142 named destinations out of 1000 (max. 500000)
+ 345 words of extra memory for PDF output out of 10000 (max. 10000000)
 

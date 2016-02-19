@@ -75,6 +75,10 @@ f = Expression(('30*(std::exp(-pow((t-0.2),2)/0.2) + std::exp(-pow((t-1.2),2)/0.
 
 poiseuille = Expression(('x[1]*(h-x[1])','0'),h=h)
 
+plot(SD)
+plot(boundaries)
+interactive()
+
 noslip = Constant((0.0,0.0))
 bcd1 = DirichletBC(VQW.sub(2),noslip,bnd,1)
 bcd2 = DirichletBC(VQW.sub(2),noslip,bnd,2)

@@ -1,26 +1,131 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 
-\bibitem{Reynolds1903}
+\bibitem{Stov14}
+K.-H. St{\o}verud, ``Relation between the chiari i malformation and
+  syringomyelia from a mechanical perspective,'' 2014.
+
+\bibitem{Kyls14}
+N.~K. Kylstad, ``Simulating the viscoelastic response of the spinal cord,''
+  2014.
+
+\bibitem{Dros11}
+I.~N. Dr{\o}sdal, ``Porous and viscous modeling of cerebrospinal fluid flow in
+  the spinal canal associated with syringomyelia,'' 2011.
+
+\bibitem{Quig04}
+M.~F. Quigley, B.~Iskandar, M.~A. Quigley, M.~Nicosia, and V.~Haughton,
+  ``Cerebrospinal fluid flow in foramen magnum: temporal and spatial patterns
+  at mr imaging in volunteers and in patients with chiari i malformation 1,''
+  {\em Radiology}, vol.~232, no.~1, pp.~229--236, 2004.
+
+\bibitem{Thom15}
+A.~Thompson, N.~Madan, J.~Hesselink, G.~Weinstein, A.~M. del Rio, and
+  V.~Haughton, ``The cervical spinal canal tapers differently in patients with
+  chiari i with and without syringomyelia,'' {\em American Journal of
+  Neuroradiology}, 2015.
+
+\bibitem{Reyn1903}
 O.~Reynolds, {\em Papers on Mechanical and Physical Subjects, The Sub-Mechanics
   of the Universe}, vol.~3.
 \newblock Cambridge University Press, Cambridge, 1903.
 
-\bibitem{White}
-F.~M. White, {\em Viscous Fluid Flow}.
-\newblock McGraw-Hill, 3~ed., 2006.
+\bibitem{Whit06}
+F.~White, {\em Viscous Fluid Flow}.
+\newblock McGraw-Hill series in mechanical engineering, McGraw-Hill, 3~ed.,
+  2006.
 
-\bibitem{Wang}
-H.~F. Wang, {\em Theory of Linear Poroelasticity with Applications to
-  Geomechanics and Hydrogeology}.
-\newblock Princeton University Press, 2000.
+\bibitem{Wang00}
+H.~F. Wang, {\em Theory of linear poroelasticity}.
+\newblock 2000.
 
-\bibitem{PorousMedia}
+\bibitem{Niel13}
 D.~A. Nield and A.~Bejan, {\em Convection in Porous Media}.
 \newblock Springer, 4~ed., 2013.
 
-\bibitem{Riviere2005}
-B.~Riviere and I.~Yotov, ``Locally conservative coupling of stokes and darcy
-  flows,'' {\em SIAM Journal on Numerical Analysis}, vol.~42, no.~5,
+\bibitem{Done04}
+J.~Donea, A.~Huerta, J.-P. Ponthot, and A.~Rodriguez-Ferran, {\em Encyclopedia
+  of Computational Mechanics Vol. 1: Fundamentals., Chapter 14: Arbitrary
+  Lagrangian-Eulerian Methods}.
+\newblock Wiley \& Sons, 2004.
+
+\bibitem{Lang2}
+H.~P. Langtangen, {\em Finite Element Method}.
+\newblock 2015.
+
+\bibitem{Bren07}
+S.~Brenner and R.~Scott, {\em The mathematical theory of finite element
+  methods}, vol.~15.
+\newblock Springer Science \& Business Media, 2007.
+
+\bibitem{Scha96}
+M.~Sch{\"a}fer, S.~Turek, F.~Durst, E.~Krause, and R.~Rannacher, {\em Benchmark
+  computations of laminar flow around a cylinder}.
+\newblock Springer, 1996.
+
+\bibitem{Ture06}
+S.~Turek and J.~Hron, {\em Proposal for numerical benchmarking of
+  fluid-structure interaction between an elastic object and laminar
+  incompressible flow}.
+\newblock Springer, 2006.
+
+\bibitem{Tang14}
+A.~Y. Tang and N.~Amin, ``Some numerical approaches to solve fluid structure
+  interaction problems in blood flow,'' in {\em Abstract and Applied Analysis},
+  vol.~2014, Hindawi Publishing Corporation, 2014.
+
+\bibitem{Seli11}
+K.~Selim, ``Adaptive finite element methods for fluid–structure interaction
+  and incompressible flow,'' 2011.
+
+\bibitem{Rivi08}
+B.~Rivi{\`e}re, {\em Discontinuous Galerkin methods for solving elliptic and
+  parabolic equations: theory and implementation}.
+\newblock Society for Industrial and Applied Mathematics, 2008.
+
+\bibitem{Rivi05}
+B.~Rivi{\`e}re and I.~Yotov, ``Locally conservative coupling of stokes and
+  darcy flows,'' {\em SIAM Journal on Numerical Analysis}, vol.~42, no.~5,
   pp.~1959--1977, 2005.
+
+\bibitem{Clar10}
+E.~C. Clarke, ``Spinal cord mechanical properties,'' in {\em Neural Tissue
+  Biomechanics}, pp.~25--40, Springer, 2010.
+
+\bibitem{Kwon02}
+B.~K. Kwon, T.~R. Oxland, and W.~Tetzlaff, ``Animal models used in spinal cord
+  regeneration research,'' {\em Spine}, vol.~27, no.~14, pp.~1504--1510, 2002.
+
+\bibitem{Clar13}
+E.~C. Clarke, D.~F. Fletcher, M.~A. Stoodley, and L.~E. Bilston,
+  ``Computational fluid dynamics modelling of cerebrospinal fluid pressure in
+  chiari malformation and syringomyelia,'' {\em Journal of biomechanics},
+  vol.~46, no.~11, pp.~1801--1809, 2013.
+
+\bibitem{Chen14}
+S.~Cheng, D.~Fletcher, S.~Hemley, M.~Stoodley, and L.~Bilston, ``Effects of
+  fluid structure interaction in a three dimensional model of the spinal
+  subarachnoid space,'' {\em Journal of biomechanics}, vol.~47, no.~11,
+  pp.~2826--2830, 2014.
+
+\bibitem{Bert09}
+C.~Bertram, ``A numerical investigation of waves propagating in the spinal cord
+  and subarachnoid space in the presence of a syrinx,'' {\em Journal of Fluids
+  and Structures}, vol.~25, no.~7, pp.~1189--1205, 2009.
+
+\bibitem{Will80}
+B.~Williams, ``On the pathogenesis of syringomyelia: a review.,'' {\em Journal
+  of the Royal Society of Medicine}, vol.~73, no.~11, p.~798, 1980.
+
+\bibitem{Fric15}
+R.~Fri{\v{c}} and P.~K. Eide, ``Comparison of pulsatile and static pressures
+  within the intracranial and lumbar compartments in patients with chiari
+  malformation type 1: a prospective observational study,'' {\em Acta
+  neurochirurgica}, vol.~157, no.~8, pp.~1411--1423, 2015.
+
+\bibitem{Fric16}
+R.~Fri{\v{c}} and P.~K. Eide, ``Perioperative monitoring of pulsatile and
+  static intracranial pressure in patients with chiari malformation type 1
+  undergoing foramen magnum decompression,'' {\em Acta neurochirurgica},
+  vol.~158, no.~2, pp.~341--347, 2016.
 
 \end{thebibliography}

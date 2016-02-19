@@ -1,8 +1,11 @@
 \chapter{Material parameters}
-CSF is modeled as water at $37^o C$, i.e
-\[ \mu_f = 0.653\cdot 10^{-3}\,\, Ns/m^2 \]
-\[ \nu_f = 0.658\cdot 10^{-6}\,\, m^2/s \]
-\[ \rho_f = 1000\,\,kg/m^3 \]
+In the simulations the units millimeters and grams are used. This combination gives back the SI-unit $\frac{N}{m^2} = \frac{kg\,\,m}{s^2 m^2} = \frac{g}{s^2\,mm} = Pa$ for pressure, and is also convenient when considering the scale of the spinal cord. CSF is modeled as water at $37^o C$, i.e \\
+\begin{tabular}{ l | l | l} \\
+			\text{parameter} & \text{value} & \text{unit} \\ \hline
+            $\rho_f$  & $10^{-3}$ & $\frac{g}{mm^3}$ \\ \hline
+			$\nu_f$   & $0.658$ & $\frac{mm^2}{s}$ \\ \hline
+\end{tabular}
+
 For the spinal cord, studies have shown a huge variety in material parameters. One of the most measured properties in the mammalian central nervous system is probably the Young's modulus, $E$. [Smith, Humphrey 2006]. In addition to this, values for the Poisson ratio, $\nu_P$ needs to be found. Smith and Huphrey used the following values for these parameters. 
 \[ E = 5*10^4 \text{dyn}/cm^2  = 5000 \text{ Pa}\]
 \[ \nu_P = 0.479 \]

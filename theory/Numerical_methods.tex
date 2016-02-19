@@ -1,37 +1,70 @@
 \chapter{Numerical Methods}
 \section{The Finite Element Method}
-The theory presented in this section is inspired by the great work of Langtangen in "Finite Element Method - INF5620 lecture notes" \cite{Langtangen}  \\
+The theory presented in this section is inspired by the great work of Langtangen in "Finite Element Method - INF5620 lecture notes" \cite{Lang2}  \\
 Consider the Poisson-equation
 \begin{align}
-\nabla^2 \mathbf{u} = \mathbf{f} & \quad \text{ in } \Omega \label{Poisson}\\
-\mathbf{u} = \mathbf{u_0} & \quad \text{ on } \partial \label{Poisson_D}\Omega_D \\
-\pdi{\mathbf{u}}{n} = \mathbf{g} & \quad \text{ on } \partial \Omega_N \label{Poisson_N}
+-\nabla^2 v = f & \quad \text{ in } \Omega \label{Poisson}\\
+v = v_0 & \quad \text{ on } \partial \label{Poisson_D}\Omega_D \\
+\pdi{v}{n} = g & \quad \text{ on } \partial \Omega_N \label{Poisson_N}
 \end{align}
-where $\Omega \in \mathbb{R}^d$ is a domain, $ \mathbf{u} = \mathbf{u}(\mathbf{x})$ is an unknown field and $\mathbf{f}$ is a source function. The boundary, $\partial \Omega$ is divided into two parts. $\partial \Omega_D$ for the Dirichlet boundary condition, and $\partial \Omega_N$ for the Neumann condition. 
+where $\Omega \in \mathbb{R}^d$ is a domain, $ v = v(x)$ is an unknown function and $f$ is a source function. The boundary, $\partial \Omega$ is divided into two parts. $\partial \Omega_D$ for the Dirichlet boundary condition, and $\partial \Omega_N$ for the Neumann condition. 
 \\
 \\
-\subsection{Weak formulation}
-\eqref{Poisson} is known as the strong form of the equation. To reformulate the problem and state a weak formulation we multiply \eqref{Poisson} with a test function $\mathbf{v} \in V$, where $V$ is a function space, and integrate over the domain. Weak formulations are important in the sense that differential equations can be transformed into a system of linear equations. In the rest of this text the following notation is used for the inner product of two functions
-\begin{align} (\mathbf{u},\mathbf{v})_{\Omega} = \int_{\Omega} \mathbf{u} : \mathbf{v} \mathrm{d}V \end{align}
+\subsection{Variational formulation}
+\eqref{Poisson} is known as the strong form of the equation. To reformulate the problem and state a weak formulation we multiply the equation with a test function, $\phi \in \hat{V}$, where $\hat{V}$ is some function space, and integrate over the domain. Weak formulations are important in the sense that differential equations can be transformed into systems of linear equations. In the rest of this text the following notation is used for the inner product of two functions
+\begin{align} (v,\phi)_{\Omega} = \int_{\Omega} v \, \phi \, \mathrm{d}x
+\end{align}
 
-By multiplying \eqref{Poisson} with a test function, $\mathbf{v}$ and integrating over the domain, the weak form is obtained
+By multiplying \eqref{Poisson} with a test function, $\phi$ and integrating over the domain, the weak form is obtained
 \begin{align}
-(\nabla^2 \mathbf{u} - \mathbf{f}, \mathbf{v})_\Omega = 0 & \quad \forall \, \mathbf{v} \in V \label{Projection}
+(\nabla^2 v + f, \phi)_\Omega = 0 & \quad \forall \, \phi \in\hat{V} \label{Projection}
 \end{align}
-or, after integrating by parts \\ \\
+We are now searching for a $v$ to satisfy the weak form instead of the strong. T
+This equation should hold for all $\phi$ in the function space $\hat{V}$. The trial function does not necessarily have to lie in the same function space, in general $v \in V$. \\
+
+ In this thesis we will use two Sobolov spaces (named after the Russian mathematician Sergei Sobolov) widely used in Finite Element computing. For these definitions to be valid, we assume that the functions $v$ are all \textbf{locally integrable} and in the case of definition \eqref{H1}, has one \textbf{weak derivative}. For more details on weak derivatives and the generalized concept of Sobolev spaces and functional analysis, we refer to the textbook by Brenner and Scott \cite{Bren07}.   
+\begin{definition}
+Let $\Omega$ be an open subset of $\mathbb{R}$ with a piecewise smooth boundary. We then define the $L^2$-norm as follows\\ \begin{center}
+$||v||_{L^2(\Omega)} = (\int_\Omega v^2 \mathrm{d}x)^{\frac{1}{2}}$
+\end{center}
+The corresponding $L^2$-space is defined via
+\begin{center}
+$L^2(\Omega) = \{ v:\Omega \rightarrow \mathbb{R} | \int_\Omega v^2 \mathrm{d}x < \infty \}$
+\end{center}
+\label{L2}
+\end{definition}
+\begin{definition}
+Let $\Omega$ be an open subset of $\mathbb{R}$ with a piecewise smooth boundary. We then define the $H^1$-norm as follows\\ \begin{center}
+$||v||_{H^1(\Omega)} = (\int_\Omega [v^2 + (\nabla v)^2]\mathrm{d}x)^{\frac{1}{2}}$
+\end{center}
+The corresponding $H^1$-space is defined via
+\begin{center} $H^1(\Omega) = \{ v:\Omega \rightarrow \mathbb{R} | \int_\Omega [v^2 + (\nabla v)^2] \mathrm{d}x < \infty \}$
+\end{center}
+\label{H1}
+\end{definition}
+In other words, using functions from these spaces, we can have some assurance that the integrals involved in the variational form are bounded. 
+By the divergence theorem, a generalized concept of integration by parts we can state the variational problem as follows: find $v \in V$ such that \\ \\
 \begin{align}
--(\nabla \mathbf{u}, \mathbf{v})_\Omega + (\mathbf{g}, \mathbf{v})_{\partial \Omega_N} = (\mathbf{f},\mathbf{v})_\Omega & \quad \forall \mathbf{v} \in V \label{Weak_form}
+(\nabla v, \nabla \phi)_\Omega = (f,\phi)_\Omega + (g, \phi)_{\partial \Omega_N}& \quad \forall \, \phi \in \hat{V} \label{Weak_form}
 \end{align}
 \\
-The formulation \eqref{Projection} is known as the projection of a function $\mathbf{u} - \mathbf{f}$ onto the function space $V$. In other words, the error is orthogonal to all functions in $V$. 
-
+Where we have used that $\pdi{v}{n} = g$ on $\partial \Omega_N$. \eqref{Weak_form} is known as the variational formulation of the Poisson problem.  The right hand side is known as the bilinear form while the left hand side is the linear form. In generic form the equation can be written
+\begin{align}
+a(v,\phi) = L(\phi) \label{Bilinear}
+\end{align}
+The first derivative of $v$ appears in the variational form. A common choice is then
+\begin{align}
+ V := \{ v \in H^1(\Omega) : v = v_0 \text{ on } \partial \Omega_D \} \\
+ \hat{V} := \{ v \in H^1(\Omega) : v = 0 \text{ on } \partial \Omega_D \}
+\end{align}
+, where the subscript $v_0$ denotes that $v = v_0$ on the Dirichlet part of the boundary. 
 \subsection{Finite elements}
-The next step is to approximate $\mathbf{u}$ with a sum of basisfunctions in a finite-dimensional function space, $V = \text{span}\{\psi_0, \psi_1, ..., \psi_N\}$. Here, $\mathbf{\psi}_i$ represents the basis functions and we search for a solution $\mathbf{u}_h \in V$ such that $\mathbf{u}_h$ can be written as a linear combination of the basis functions. 
+The next step is to approximate $v$ with a sum of basisfunctions in the finite-dimensional function space, $V = \text{span}\{\phi_0, \phi_1, ..., \phi_N \}$. Here, $\phi_i$ represents the basis functions and we search for a solution $v_h \in V$ such that $v_h$ can be written as a linear combination of the basis functions. 
 The first step in the finite element method consists of dividing the domain into smaller parts
 \begin{align*}
 \Omega = \Omega_0 \cup \Omega_1 \cup ... \cup \Omega_{N_e}
 \end{align*}
-where $N_e$ is the number of elements. Each element have a number of nodes within them depending on what type of basis functions to be used. Let's first consider the continuous Galerkin basis functions, $\phi_i$, in a one-dimensional domain. There is exactly one basisfunction for each node located at $x_i$. These basis functions have the property that
+where $N_e$ is the number of elements. Each element have a number of nodes within them depending on what type of basis functions to be used. Let's first consider the continuous Galerkin basis functions, in a one-dimensional domain. There is exactly one basisfunction for each node located at $x_i$. These basis functions have the property that
 \begin{align*}
 \phi_i(x_j) = \begin{cases}
 				1 \quad \text{ for } i=j \\
@@ -45,45 +78,523 @@ That is, the basis functions $\phi_i$ are zero on all nodes except at node $i$. 
     \includegraphics[scale=0.4]{figures/hats.png}
   \end{center}
 	\caption{The three first linear basis functions on the unit interval divided uniformly into 5 elements}
+	\label{fig:Hats}
 \end{figure}
-Now, let's return to the original problem \eqref{Poisson}-\eqref{Poisson_N}. We start by approximating u as a linear combination of all the basis functions. 
+Now, let's return to the original problem \eqref{Poisson}-\eqref{Poisson_N} in scalar form. We start by approximating $v$ as a linear combination of all the basis functions. 
 \begin{align}
-u_h = \sum_{i=0}^N c_i \phi_i \label{u_hsum}
+v_h = \sum_{i=0}^N c_i \phi_i \label{u_hsum}
 \end{align}
-The definitions of $u_h$ and $V$ now give rise to a linear system. Using the summation convention $x_i\,y_i = \sum_0^N x_i y_i $, \eqref{Weak_form} is now written 
+The definitions of $v_h$ and $V$ now give rise to a linear system. Using the Einstein summation convention, $x_i\,y_i = \sum_0^N x_i y_i $, \eqref{Weak_form} is now written 
 \begin{align}
--c_i(\nabla \phi_i, \phi_j)_\Omega = (f,\phi_j) - (g, \phi_j)_{\partial \Omega_N} \label{Linear_system}
+-c_i(\nabla \phi_i, \phi_j)_\Omega = (f,\phi_j)_\Omega - (g, \phi_j)_{\partial \Omega_N} \label{Linear_system}
 \end{align}
 \\
 \\
 
-The right hand side of \eqref{Linear_system} is known as the bilinear form while the left hand side is the linear form, assuming the normal derivative is known on the boundary. In the case of Dirichlet boundary conditions all test functions $\phi_j$ will take the value 0 on $\partial \Omega_D$ and the linear system will be adjusted to take these boundary conditions into account. \\
+In the case of Dirichlet boundary conditions all test functions $\phi_j$ will take the value 0 on $\partial \Omega_D$ and the linear system will be adjusted to take these boundary conditions into account. \\
 The system can be written in matrix form, and in the end the problem consists of solving the linear system
 \begin{align} A_{i,j}c_i = b_j \label{Matrix_1} \end{align}
 \\
 \\
-\section{Implementation in FEniCS}
-When the variational form has been carried out, implementation in FEniCS is relatively simple. We need a computational mesh, appropriate function spaces, a variational form and boundary conditions to have a well-posed problem. 
+\subsection{Implementation in FEniCS}
+When the variational form has been carried out, implementation in FEniCS is relatively simple. The programs in this study are written in the Python programming language. When programming with Python, we first need to import dolfin to access the DOLFIN library, containing classes convinient and efficient for finite element computing. In Python the full library can be imported as simple as 
+\begin{verbatim}
+from dolfin import *
+\end{verbatim}
+Now, let's focus our attention on solving the following problem:
+\begin{align}
+\nabla^2v = 20x \,\,\,\,\, \text{ in } \Omega \\
+v(0,y) = 0, \,\,\,\, v(1,y) = 1 \\
+\pdi{v(x,0)}{n} = \pdi{v(x,1)}{n} = 0
+\end{align}
+Where $\Omega$ is the unit square, $\Omega = [0,1] \times [0,1]$ \\
 \\
+First of all we need to define the computational mesh.
+\begin{cverbatim}
+mesh = UnitSquareMesh(10,10)
+\end{cverbatim}
+The class UnitSquareMesh initializes a mesh with triangular cells. The mesh consists of n$\times$m squares depending on the arguments, $n$ and $m$, sent into the constructor. Each of these squares are divided on the diagonal to form two triangles, and these triangles are the computational cells. In this case we get the unit square divided into 10$\times$10 smaller squares and thus the total number of triangles, or cells, will be 200. \\
+The next thing to do is to define an appropriate function space for the test functions. The solution will be a linear combination of these functions and will be in (almost) the same function space. 
+\begin{cverbatim}
+V = FunctionSpace(mesh,'CG',1)
+\end{cverbatim}
+The function space needs a domain, type of element, and the degree of the element. In this case we use Continuous Galerkin elements ('CG') with degree 1. These basis functions are visualized in Figure \ref{fig:Hats}
+\\ We can then define our test- and trial functions $v$ and $\phi$
+\begin{cverbatim}
+v = TrialFunction(V)
+phi = TestFunction(V)
+\end{cverbatim}
+Note that the test- and trial function seem to be in the exact same function space. This is the case except when imposing Dirichlet boundary conditions. 
+The functions $f$, $v_0$ and $g$ can be defined by using the 'Constant' or 'Expression' classes. We set $f = 20x$ and use Dirichlet boundary conditions, $v(0,y) = 0$, $v(1,y) = 1$ and Neumann conditions $\pdi{v(x,0)}{n} = \pdi{v(x,1)}{n} = 0$. The homogenuous Neumann condition is simple in the finite element method as the terms appearing after integration by parts can be dropped. If this is not the case, we can insert $g$ for $\pdi{u}{n}$ on the boundary integral appearing in the variational form. When the Neumann conditions are incorporated this way we say that the boundary conditions are weakly imposed. Functions (or classes) describing the boundaries must also be defined:
+\begin{cverbatim}
+f = Expression('20*x[0]')
+def boundary0(x,on_bnd):
+	return on_bnd and near(x[0],0.0)
+def boundary1(x,on_bnd):
+	return on_bnd and near(x[0],1.0)
+
+bc0 = DirichletBC(V,0.0,boundary0)
+bc1 = DirichletBC(V,1.0,boundary1)
+bcs = [bc0,bc1]
+\end{cverbatim}
+Note that 'x[0]' means first dimension in space, 'x[1]' means second dimension and so on. The Dirichlet conditions are put in a list. Next, the variational form is defined, and when solving for a function v, the boundary conditions are added to the "magic" solve function. 
+\begin{cverbatim}
+F = inner(grad(v),grad(phi))*dx - inner(f,phi)*dx
+v = Function(V)
+solve(lhs(F)==rhs(F),v,bcs)
+plot(v)
+\end{cverbatim}
+The functions lhs and rhs separates the form F into the left hand side, equivalent to the bilinear form and to the right hand side, equivalent to the linear form. Specifying the full form F is simple and convenient when the equations are short and simple. If we want to relate the code to the mathematics as written in \eqref{Bilinear} we can, define these forms manually. 
+\begin{cverbatim}
+a = inner(grad(v),grad(phi))*dx
+L = inner(f,phi)*dx
+v = Function(V)
+solve(a==L,v,bcs)
+\end{cverbatim}
+\begin{figure}[!h]
+\includegraphics[scale=0.5]{figures/poisson_f_20x}
+\caption{Plot of the computed solution}
+\end{figure}
+The plot in the figure is slightly rotated. The solution is independent of y-position, as expected. 
+
+
+\section{A bencmark FSI-problem}
+Within CFD, a benchmark is a configuration or a test case which should help test and compare different numerical methods and code implementations. A classical Fluid Dynamics problem regarding flow around a circular cylinder has been under vast research the last 50 years, working as a test case for both laminar and turbulent flows. One of the most cited benchmark proposals for this case is the problem described by Michael Schafer et. al in 1996 \cite{Scha96}. The research group still focus on these kinds of problems and one of the co-authors of the 1996 paper, Stefan Turek, together with Jaroslav Hron has proposed a similar benchmark for FSI solvers, consisting of the exact same domain and rigid cylinder, but now with an elastic flag attached to it \cite{Ture06}. 
+\\ The first results presented will contain a validation of the present FSI-solver implemented in FEniCS compared to the results of Turek and Hron in their benchmark proposal. 
+\begin{figure}
+\includegraphics[scale=0.3]{figures/Hron_Turek_geometry}
+\caption{The Domain as published in \cite{Ture06}}
+\label{fig:Geometry}
+\end{figure}
+\\
+A proper validation of a FSI solver requires separate verification of the fluid and structural parts as well as coupled tests. In the present study we first solve the equations with a \textit{monolithic} approach, i.e fully coupling between the fluid and solid. The alternative would be a \textit{partitioned} approach, where the fluid and solid equations are solved separately. For instance, one can solve the fluid equations independently and then proceed by solving the solid equation with prescribed stress on the interface computed from the fluid solution. Iteration back and forth would be needed until convergence. \\
+The fully coupled monolithic scheme is usually preferred with respect to accuracy and stability. Also, when the systems are strongly coupled in nature, i.e. the solid movement is affected by the fluid movement and vice versa, a monolithic scheme would be advantageous. The partitioned approach, on the other hand, can benefit from numeruous previous studies where efficiency and stability for various solution techniques have been investigated. See e.g. \cite{Tang14} for a short review. 
+\\
+\\
+\subsection{Domain, Initial- and boundary conditions}
+The origin is set at the bottom left corner. We also set:
+\\ - The channel height, H = 0.41
+\\ - The channel length, L = 2.5
+\\ - The circle center C = (0.2,0.2)
+\\ - The right bottom corner of the elastic structure has position (0.6,0.19) 
+\\ - The elastic structure has length, l=0.35 and heigth h=0.02
+\\
+\\
+- At the left boundary, the inlet, of the channel, we set a prescribed parabolic velocity profile
+\begin{align}
+\mathbf{v}_{\text{in}}(0,y) = 1.5\bar{v_0}\frac{y(H-y)}{(\frac{H}{2})^2}
+\end{align}
+- In the case of unsteady flow a smooth increase in time is used:
+\begin{align}
+ \mathbf{v}_{\text{in}}(t,0,y)= \begin{cases}
+				\mathbf{v}_{\text{in}}(0,y)\frac{1-\cos(\frac{\pi}{2}t)}{2} & \quad \text{ if } t<2.0 \\
+				0 & \quad  \text{ otherwise }
+		 		\end{cases}
+\end{align}
+\\
+- On the outlet, the condition $\sigma \cdot \mathbf{n} = 0$) is applied
+- On rigid walls the no-slip condition is used
+- On the interface, $\Gamma^t$, the previously described coupling conditions are applied:
+\begin{align}
+\begin{rcases}
+\sigma_f \cdot \mathbf{n} & =  \sigma_s \cdot \mathbf{n} \\
+\mathbf{v}_f & = \mathbf{v}_s
+\end{rcases}
+\text{ on } \Gamma^t
+\end{align}
+In addition to the interface, $\Gamma^t$, it may be convenient to define the fluid boundary, $\partial \Omega_f^t$ consisting of the outer rectangle and the part of the circle in contact with the fluid, and the solid boundary, $\partial \Omega_s^t$ consisting of the circle in contact with the solid.
+\subsection{CFD tests}
+For the CFD tests we perform tests treating the flag as a rigid object. This can be done by changing the structural parameters, or simply by adjust the mesh to include the fluid domain only. In this validation we choose the latter. 
+
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{l | l | l | l} \hline
+	Parameter & CFD1 & CFD2 & CFD3 \\ \hline
+    $\rho_f\, [10^3\frac{\text{kg}}{\text{m}^3}]$  & 1 & 1 & 1 \\   \hline
+    $\nu_f\, [10^{-3}\frac{\text{m}^2}{\text{s}}]$ & 1 & 1 & 1 \\ \hline
+    $\bar{v_0}$ & 0.2 & 1 & 2   \\ \hline \hline
+    $\text{Re} = \frac{Ud}{\nu_f}$ & 20 & 100 & 200 \\ \hline 
+    \hline
+  \end{tabular}
+  \caption{Parameters for the CFD test cases}
+\end{center}
+\end{table}
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{l | l | l | l} \hline
+	Mesh refinement & Cells & Drag & Lift \\ \hline
+    0  & 1334 & 13.9344 & 1.0980  \\   \hline
+    1 & 5336 & 14.1165 & 1.0836 \\ \hline
+    2 & 21334 & 14.1865 & 1.0944  \\ \hline \hline
+    \textbf{Ref. (Hron, Turek)}  & & \textbf{14.29} & \textbf{1.119} \\ \hline 
+    \hline
+  \end{tabular}
+\end{center}
+\caption{Results for CFD1}
+\end{table}
+
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{l | l | l | l} \hline
+	Mesh refinement & Cells & Drag & Lift \\ \hline
+    0  & 1 & 1 & 1 \\   \hline
+    1 & 1 & 1 & 1 \\ \hline
+    2 &.2 & 1 & 2   \\ \hline \hline
+    \textbf{Ref. (Hron, Turek)}  & & \textbf{136.7} & \textbf{10.53} \\ \hline 
+    \hline
+  \end{tabular}
+\end{center}
+\caption{Results for CFD2}
+\end{table}
+\subsection{CSM tests}
+The structural tests are performmed by adding the gravitational force to the structural part only. The CSM3 test is computed as a time-dependent case, starting from the initial position while CSM1 and CSM2 are Steady State (SS) solutions. 
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{l | l | l | l} \hline
+	Parameter & CSM1 & CSM2 & CSM3 \\ \hline
+    $\rho_s\, [10^3\frac{\text{kg}}{\text{m}^3}]$  & 1 & 1 & 1 \\   \hline
+    $\nu_s $ & 0.4 & 0.4 & 0.4 \\ \hline
+    $\mu_s \,[10^{6}\frac{\text{m}^2}{\text{s}}]$ & 0.5 & 2 & 0.5   \\ \hline
+    $g \, [\frac{\text{m}^2}{s}]$ & 2 & 2 & 2 \\ \hline
+    \hline
+  \end{tabular}
+\end{center}
+\caption{Parameters for the CSM test cases}
+\end{table}
+
+\begin{table}[!h]
+\begin{center}
+  \begin{tabular}{l | l | l | l} \hline
+	Mesh refinement & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$\\ \hline
+    0  & 738 & -12.410569 & -60.599246 \\   \hline
+    1 & 2952 & -12.419505 & -60.622920 \\ \hline
+    2 & 11808 & -12.422290 & -60.630433   \\ \hline \hline
+    \textbf{Ref. (Hron, Turek)}  & & \textbf{-7.187} & \textbf{-66.10} \\ \hline 
+    \hline
+  \end{tabular}
+\end{center}
+\caption{Results for CSM1}
+\end{table}
+
+\begin{table}[!h]
+\begin{center}
+  \begin{tabular}{l | l | l | l} \hline
+	Mesh refinement & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$\\ \hline
+    0  & 738 & -0.92479395 & -16.853778 \\   \hline
+    1 & 2952 & -0.92558954 & -16.861757 \\ \hline
+    2 & 11808 & -0.92583356 & -16.864252   \\ \hline \hline
+    \textbf{Ref. (Hron, Turek)}  & & \textbf{-0.4690} & \textbf{-16.97} \\ \hline 
+    \hline
+  \end{tabular}
+\end{center}
+\caption{Results for CSM2}
+\end{table}
+
+
+
+\subsection{FSI tests}
+
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{l | l | l | l} \hline
+	Parameter & FS1 & FSI2 & FSI3 \\ \hline
+    $\rho_f\, [10^3\frac{\text{kg}}{\text{m}^3}]$  & 1 & 1 & 1 \\   \hline
+    $\nu_f\, [10^{-3}\frac{\text{m}^2}{\text{s}}]$ & 1 & 1 & 1 \\ \hline
+    $\bar{v_0}$ & 0.2 & 1 & 2   \\ \hline \hline
+    $\text{Re} = \frac{Ud}{\nu_f}$ & 20 & 100 & 200 \\ \hline
+    \hline
+  \end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{l | l | l | l} \hline
+	Parameter & FSI1 & FSI2 & FSI3 \\ \hline
+    $\rho_s \,[10^3\frac{\text{kg}}{\text{m}^3}]$  & 1 & 10 & 1 \\   \hline
+    $\nu_s $ & 0.4 & 0.4 & 0.4 \\ \hline
+    $\mu_s \,[10^{6}\frac{\text{m}^2}{\text{s}}]$ & 0.5 & 0.5 & 2   \\ \hline \hline
+  \end{tabular}
+\end{center}
+\end{table}
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{l | l | l | l | l | l} \hline
+	Mesh refinement & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Drag & Lift\\ \hline
+    0  & 2698 & 0.015596 & 0.74221 & 14.0876279441 & 0.756130219216 \\   \hline
+    1 & 10792 & 0.017738 & 0.77686 & 14.1777783843 & 0.763145083966 \\ \hline
+    2 &  & $ $&  $ $ & $ $ & $ $   \\ \hline \hline
+    \textbf{Ref. (Hron, Turek)}  & & 0.0227 & 0.8209 & 14.295 & 0.7638\\ \hline 
+    \hline
+  \end{tabular}	
+\caption{Results for FSI1}
+\end{center}
+\end{table}
+
+\begin{table}[!ht]
+  \begin{center}
+  \begin{tabular}{l | l | l | l | l | l} \hline
+	Mesh refinement & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Drag & Lift\\ \hline
+    0  & 2698 & $ -4.33 \pm 4.54$ & $ 1.40 \pm 29.96$ & $441.45 \pm 33.15 $ & $-2.30 \pm 178.00$\\   \hline
+    1 & 10792 & $ $&  $ $ & $ $ & $ $\\ \hline
+    2 &  & $ $&  $ $ & $ $ & $ $   \\ \hline \hline
+    \textbf{Ref. (Hron, Turek)}  & & \textbf{-2.69} $\pm$ \textbf{2.53} & \textbf{1.48} $\pm$ \textbf{34.38} & \textbf{457.3} $\pm$ \textbf{22.66} & \textbf{2.22} $\pm$ \textbf{149.78}\\ \hline 
+    \hline
+
+  \end{tabular}
+	  \caption{Results for FSI3}
+  \end{center}
+\end{table}
+- note: Hron, Turek, $\Delta t = 0.0005$, we used $\Delta t = 0.0003$. \\ \\
+Numbers for FSI3:
+Ux: Max = 0.0002099, Min = -0.008879 \\
+Uy: Max = 0.03136, Min = -0.02856 \\
+Drag: Max = 474.6, Min = 408.3 \\
+Lift: Max = 175.7, Min = -180.3 (174.4, -177.0\\
+
+\section{Fluid Structure Interaction using the Finite Element method}
+The solver was implemented from scratch in Python using the DOLFIN library. FSI solvers within the FEniCS framework exists, e.g. under Unicorn or CBC.twist. For instance, Selin \cite{Seli11} implemented a partitioned solver in FEniCS in his PhD-thesis, using the already existing modules for solving fluid flow and structural deformations separately (CBC.Flow and CBC.Twist). However, the benefits of being in full control of the equations and all boundary conditions involved are obvious, especially in the process of understanding the complexity of the physical problem. In addition to this, it will be easier to adjust the solver with respect to the model. The equations can be changed whether we want the spinal cord to be porous, elastic, poroelastic or viscoelastic. The use of two separate solvers is also problematic for the monolithic approach, when all equations are solved simultaneously. On the other hand, solvers implemented by experienced and skilled research groups will probably be a lot more efficient and should already have been validated. 
+\\
+\\
+In the rest of this section, we give a brief explanation to the mathematics and implementation in FEniCS. In the previous example we saw the close link between code and mathematics. :
+\begin{align*}
+a(\mathbf{v},\Phi) = (\nabla \mathbf{v}, \nabla \Phi)_\Omega \\
+L(\mathbf{v}) = (\mathbf{f},\Phi)_\Omega
+\end{align*}
+Translates to
+\begin{center}
+\begin{cverbatim}
+a = inner(grad(v),grad(phi)*dx
+L = inner(f,phi)*dx
+\end{cverbatim}
+\end{center}
+In deriving variational forms, we try to keep this close link by recalling the symbols used for velocity ($\mathbf{v}$), total displacement ($\mathbf{U}$), pressure ($p$), and mesh velocity, ($\mathbf{w}$). Also recall that in the solid the mesh moves exactly with the velocty of the structure so $\mathbf{w}_s = \mathbf{u}_s$
+\\
+\\
+The total displacement $\mathbf{U}$ can now be expressed as a function of the displacement from the previous time step, $\mathbf{U}^{(1)}$, and the mesh velocity $\mathbf{w}$. In an implicit shceme, for instance, $\mathbf{U} = \mathbf{U}^{(1)} + \Delta t\mathbf{w}$
+\subsection{A note on temporal discretization}
+Throughout the thesis we have used the notation $\mathbf{v} = \mathbf{v}^{n+1}$ to denote the unknown functions at the time step we want to proceed to.  
+If we use an implicit scheme in time, i.e, $(\pdi{\mathbf{v}}{t})^{n+1} \approx \frac{\mathbf{v}^{n+1}-\mathbf{v}^{n}}{\Delta t} $, and $\mathbf{U}^{n+1} = \mathbf{U}^{n} + \Delta t \mathbf{w}^{n+1}$ where n denotes time step number. For the known time step n, we have used $\mathbf{v}^{(1)} = v^n$ and for the guess in the linearized form, $v^{(0)}$.
+\\
+\\
+\subsection{Spatial discretization}
+Since we have three unknown functions, we use a mixed function space with three function spaces, $\Phi$, $\eta$ and $\Psi$. In the fluid we multiply the momentum equation with $\Phi$, the continuity equation with $\eta$ and the equation for mesh velocity with $\Psi$ and integrate over the domain in its \textit{current} configuration, $\Omega^t$. In the fluid, this yields
+\begin{align}
+\frac{\rho_f}{\Delta t}(\mathbf{v},\Phi)_{\Omega_f} + \rho_f(((\mathbf{v}-\mathbf{w})\cdot \nabla) \mathbf{v}^{(0)}, \Phi)_{\Omega_f^t} - (p,\nabla \cdot \Phi)_{\Omega_f^t} + 2\mu_f(\epsilon(\mathbf{v}), \epsilon(\Phi))_{\Omega_f^t} = \\ 
+\frac{\rho_f}{\Delta t}(\mathbf{v}^{(1)},\Phi)_{\Omega_f^t} - (\sigma_f(p,\mathbf{v})\cdot \mathbf{n}, \Phi)_{\partial \Omega_f^t} - (\sigma_f(p,\mathbf{v}) \cdot \mathbf{n}_f, \Phi)_{\Gamma^t} \label{VarMom}
+\end{align}
+\begin{align}
+-(\nabla \cdot \mathbf{v},\eta)_{\Omega_f^t} = 0 \label{VarCon}
+\end{align}
+\begin{align}
+\Delta t(\nabla \mathbf{w}, \nabla \Psi)_{\Omega_f^t} = - (\nabla \mathbf{U}^{(1)}, \nabla \Psi)_{\Omega_f^t} & + ([\nabla \mathbf{U}^{(1)} + \Delta t \nabla \mathbf{w}] \cdot \mathbf{n}, \Psi)_{\Omega_f^t} \\ 
+& + ([\nabla \mathbf{U}^{(1)} + \Delta t \nabla \mathbf{w}] \cdot \mathbf{n}_f, \Psi)_{\Gamma^t} \label{VarMesh}
+\end{align}
+\\
+And in the solid
+\begin{align}
+\frac{\rho_s}{\Delta t}(\mathbf{v},\Phi)_{\Omega_s} + \Delta t (\sigma_s (\mathbf{v}), \nabla(\Phi))_{\Omega_s} & = \frac{\rho_s}{\Delta t}(\mathbf{v}^{(1)},\Phi)_{\Omega_s} - (\sigma_s(\mathbf{U}^{(1)}), \nabla \Phi)_{\Omega_s} \\
+& - ([\sigma_s(\mathbf{U}^{(1)}) + \Delta t \sigma_s(\mathbf{w})]\cdot \mathbf{n}, \Phi)_{\partial \Omega_s^t} \\
+& - ([\sigma_s(\mathbf{U}^{(1)}) + \Delta t \sigma_s(\mathbf{w})]\cdot \mathbf{n}_s, \Phi)_{\Gamma^t} \label{VarMom2}
+\end{align}
+\begin{align}
+\frac{1}{\delta}(\mathbf{v},\Psi)_{\Omega_s} - \frac{1}{\delta}(\mathbf{w},\Psi)_{\Omega_s} = 0 \label{VarMesh2}
+\end{align}
+The parameter $\delta $ should be small and ensures the importance of $\mathbf{v_s} = \mathbf{w_s}$ inside the solid. On the interface, we have distinguished between the normal vector with respect to the fluid and solid domain. In general $\mathbf{n}_f = -\mathbf{n}_s$. To be able to set up and assemble the matrices for this system, the equations should be added to form one bilinear form and one linear form. 
+\subsection{Treatment of boundary conditions}
+In addition to the boundary conditions described in the original benchmark paper from Turek and Hron, homogenuous Dirichlet conditions are prescribed to the mesh displacement velocity on the domain boundary, i.e 
+\begin{align} 
+\mathbf{w} = 0 \text{ on } \partial \Omega_f^t \cup \partial \Omega_s^t
+\end{align}
+Except for the fluid velocity on the outlet, the domain boundaries (not interface) have prescribed Dirichlet conditions on both $\mathbf{u}$ and $\mathbf{w}$. Therefore the test functions $\Phi$ and $\Psi$ will be zero on these boundaries. \\ \\
+If we add all the equations in the previous section together, the contributions to the boundary integral on the interface gives:
+\begin{align}- (\sigma_f(p,\mathbf{v}) \cdot \mathbf{n}_f, \Phi)_{\Gamma^t} - ([\sigma_s(\mathbf{U}^{(1)}) + \Delta t \sigma_s(\mathbf{w})]\cdot \mathbf{n}_s, \Phi)_{\Gamma^t}
+\end{align}
+Dropping this contribution from the variational form gives
+\begin{align} \sigma_f(p,\mathbf{v}) \cdot \mathbf{n} = [\sigma_s(\mathbf{U}^{(1)}) + \Delta t \sigma_s(\mathbf{w})] \cdot \mathbf{n} = \sigma_s(\mathbf{U}) \cdot \mathbf{n}
+\end{align}
+where the choice of $\mathbf{n}$ ($\mathbf{n} = \mathbf{n}_f$ or $\mathbf{n} = \mathbf{n}_s$) is arbitrary, but the same for each side of the equation. \\
+\\
+Because we use the same function for fluid velocity and solid velocity we will also achieve the no-slip condition for the fluid on the structure
+\begin{align}
+\mathbf{v}_f = \mathbf{v}_s \text{ on } \Gamma^t
+\end{align}
+Because the functions $\mathbf{v}_f$ and $\mathbf{v}_s$ share nodes on the interface.
+\\
+\\
+The additional equation for $\mathbf{w}$ in the fluid also gives rise to boundary conditions on $\nabla \mathbf{U}\cdot\mathbf{n}$ on the interface. To this end we set 
+\begin{align}
+\nabla \mathbf{U} \cdot \mathbf{n} = 0
+\end{align}
+and let the parameter $\delta$ underline the importance of $\mathbf{w} = \mathbf{v}$ \textit{inside} the solid, whereas $\mathbf{w}$ in the fluid should just be smoothed out. \\
+\\
+On the outlet, we assign the stress-free condition $\sigma_f(p,\mathbf{v}) \cdot \mathbf{n} = 0$ so the boundary integral also vanish on the outlet for the momentum equation in the fluid. 
+\\
+\\
+This means that all integrals involving boundaries will vanish in the variational form. The Dirichlet conditions are imposed in FEniCS as previously described.
+\subsection{A FSI solver in FEniCS}
+There will be some changes and a great leap in complexity compared to the previous example using FEniCS. The main differences and additions are explained here. The computational mesh is constructed in gmsh with a straight boundary dividing the fluid and the solid. This way, the class MeshFunction can be utilized by dividing the mesh in two subdomains. We now assume we have classes describing the solid and fluid region, implemented with functions simliary to the boundary functions in the Poisson example. 
+\begin{cverbatim}
+mesh = Mesh('FSI_mesh.xml')
+SD = MeshFunction('uint', mesh, mesh.topology().dim())
+SD.set_all(0)
+Elastic().mark(SD,1)
+\end{cverbatim}
+where 
+\begin{cverbatim}
+class Elastic(SubDomain):
+	def inside(self,x,on_bnd):
+		# returns True if vector x in solid.
+\end{cverbatim}
+'uint' means that the MeshFunction has values of nonnegative integers. The last argument ensures the MeshFunction to have the same dimension as the mesh. \\
+Using the MeshFunction, the fluid domain have been marked 0, and the solid domain have been marked 1. Integration over the two domains can be separated by passing this number to dx in the variational formulation. A similar class, the FacetFunction
+\begin{cverbatim}
+boundaries = FacetFunction("size_t",mesh)
+\end{cverbatim}
+is used to mark the boundaries and, if needed, separate integration over specific parts of the boundary.
+\\
+\\'uint' means that the MeshFunction has values of nonnegative integers. 'size\_t' means the same for the FacetFunction. The last argument to MeshFunction ensures the MeshFunction to have the same dimension as the mesh. 
+\\ \\	
+We need a function spaces for all three testfunctions, corresponding to $\mathbf{v}, p$ and $\mathbf{w}$, and in this case we can use a handy FEniCS class to create a mixed function space. Test -and trial functions should also be created from this mixed space.
+\begin{cverbatim}
+V = VectorFunctionSpace(mesh,'CG',2)
+P = FunctionSpace(mesh,'CG',1)
+W = FunctionSpace(mesh,'CG', 2)
+VPW = MixedFunctionSpace([V,P,V])
+v,p,w = TrialFunctions(VPW)
+phi,eta,psi = TestFunctions(VPW)
+\end{cverbatim}
+All Dirichlet boundary conditions need to be specified, and the functions need to be in the space of the respective trial function where the condition is set. For instance, the top boundary of the domain have been marked 2 with the FacetFunction, and we want to presribe the no-slip condition on the fluid velocity.
+\begin{cverbatim}
+noslip = Constant((0.0,0.0))
+bcv2 = DirichletBC(VPW.sub(0),noslip,boundaries,2) # Top
+\end{cverbatim}
+All the Dirichlet boundary conditions are put together in a list, bcs.\\ \\
+When the Mesh -and FacetFunctions have been properly marked, we need to map the information from these classes to the different measures, dx, ds and dS representing integration over cells, exterior facets and interior facets, respectively. This is done by:
+\begin{cverbatim}
+dS = Measure('dS')[boundaries]
+dx = Measure('dx')[SD]
+ds = Measure('ds')[boundaries]
+
+dx_f = dx(0,subdomain_data=SD)
+dx_s = dx(1,subdomain_data=SD)
+\end{cverbatim}
+Sometimes, it can be convinient to define the constants used in FEniCS as instances of the class Constant, to avoid re-compiling if the value of the constant is changed. e.g.
+\begin{cverbatim}
+dt = 0.0003
+k = Constant(dt)
+\end{cverbatim}
+We can now attention our focus to the variational form. Regular Python functions can be used in the variational formulation, and by defining these two
+\begin{cverbatim}
+def sigma_s(U):
+	return 2*mu_s*sym(grad(U)) + lamda*tr(sym(grad(U)))*Identity(2)
+
+def eps(v):
+	return 2*mu_f*sym(grad(v))
+\end{cverbatim}
+The variational form is very similar to the mathematics. We define the bilinear and linear forms, a and L, for each separate equation, momentum, continuity and the movement of the domain in both the fluid and solid domain (except for continuity in the solid). For instance, aMF will denote the bilinear form, a, for the momentum equation in the fluid.
+\begin{cverbatim}
+# FLUID
+aMF = rho_f/k*inner(v,phi)*dx_f + \
+	rho_f*inner(grad(v0)*(v-w),phi)*dx_f - \
+	 inner(p,div(phi))*dx_f + \
+	2*mu_f*inner(eps(v),eps(phi))*dx_f
+
+LMF = rho_f/k*inner(v1,phi)*dx_f
+
+aCF = -inner(div(v),eta)*dx_f
+
+aDF = k*inner(grad(w),grad(psi))*dx_f
+LDF = -inner(grad(U),grad(psi))*dx_f
+
+aF = aMF + aCF + aDF
+LF = LMF + LDF
+
+# SOLID
+aMS = rho_s/k*inner(v,phi)*dx_f + \
+	k*inner(sigma_s(u),grad(phi))*dx_f
+
+LMS = rho_s/k*inner(v1,phi)*dx_f - \
+	inner(sigma_s(U),grad(phi))*dx_f
+
+aDS = 1/delta*inner(u,w)*dx_f - \
+	1/delta*inner(d,w)*dx_f
+
+
+aS = aMS + aDS
+LS = LMS
+
+\end{cverbatim}
+We can now add the forms together to obtain one biliear and one linear form
+\begin{cverbatim}
+a = aS + aF 
+L = LS + LF
+\end{cverbatim}
+Before the time loop starts we define a function for holding the solution:
+\begin{cverbatim}
+VPW_ = Function(VPW)
+\end{cverbatim}
+This function will consist of all values for $\mathbf{v}$, $p$ and $\mathbf{w}$.
+\\
+\\
+The time loop runs until the current time exceeds the specified end time, T. The forms change in time, and thus needs to be assembled to be updated to use the correct values for $\mathbf{v}^{(1)}, \mathbf{w}^{(1)}, \mathbf{U}^{(1)}$ and $\mathbf{v}^{(0)}$. The linear form needs an update each time step, while the bilinear form needs to be updated every single iteration inside the time loop. For the iterative method, we have (for now) chosen the Picard iteration based on the simplicity of the algorithm compared to Newton's method, especially when dealing with a mixed function space consisting of three separate spaces. The iteration runs until the $L^2$ norm of $(\mathbf{v}-\mathbf{v}^({0}))$ is less than a given number, $\alpha$, or if the number of iterations becomes to large. 
+\ref{fig:Geometry}
+
+
+\begin{cverbatim}
+while t < T:
+	...
+	b = assemble(L)
+	...
+	while error > alpha and k_iter < max_iter:
+		A = assemble(a)
+		A = ident.zeros()
+		[bc.apply(A,b) for bc in bcs]
+		solve(A,VPW_.vector,b,'lu')
+		v_,p_,w_ = VPW_.split(True)
+		eps = errornorm(v_,v0,degree_rise=3)	
+		k_iter += 1
+		
+		v0.assign(v_)
+\end{cverbatim}
+The second statement within the iteration loop is needed because the lack of an equation for $p$ within the solid. The \textit{ident.zeros()} function replaces zeros with ones on the diagonal of the matrix block, and the solution vector for $p$ will be zero inside the solid. To assign a new value for v0, and later be able to calculate drag and lift, we split the solution vector with the argument True. The solver is 'lu' by default, but in this case it is written explicitly. When converging iterative solvers are in general way faster, but in this case no Krylov Solver was found to converge. 
+\\
+\\
+The next problem to address is how the mesh should be updated. The domain should now move with velocity $\mathbf{w}$, so we want to move the mesh with $\Delta t \mathbf{w}$ from one time step to the next. For the total displacement, the update $\mathbf{U} = U^{(1)} + \Delta t \mathbf{w}$ should also be taken into account. The actual update of the mesh is done with the functions \textit{move()} and \textit{bounding\_box\_tree().build()}
+\begin{cverbatim}
+	w_vector()[:] *= float(k)
+	U_.vector()[:] += w_vector()[:]
+	mesh.move(w_)
+	mesh.bounding_box_tree().build(mesh)
+	
+	v1.assign(v_)
+\end{cverbatim}
+The final line is to update the velocity, so we can move to the next time step. Note that the velocity in both the fluid and the solid is updated by this call. \\
+
+	
+	
+	
+
+
 \section{A Discontinuous Galerkin method}
 Discontinuous Galerkin (DG) methods is a relatively new tool for CFD simulations. The method itself was developed during the 1970s and has been used increasingly the last few decades. Unlike with the Continuous Galerkin elements, we now allow the solution to be discontiuous, i.e cells do not share nodes anymore. Instead of solving over the whole domain, we now seek approximate continuous solutions on each cell independently of the others. To this end it is convenient to define the average and jump of a discontinuous variable
 \begin{align} 
-\{\mathbf{u}\} = \frac{1}{2}(\mathbf{u}^+ + \mathbf{u}^-) \hspace{2 cm}  [\mathbf{u}]  =  \mathbf{u}^+ - \mathbf{u}^- \label{Avg_jump}
+\{\mathbf{v}\} = \frac{1}{2}(\mathbf{v}^+ + \mathbf{v}^-) \hspace{2 cm}  [\mathbf{v}]  =  \mathbf{v}^+ - \mathbf{v}^- \label{Avg_jump}
 \end{align}
-where $\mathbf{u}^+$ and $\mathbf{u}^-$ is the solution at two neighboring cells at cell $E^+$ and $E^-$. The normal vectors are denoted $\mathbf{n}^+$ and $\mathbf{n}^-$. If consistent the choice of $\mathbf{n}$ is arbitrary. 
+where $\mathbf{v}^+$ and $\mathbf{v}^-$ is the solution at two neighboring cells at cell $E^+$ and $E^-$. The normal vectors are denoted $\mathbf{n}^+$ and $\mathbf{n}^-$. If consistent, the choice of $\mathbf{n}$ is arbitrary. \cite{Rivi08}
 \subsection{Stokes flow}
-By integrating Stokes equation by parts, adding symmetry and penalty terms as in \cite{Riviere2005} we end up with a DG-method ready for use. Since the method involves many terms we derive a weak formulation for each term. All sets of facets are denoted as $e$, interior facets as $\Gamma$ and exterior facets as $\partial \Omega$. Starting with the diffusion term $-\mu \nabla ^2 u$, we multiply with a test function and integrate by parts:
+By integrating Stokes equation by parts, adding symmetry and penalty terms as in \cite{Rivi05} we end up with a DG-method ready for use. Since the method involves many terms we derive a weak formulation for each term. All sets of facets are denoted as $e$, interior facets as $\Gamma$ and exterior facets as $\partial \Omega$. Starting with the diffusion term $-\mu \nabla ^2 u$, we multiply with a test function and integrate by parts:
 \begin{align}
-	\mu \sum_{E \in e} (\nabla u, \nabla v)_E 
-   -\mu \sum_{E \in \Gamma}([v], \{ \nabla u \} \cdot n_e)_E 
-   -\mu \sum_{E \in \Gamma}([u], \{ \nabla v \} \cdot n_e)_E 
-	+ \frac{\alpha}{h} \sum_{E \in \Gamma}([u],[v])_E \nonumber \\
-	-\mu \sum_{E \in \partial \Omega}(v,  \nabla u \cdot n_e)_E 
-   -\mu \sum_{E \in \partial \Omega}(u,  \nabla v  \cdot n_e)_E 
-	+ \frac{\beta}{h} \sum_{E \in \partial \Omega}(u,v)_E 
+	\mu \sum_{E \in e} (\nabla \mathbf{v}, \nabla \Phi)_E 
+   -\mu \sum_{E \in \Gamma}([\mathbf{v}], \{ \nabla \Phi \} \cdot \mathbf{n}_e)_E 
+   -\mu \sum_{E \in \Gamma}([\mathbf{v}], \{ \nabla \Phi \} \cdot \mathbf{n}_e)_E 
+	+ \frac{\alpha}{h} \sum_{E \in \Gamma}([\mathbf{v}],[\Phi])_E \nonumber \\
+	-\mu \sum_{E \in \partial \Omega}(\Phi,  \nabla \mathbf{v} \cdot \mathbf{n}_e)_E 
+   -\mu \sum_{E \in \partial \Omega}(\mathbf{v},  \nabla \Phi  \cdot \mathbf{n}_e)_E 
+	+ \frac{\beta}{h} \sum_{E \in \partial \Omega}(\mathbf{v},\Phi)_E 
  \label {Diffusion}
 \end{align}
 Similiarly, the contributions from the term $\nabla p$ will be
 \begin{align}
-	- \sum_{E \in e}(p, \nabla \cdot v)_E - \sum_{E \in \Gamma}
+	- \sum_{E \in e}(p, \nabla \cdot \Phi)_E - \sum_{E \in \Gamma}
 \end{align}
