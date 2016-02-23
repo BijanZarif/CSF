@@ -18,7 +18,7 @@ Line(3) = {1, 2};
 Line(4) = {2, 3};
 
 
-Point(6) = {0, h, 0, a};
+Point(6) = {0, h+5, 0, a};
 
 Point(7) = {x0, h, 0,a};
 Point(8) = {x1, h, 0,a};

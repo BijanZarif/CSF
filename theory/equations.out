@@ -12,9 +12,9 @@
 \BOOKMARK [2][-]{subsection.3.1.4}{Navier-Stokes equations for incompressible flow}{section.3.1}% 12
 \BOOKMARK [1][-]{section.3.2}{Linear Elasticity}{chapter.3}% 13
 \BOOKMARK [1][-]{section.3.3}{Linear Poroelasticity}{chapter.3}% 14
-\BOOKMARK [2][-]{subsection.3.3.1}{Biot's Equations}{section.3.3}% 15
-\BOOKMARK [1][-]{section.3.4}{Descriptions of Motion}{chapter.3}% 16
-\BOOKMARK [2][-]{subsection.3.4.1}{The arbitrary Lagrangian-Eulerian description}{section.3.4}% 17
+\BOOKMARK [1][-]{section.3.4}{Descriptions of Motion}{chapter.3}% 15
+\BOOKMARK [2][-]{subsection.3.4.1}{Lagrangian and Eulerian descriptions of motion}{section.3.4}% 16
+\BOOKMARK [2][-]{subsection.3.4.2}{The Arbitrary Eulerian Lagrangian description}{section.3.4}% 17
 \BOOKMARK [0][-]{chapter.4}{Numerical Methods}{}% 18
 \BOOKMARK [1][-]{section.4.1}{The Finite Element Method}{chapter.4}% 19
 \BOOKMARK [2][-]{subsection.4.1.1}{Variational formulation}{section.4.1}% 20

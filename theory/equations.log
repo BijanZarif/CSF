@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.1.20)  17 FEB 2016 12:52
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.1.20)  23 FEB 2016 14:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -6,10 +6,10 @@ entering extended mode
 (./equations.tex
 LaTeX2e <2011/06/27>
 Babel <3.9h> and hyphenation patterns for 4 languages loaded.
-(/usr/share/texlive/texmf-dist/tex/latex/base/report.cls
-Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
-(/usr/share/texlive/texmf-dist/tex/latex/base/size10.clo
-File: size10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo
+File: bk10.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 )
 \c@part=\count79
 \c@chapter=\count80
@@ -351,7 +351,11 @@ File: pppdftex.def 2013/08/25 v0.4v Pdfpages driver for pdfTeX (AM)
 \WF@box=\box31
 \WF@everypar=\toks21
 Package: wrapfig 2003/01/31  v 3.6
-) (./equations.aux)
+) (./equations.aux
+
+LaTeX Warning: Label `MeshVel' multiply defined.
+
+)
 \openout1 = `equations.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
@@ -368,8 +372,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
-
-(/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+ (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count123
 \scratchdimen=\dimen136
@@ -446,131 +449,234 @@ de-com-pres-sion surgery[][] [][]
 Chapter 1.
 ) (./Medical_background.tex [3
 
+] [4
+
 ]
 Chapter 2.
-<figures/Spinal_Cord.png, id=215, 764.8575pt x 656.4525pt>
+<figures/Spinal_Cord.png, id=220, 764.8575pt x 656.4525pt>
 File: figures/Spinal_Cord.png Graphic file (type png)
 
 <use figures/Spinal_Cord.png>
-Package pdftex.def Info: figures/Spinal_Cord.png used on input line 9.
+Package pdftex.def Info: figures/Spinal_Cord.png used on input line 10.
 (pdftex.def)             Requested size: 229.45901pt x 196.93727pt.
 
+Underfull \hbox (badness 10000) in paragraph at lines 10--11
 
-Package caption Warning: \label without proper \caption on input line 16.
-See the caption package documentation for explanation.
+ []
 
 
-LaTeX Warning: Reference `CSF' on page 4 undefined on input line 14.
+Underfull \hbox (badness 10000) in paragraph at lines 14--19
 
-<figures/Ida_CSF.png, id=218, 446.66875pt x 170.6375pt>
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 14--19
+
+ []
+
+[5] <figures/Ida_CSF.png, id=230, 446.66875pt x 170.6375pt>
 File: figures/Ida_CSF.png Graphic file (type png)
 
 <use figures/Ida_CSF.png>
-Package pdftex.def Info: figures/Ida_CSF.png used on input line 16.
+Package pdftex.def Info: figures/Ida_CSF.png used on input line 22.
 (pdftex.def)             Requested size: 357.33548pt x 136.51016pt.
 
-Overfull \hbox (12.33548pt too wide) in paragraph at lines 16--17
-[][]
- []
-
-[4
-
-]) (./Mathematical_background.tex
-Underfull \hbox (badness 10000) in paragraph at lines 20--1
-
- []
-
-[5 <./figures/Spinal_Cord.png> <./figures/Ida_CSF.png>] [6]
-Chapter 3.
-
-Underfull \hbox (badness 10000) in paragraph at lines 2--18
-
+Overfull \hbox (12.33548pt too wide) in paragraph at lines 22--23
+[][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 2--18
+Underfull \hbox (badness 10000) in paragraph at lines 22--23
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 2--18
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2--18
+) (./Mathematical_background.tex
+Underfull \hbox (badness 10000) in paragraph at lines 26--1
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 2--18
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 2--18
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 22--26
-
- []
-
-[7
+[6 <./figures/Spinal_Cord.png>] [7 <./figures/Ida_CSF.png>] [8
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 57--64
+Chapter 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--20
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 57--64
-
- []
-
-[8] [9]
-Underfull \hbox (badness 10000) in paragraph at lines 121--124
+Underfull \hbox (badness 10000) in paragraph at lines 2--20
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 121--124
-
- []
-
-[10]
-Underfull \hbox (badness 10000) in paragraph at lines 138--143
+Underfull \hbox (badness 10000) in paragraph at lines 2--20
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 145--149
-
- []
-
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 161--171
+Underfull \hbox (badness 10000) in paragraph at lines 2--20
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 161--171
-
- []
-
-[12]
-Underfull \hbox (badness 10000) in paragraph at lines 209--213
+Underfull \hbox (badness 10000) in paragraph at lines 2--20
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 209--213
+Underfull \hbox (badness 10000) in paragraph at lines 2--20
 
  []
 
-[13]) (./Numerical_methods.tex [14]
+
+Underfull \hbox (badness 10000) in paragraph at lines 2--20
+
+ []
+
+[9]
+Underfull \hbox (badness 10000) in paragraph at lines 24--28
+
+ []
+
+Package epstopdf Info: Source file: <figures/Fixed_control_volume.eps>
+(epstopdf)                    date: 2016-02-22 11:11:30
+(epstopdf)                    size: 5231 bytes
+(epstopdf)             Output file: <figures/Fixed_control_volume-eps-converted
+-to.pdf>
+(epstopdf)                    date: 2016-02-22 11:11:37
+(epstopdf)                    size: 2973 bytes
+(epstopdf)             Command: <repstopdf --outfile=figures/Fixed_control_volu
+me-eps-converted-to.pdf figures/Fixed_control_volume.eps>
+(epstopdf)             \includegraphics on input line 34.
+Package epstopdf Info: Output file is already uptodate.
+
+<figures/Fixed_control_volume-eps-converted-to.pdf, id=258, 467.7475pt x 272.01
+625pt>
+File: figures/Fixed_control_volume-eps-converted-to.pdf Graphic file (type pdf)
+
+ <use figures/Fixed_control_volume-eps-converted-to.pdf>
+Package pdftex.def Info: figures/Fixed_control_volume-eps-converted-to.pdf used
+ on input line 34.
+(pdftex.def)             Requested size: 233.87317pt x 136.00778pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 34--35
+
+ []
+
+Package epstopdf Info: Source file: <figures/Moving_control_volume.eps>
+(epstopdf)                    date: 2016-02-22 15:25:17
+(epstopdf)                    size: 5831 bytes
+(epstopdf)             Output file: <figures/Moving_control_volume-eps-converte
+d-to.pdf>
+(epstopdf)                    date: 2016-02-22 15:26:50
+(epstopdf)                    size: 3052 bytes
+(epstopdf)             Command: <repstopdf --outfile=figures/Moving_control_vol
+ume-eps-converted-to.pdf figures/Moving_control_volume.eps>
+(epstopdf)             \includegraphics on input line 41.
+Package epstopdf Info: Output file is already uptodate.
+
+<figures/Moving_control_volume-eps-converted-to.pdf, id=260, 412.54124pt x 195.
+73125pt>
+File: figures/Moving_control_volume-eps-converted-to.pdf Graphic file (type pdf
+)
+ <use figures/Moving_control_volume-eps-converted-to.pdf>
+Package pdftex.def Info: figures/Moving_control_volume-eps-converted-to.pdf use
+d on input line 41.
+(pdftex.def)             Requested size: 330.03345pt x 156.58519pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 41--42
+
+ []
+
+[10 <./figures/Fixed_control_volume-eps-converted-to.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 70--77
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 70--77
+
+ []
+
+[11 <./figures/Moving_control_volume-eps-converted-to.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 86--91
+
+ []
+
+[12] [13]
+Missing character: There is no Â in font cmr10!
+Missing character: There is no   in font cmr10!
+
+Underfull \hbox (badness 10000) in paragraph at lines 139--143
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 154--159
+
+ []
+
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 161--164
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 161--164
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 178--187
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 178--187
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 178--187
+
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 188--194
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 188--194
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 206--211
+
+ []
+
+[16]
+Underfull \hbox (badness 10000) in paragraph at lines 223--227
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--261
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--261
+
+ []
+
+[17]) (./Numerical_methods.tex [18]
 Chapter 4.
+
+LaTeX Warning: Citation `|lang2' on page 19 undefined on input line 3.
+
 
 Underfull \hbox (badness 10000) in paragraph at lines 9--13
 
@@ -586,7 +692,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 21--24
 
  []
 
-[15
+[19
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 27--27
@@ -608,7 +714,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 45--47
 
  []
 
-[16]
+[20]
 Underfull \hbox (badness 10000) in paragraph at lines 73--75
 
  []
@@ -618,7 +724,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 73--75
 
  []
 
-<figures/hats.png, id=349, 865.0719pt x 560.8152pt>
+<figures/hats.png, id=377, 865.0719pt x 560.8152pt>
 File: figures/hats.png Graphic file (type png)
  <use figures/hats.png>
 Package pdftex.def Info: figures/hats.png used on input line 78.
@@ -648,20 +754,20 @@ Underfull \hbox (badness 10000) in paragraph at lines 96--99
 
  []
 
-[17]
+[21]
 Underfull \hbox (badness 10000) in paragraph at lines 109--115
 
  []
 
-[18 <./figures/hats.png>] [19]
-<figures/poisson_f_20x.png, id=371, 602.25pt x 401.5pt>
+[22 <./figures/hats.png>] [23]
+<figures/poisson_f_20x.png, id=398, 602.25pt x 401.5pt>
 File: figures/poisson_f_20x.png Graphic file (type png)
 
 <use figures/poisson_f_20x.png>
 Package pdftex.def Info: figures/poisson_f_20x.png used on input line 155.
 (pdftex.def)             Requested size: 301.12425pt x 200.7495pt.
 
-<figures/Hron_Turek_geometry.png, id=374, 1096.095pt x 639.38875pt>
+<figures/Hron_Turek_geometry.png, id=401, 1096.095pt x 639.38875pt>
 File: figures/Hron_Turek_geometry.png Graphic file (type png)
 
 <use figures/Hron_Turek_geometry.png>
@@ -678,19 +784,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 162--174
 
  []
 
-[20 <./figures/poisson_f_20x.png (PNG copy)>]
+[24 <./figures/poisson_f_20x.png (PNG copy)>]
 Underfull \hbox (badness 10000) in paragraph at lines 175--184
 
  []
 
-[21 <./figures/Hron_Turek_geometry.png>]
+[25 <./figures/Hron_Turek_geometry.png>]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[22]
+[26]
 Overfull \hbox (106.81679pt too wide) in paragraph at lines 322--330
  [] 
  []
@@ -710,12 +816,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 348--354
 
  []
 
-[23]
+[27]
 Underfull \hbox (badness 10000) in paragraph at lines 356--360
 
  []
 
-[24]
+[28]
 Underfull \hbox (badness 10000) in paragraph at lines 371--375
 
  []
@@ -730,7 +836,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 376--380
 
  []
 
-[25]
+
+Overfull \hbox (55.94203pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/10 4.3.  FLUID STRUCTURE INTERACTION USING THE FINITE ELEMENT MET
+HOD \OT1/cmr/m/n/10 29
+ []
+
+[29]
 Underfull \hbox (badness 10000) in paragraph at lines 408--411
 
  []
@@ -755,7 +867,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 428--435
 
  []
 
-[26]
+[30]
 Underfull \hbox (badness 10000) in paragraph at lines 454--466
 
  []
@@ -765,7 +877,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 454--466
 
  []
 
-[27]
+
+Overfull \hbox (55.94203pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/10 4.3.  FLUID STRUCTURE INTERACTION USING THE FINITE ELEMENT MET
+HOD \OT1/cmr/m/n/10 31
+ []
+
+[31]
 Underfull \hbox (badness 10000) in paragraph at lines 472--481
 
  []
@@ -775,12 +893,18 @@ Overfull \hbox (37.74675pt too wide) in paragraph at lines 494--494
 [][][][][][]  
  []
 
-[28]
+[32]
 Underfull \hbox (badness 10000) in paragraph at lines 537--542
 
  []
 
-[29]
+
+Overfull \hbox (55.94203pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/10 4.3.  FLUID STRUCTURE INTERACTION USING THE FINITE ELEMENT MET
+HOD \OT1/cmr/m/n/10 33
+ []
+
+[33]
 Underfull \hbox (badness 10000) in paragraph at lines 560--571
 
  []
@@ -790,14 +914,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 572--573
 
  []
 
-[30]
+[34]
 Overfull \hbox (31.53134pt too wide) in paragraph at lines 596--596
 [] 
  []
 
-) (./material_parameters.tex [31]
+) (./material_parameters.tex [35] [36
+
+]
 Chapter 5.
-) (./Spinal_Cord_Simulations.tex [32
+) (./Spinal_Cord_Simulations.tex [37] [38
 
 ]
 Chapter 6.
@@ -817,55 +943,72 @@ Underfull \hbox (badness 10000) in paragraph at lines 2--6
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 7--22
+Underfull \hbox (badness 10000) in paragraph at lines 9--24
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 7--22
+Underfull \hbox (badness 10000) in paragraph at lines 9--24
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 7--22
+Underfull \hbox (badness 10000) in paragraph at lines 9--24
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 7--22
+Underfull \hbox (badness 10000) in paragraph at lines 9--24
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 7--22
+Underfull \hbox (badness 10000) in paragraph at lines 9--24
 
  []
 
-[33
+[39]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-] [34] <figures/Syrinx_Subject.png, id=481, 73.9125pt x 151.767pt>
+
+Overfull \hbox (68.44205pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/10 40 \OT1/cmr/m/sl/10 CHAPTER 6.  SIMULATING INTERACTION BETWEEN 
+CSF AND THE SPINAL CORD
+ []
+
+[40] <figures/Syrinx_Subject.png, id=517, 73.9125pt x 151.767pt>
 File: figures/Syrinx_Subject.png Graphic file (type png)
 
 <use figures/Syrinx_Subject.png>
-Package pdftex.def Info: figures/Syrinx_Subject.png used on input line 31.
+Package pdftex.def Info: figures/Syrinx_Subject.png used on input line 33.
 (pdftex.def)             Requested size: 147.82462pt x 303.53323pt.
 
-<figures/Syrinx_PostOp.png, id=482, 57.816pt x 127.7865pt>
+<figures/Syrinx_PostOp.png, id=518, 57.816pt x 127.7865pt>
 File: figures/Syrinx_PostOp.png Graphic file (type png)
 
 <use figures/Syrinx_PostOp.png>
-Package pdftex.def Info: figures/Syrinx_PostOp.png used on input line 31.
+Package pdftex.def Info: figures/Syrinx_PostOp.png used on input line 33.
 (pdftex.def)             Requested size: 137.31262pt x 303.49217pt.
 
-<figures/Syrinx_Levels.png, id=483, 272.01625pt x 451.6875pt>
+<figures/Syrinx_Levels.png, id=519, 272.01625pt x 451.6875pt>
 File: figures/Syrinx_Levels.png Graphic file (type png)
 
 <use figures/Syrinx_Levels.png>
-Package pdftex.def Info: figures/Syrinx_Levels.png used on input line 41.
+Package pdftex.def Info: figures/Syrinx_Levels.png used on input line 43.
 (pdftex.def)             Requested size: 163.211pt x 271.01459pt.
-) (./equations.bbl [35 <./figures/Syrinx_Subject.png> <./figures/Syrinx_PostOp.
-png>] [36 <./figures/Syrinx_Levels.png>]
-[37
+) (./equations.bbl
+Overfull \hbox (106.3578pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/10 6.2.  ASSESSMENT OF CSF VELOCITIES BEFORE AND AFTER DECOMPRESS
+ION SURGERY \OT1/cmr/m/n/10 41
+ []
+
+[41 <./figures/Syrinx_Subject.png> <./figures/Syrinx_PostOp.png>]
+Overfull \hbox (68.44205pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/10 42 \OT1/cmr/m/sl/10 CHAPTER 6.  SIMULATING INTERACTION BETWEEN 
+CSF AND THE SPINAL CORD
+ []
+
+[42 <./figures/Syrinx_Levels.png>] [43
 
 ]
 Missing character: There is no â in font cmr10!
@@ -879,27 +1022,30 @@ th-ods for solv-ing el-lip-tic and
 
 )
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 16.
- [38]
+ [44]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 16.
  (./equations.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 16.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 16.
 Package rerunfilecheck Info: File `equations.out' has not changed.
-(rerunfilecheck)             Checksum: B9867402FBE453C098421DDABF064818;2823.
+(rerunfilecheck)             Checksum: 9966DEA22CBE61AC2A41FAC368B907F9;2853.
 
 
 LaTeX Warning: There were undefined references.
 
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 16.
  ) 
 Here is how much of TeX's memory you used:
- 9603 strings out of 494985
- 142278 string characters out of 6180356
- 339121 words of memory out of 5000000
- 12541 multiletter control sequences out of 15000+600000
- 9202 words of font info for 35 fonts, out of 8000000 for 9000
+ 9649 strings out of 494985
+ 143078 string characters out of 6180356
+ 341942 words of memory out of 5000000
+ 12564 multiletter control sequences out of 15000+600000
+ 9555 words of font info for 36 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 43i,17n,43p,1124b,433s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,17n,43p,1135b,433s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share/texli
@@ -909,15 +1055,16 @@ t/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
 amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
-10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb>
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on equations.pdf (38 pages, 943520 bytes).
+/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl
+10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/
+texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on equations.pdf (44 pages, 970344 bytes).
 PDF statistics:
- 589 PDF objects out of 1000 (max. 8388607)
- 515 compressed objects within 6 object streams
- 142 named destinations out of 1000 (max. 500000)
- 345 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 631 PDF objects out of 1000 (max. 8388607)
+ 548 compressed objects within 6 object streams
+ 150 named destinations out of 1000 (max. 500000)
+ 355 words of extra memory for PDF output out of 10000 (max. 10000000)
 

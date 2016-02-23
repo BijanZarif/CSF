@@ -1,6 +1,6 @@
 \chapter{Numerical Methods}
 \section{The Finite Element Method}
-The theory presented in this section is inspired by the great work of Langtangen in "Finite Element Method - INF5620 lecture notes" \cite{Lang2}  \\
+The theory presented in this section is inspired by the great work of Langtangen in "Finite Element Method - INF5620 lecture notes" \cite{|lang2}  \\
 Consider the Poisson-equation
 \begin{align}
 -\nabla^2 v = f & \quad \text{ in } \Omega \label{Poisson}\\
@@ -22,16 +22,16 @@ By multiplying \eqref{Poisson} with a test function, $\phi$ and integrating over
 We are now searching for a $v$ to satisfy the weak form instead of the strong. T
 This equation should hold for all $\phi$ in the function space $\hat{V}$. The trial function does not necessarily have to lie in the same function space, in general $v \in V$. \\
 
- In this thesis we will use two Sobolov spaces (named after the Russian mathematician Sergei Sobolov) widely used in Finite Element computing. For these definitions to be valid, we assume that the functions $v$ are all \textbf{locally integrable} and in the case of definition \eqref{H1}, has one \textbf{weak derivative}. For more details on weak derivatives and the generalized concept of Sobolev spaces and functional analysis, we refer to the textbook by Brenner and Scott \cite{Bren07}.   
+ In this thesis we will use two Sobolov spaces (named after the Russian mathematician Sergei Sobolov) widely used in Finite Element computing. For these definitions to be valid, we assume that the functions $v$ are all \textbf{|locally integrable} and in the case of definition \eqref{H1}, has one \textbf{weak derivative}. For more details on weak derivatives and the generalized concept of Sobolev spaces and functional analysis, we refer to the textbook by Brenner and Scott \cite{Bren07}.   
 \begin{definition}
 Let $\Omega$ be an open subset of $\mathbb{R}$ with a piecewise smooth boundary. We then define the $L^2$-norm as follows\\ \begin{center}
-$||v||_{L^2(\Omega)} = (\int_\Omega v^2 \mathrm{d}x)^{\frac{1}{2}}$
+$||v||_{|l^2(\Omega)} = (\int_\Omega v^2 \mathrm{d}x)^{\frac{1}{2}}$
 \end{center}
 The corresponding $L^2$-space is defined via
 \begin{center}
 $L^2(\Omega) = \{ v:\Omega \rightarrow \mathbb{R} | \int_\Omega v^2 \mathrm{d}x < \infty \}$
 \end{center}
-\label{L2}
+\label{|l2}
 \end{definition}
 \begin{definition}
 Let $\Omega$ be an open subset of $\mathbb{R}$ with a piecewise smooth boundary. We then define the $H^1$-norm as follows\\ \begin{center}
@@ -86,7 +86,7 @@ v_h = \sum_{i=0}^N c_i \phi_i \label{u_hsum}
 \end{align}
 The definitions of $v_h$ and $V$ now give rise to a linear system. Using the Einstein summation convention, $x_i\,y_i = \sum_0^N x_i y_i $, \eqref{Weak_form} is now written 
 \begin{align}
--c_i(\nabla \phi_i, \phi_j)_\Omega = (f,\phi_j)_\Omega - (g, \phi_j)_{\partial \Omega_N} \label{Linear_system}
+-c_i(\nabla \phi_i, \phi_j)_\Omega = (f,\phi_j)_\Omega - (g, \phi_j)_{\partial \Omega_N} \label{|linear_system}
 \end{align}
 \\
 \\
@@ -208,7 +208,7 @@ For the CFD tests we perform tests treating the flag as a rigid object. This can
 
 \begin{table}[!ht]
 \begin{center}
-  \begin{tabular}{l | l | l | l} \hline
+  \begin{tabular}{|l | l | l | l|} \hline
 	Parameter & CFD1 & CFD2 & CFD3 \\ \hline
     $\rho_f\, [10^3\frac{\text{kg}}{\text{m}^3}]$  & 1 & 1 & 1 \\   \hline
     $\nu_f\, [10^{-3}\frac{\text{m}^2}{\text{s}}]$ & 1 & 1 & 1 \\ \hline
@@ -221,7 +221,7 @@ For the CFD tests we perform tests treating the flag as a rigid object. This can
 \end{table}
 \begin{table}[!ht]
 \begin{center}
-  \begin{tabular}{l | l | l | l} \hline
+  \begin{tabular}{|l | l | l | l|} \hline
 	Mesh refinement & Cells & Drag & Lift \\ \hline
     0  & 1334 & 13.9344 & 1.0980  \\   \hline
     1 & 5336 & 14.1165 & 1.0836 \\ \hline
@@ -235,7 +235,7 @@ For the CFD tests we perform tests treating the flag as a rigid object. This can
 
 \begin{table}[!ht]
 \begin{center}
-  \begin{tabular}{l | l | l | l} \hline
+  \begin{tabular}{|l | l | l | l|} \hline
 	Mesh refinement & Cells & Drag & Lift \\ \hline
     0  & 1 & 1 & 1 \\   \hline
     1 & 1 & 1 & 1 \\ \hline
@@ -250,7 +250,7 @@ For the CFD tests we perform tests treating the flag as a rigid object. This can
 The structural tests are performmed by adding the gravitational force to the structural part only. The CSM3 test is computed as a time-dependent case, starting from the initial position while CSM1 and CSM2 are Steady State (SS) solutions. 
 \begin{table}[!ht]
 \begin{center}
-  \begin{tabular}{l | l | l | l} \hline
+  \begin{tabular}{|l | l | l | l|} \hline
 	Parameter & CSM1 & CSM2 & CSM3 \\ \hline
     $\rho_s\, [10^3\frac{\text{kg}}{\text{m}^3}]$  & 1 & 1 & 1 \\   \hline
     $\nu_s $ & 0.4 & 0.4 & 0.4 \\ \hline
@@ -264,7 +264,7 @@ The structural tests are performmed by adding the gravitational force to the str
 
 \begin{table}[!h]
 \begin{center}
-  \begin{tabular}{l | l | l | l} \hline
+  \begin{tabular}{|l | l | l | l|} \hline
 	Mesh refinement & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$\\ \hline
     0  & 738 & -12.410569 & -60.599246 \\   \hline
     1 & 2952 & -12.419505 & -60.622920 \\ \hline
@@ -278,7 +278,7 @@ The structural tests are performmed by adding the gravitational force to the str
 
 \begin{table}[!h]
 \begin{center}
-  \begin{tabular}{l | l | l | l} \hline
+  \begin{tabular}{|l | l | l | l|} \hline
 	Mesh refinement & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$\\ \hline
     0  & 738 & -0.92479395 & -16.853778 \\   \hline
     1 & 2952 & -0.92558954 & -16.861757 \\ \hline
@@ -296,7 +296,7 @@ The structural tests are performmed by adding the gravitational force to the str
 
 \begin{table}[!ht]
 \begin{center}
-  \begin{tabular}{l | l | l | l} \hline
+  \begin{tabular}{|l | l | l | l|} \hline
 	Parameter & FS1 & FSI2 & FSI3 \\ \hline
     $\rho_f\, [10^3\frac{\text{kg}}{\text{m}^3}]$  & 1 & 1 & 1 \\   \hline
     $\nu_f\, [10^{-3}\frac{\text{m}^2}{\text{s}}]$ & 1 & 1 & 1 \\ \hline
@@ -309,7 +309,7 @@ The structural tests are performmed by adding the gravitational force to the str
 
 \begin{table}[!ht]
 \begin{center}
-  \begin{tabular}{l | l | l | l} \hline
+  \begin{tabular}{|l | l | l | l|} \hline
 	Parameter & FSI1 & FSI2 & FSI3 \\ \hline
     $\rho_s \,[10^3\frac{\text{kg}}{\text{m}^3}]$  & 1 & 10 & 1 \\   \hline
     $\nu_s $ & 0.4 & 0.4 & 0.4 \\ \hline
@@ -319,7 +319,7 @@ The structural tests are performmed by adding the gravitational force to the str
 \end{table}
 \begin{table}[!ht]
 \begin{center}
-  \begin{tabular}{l | l | l | l | l | l} \hline
+  \begin{tabular}{|l | l | l | l | l | l|} \hline
 	Mesh refinement & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Drag & Lift\\ \hline
     0  & 2698 & 0.015596 & 0.74221 & 14.0876279441 & 0.756130219216 \\   \hline
     1 & 10792 & 0.017738 & 0.77686 & 14.1777783843 & 0.763145083966 \\ \hline
@@ -333,7 +333,7 @@ The structural tests are performmed by adding the gravitational force to the str
 
 \begin{table}[!ht]
   \begin{center}
-  \begin{tabular}{l | l | l | l | l | l} \hline
+  \begin{tabular}{|l | l | l | l | l | l|} \hline
 	Mesh refinement & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Drag & Lift\\ \hline
     0  & 2698 & $ -4.33 \pm 4.54$ & $ 1.40 \pm 29.96$ & $441.45 \pm 33.15 $ & $-2.30 \pm 178.00$\\   \hline
     1 & 10792 & $ $&  $ $ & $ $ & $ $\\ \hline

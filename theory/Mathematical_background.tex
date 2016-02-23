@@ -2,6 +2,8 @@
 The flow of CSF around the spinal cord requires equations for fluid flow to be coupled with equations for elasticity or in the optimal case, poroelasticity. The underlying concepts of these kinds of problems were originally developed somewhat independently within petroleum engineering, geomechanics and hydrogeology. The equations will first be presented separately. Later in the chapter, coupling conditions will be discussed. Several quantities will be discussed and we try to use a consistent notation for each quantity throughout the study. 
 \\
 \\
+This chapter intends to give a short description of the mathematical theory behind modeling of CSF. The equations are first introduced by assuming a fixed set of coordinates. Later, the two fundamental descriptions of motion are discussed. \\
+\\
 In this thesis we use the following notation for the physical quantities: \\ \\
 $\mathbf{v}$ - Velocity of the material. In the fluid, $\mathbf{v}$ represents fluid velocity, and in the solid $\mathbf{v}$ denotes the velocity of the solid.
 \\ \\
@@ -16,7 +18,7 @@ $\mathbf{w}$ - Domain velocity, (i.e, all material points within the domain move
 \\
 Subscripts f and s are used to denote fluid and solid quantities, respectively
 \section{Fluid flow}
-The most fundamental equations in fluid flow are conservation laws. These equations are based on classical mechanics and states conservation of mass, momentum and energy. In the literature, these are often reffered to as balance equations. 
+The most fundamental equations in fluid flow are conservation laws. These equations are based on classical mechanics and states conservation of mass, momentum and energy. In the literature, these are often reffered to as balance equations.
 
 \subsection{Reynolds Transport Theorem}
 The famous engineer and scientist Osbourne Reynold stated the general conservation law the following way \cite{Reyn1903}:
@@ -27,12 +29,24 @@ Any change whatsoever in the quantity of any entity within a closed surface can 
 \item it may be effected by the production or destruction of the entity within the surface, or
 \item by the passage of the entity across the surface.
 \end{enumerate}
-
-Now, consider a control volume, $V_0$ and some fluid property $Q(\mathbf{x},t)$. The rate of change of $Q$ within the control volume can be written
+\begin{center}
+\begin{figure}[!ht]
+\includegraphics[scale=0.5]{figures/Fixed_control_volume} \\
+\caption{Fixed control volume with flow as indicated by streamlines} 
+\end{figure}
+\end{center}
+It should be noted that the transport theorem can be approached in two different ways. One for a fixed set of spatial coordinates, a fixed control volume, where fluid can enter and exit the boundaries of the defined body. The other approach has a control volume consisting of the same material particles at all times. Therefore the body has to follow the flow, and no fluid will cross the boundary. In this approach, one has to take into account the movement of the boundary of the body and the fact that the body can change it's volume. More on descriptions of motion is described in section \ref{sec:DoM}
+\begin{center}
+\begin{figure}[!ht]
+\includegraphics[scale=0.8]{figures/Moving_control_volume}\\
+\caption{A moving control volume, consisting of the same fluid particles at time $t$ (left) and time $t+\Delta t$ (right) }
+\end{figure}
+\end{center}
+Now, consider a fixed control volume, $V_0$ and some fluid property $Q(\mathbf{x},t)$. The rate of change of $Q$ within the control volume can be written
 \begin{align}
 \frac{\mathrm{d}}{\mathrm{d}t} \int_{V_0} Q(\mathbf{x},t) \, \mathrm{d}V \label{Rate_of_change}
 \end{align}
-The net change of $Q$ must be equal the rate of change in $Q$ within the control volume plus the net rate of mass flow out of the volume. In other words
+The net change of $Q$ must be equal the rate of change in $Q$ within the control volume plus the net rate of mass flow out of the volume. In other words:
 \begin{align}
 \frac{\mathrm{d}}{\mathrm{d}t} \int_{V_0} Q(\mathbf{x},t) \, \mathrm{d}V = \int_{V_0} \pdi{Q(\mathbf{x},t)}{t} \mathrm{d}V + \int_{S_0} Q(\mathbf{x},t) \mathbf{v} \cdot \mathbf{n} \mathrm{d}S \label{Reynolds}
 \end{align}
@@ -41,7 +55,6 @@ Here, $\mathbf{v}$ denotes fluid velocity, and $\mathbf{n}$ denotes the outward 
 \frac{\mathrm{d}}{\mathrm{d}t} \int_{V_0} Q(\mathbf{x},t) \, \mathrm{d}V = \int_{V_0} \big{[}\pdi{Q(\mathbf{x},t)}{t} + \nabla \cdot (Q(\mathbf{x},t) \mathbf{v}) \big{]}\mathrm{d}V \label{Reynold}
 \end{align}
 where \[ \nabla = \mathbf{i}_j\pdi{}{x_j} \]
-
 \subsection{Conservation of mass and momentum}
 Choose $Q(\mathbf{x},t) = \rho$. Conservation of mass means that
 \begin{align*} 
@@ -51,7 +64,7 @@ And by using the transport theorem \eqref{Reynold}
 \begin{align}
 \int_{V_0} \big{[}\pdi{\rho}{t} + \nabla \cdot (\rho \mathbf{v}) \big{]}\mathrm{d}V = 0
 \end{align}
-This should hold for any volume $V_0$, hence the integrand has to be zero:
+This should hold for any volume $V_0$, hence the integrand has to be zero. If there existed a point where the integrand were not zero, the control volume could be an arbitrary small enclosed sphere around this point, and the volume integral would not be zero. Therefore, 
 \begin{align} 
 \pdi{\rho}{t} + \nabla \cdot (\rho \mathbf{v}) = 0 \label{Continuity}
 \end{align}
@@ -72,8 +85,13 @@ With the same argument as before the integrand has to be zero, and with some rea
 \pdi{\rho \mathbf{v}}{t} + \nabla \cdot (\rho \mathbf{v}\mathbf{v} ) = \nabla \cdot \sigma_f + \mathbf{F}_v \label{Momentum}
 \end{align} 
 The stress tensor, $\sigma_f$, depends on fluid properties and will be defined in the next subsection. Equation \eqref{Momentum} is known as the momentum equation as it states conservation of momentum.
-
-
+\\
+\\
+The energy equation for an incompressible flow is given by
+\begin{align}
+\rho c_p \pdi{T}{t} + \mathbf{v}\cdot \nabla T = k \nabla^2 T + \Phi \label{Energy}
+\end{align}
+Where $c_p$ is the heat capacity and $\Phi$ is the dissippation function. When $\rho$ and $\mu$ is constant, the other two balance equations, \eqref{Continuity} and \eqref{Momentum}, are uncoupled from the energy equation, and thus ignored from the set of equations. 
 \subsection{Incompressible Newtonian fluids}
 In this text we will only consider incompressible fluid flow for a Newtonian fluid. 
 The assumption of a Newtonian fluid requires the viscous stresses to be linear functions of the components of the strain-rate tensor, denoted by $\epsilon$. These assumptions were first made by Stokes in 1845. Stokes' assumptions have later proven to be quite accurate for all gases and most common fluids. Stokes' three postulates regarding the deformation laws are: \cite{Whit06}
@@ -107,22 +125,20 @@ Stating both conservation of mass and momentum of a fluid together with suitable
 \nabla \cdot \mathbf{v} = 0 \label{Stokes}
 \end{align}
 The parameters $\rho$ and $\mu$ describe density and dynamic viscosity. Often, the momentum equation is written in terms of the kinematic viscosity $\nu = \frac{\mu}{\rho}$ by dividing the momentum equation with $\rho$. \\
-These equations are coupled and non-linear and can generally not be solved analytically. However, numeruous analytical solutions have been carried out for different specific problems, see e.g. White \cite{Whit06} pp...xxx. These problems are often very simple and idealized. Hence, numerical solutions are a necessity to obtain useful solutions to real-life problems. Such metods will be discussed in chapter xxx. 
+These equations are coupled and non-linear and can generally not be solved analytically. However, numeruous analytical solutions have been carried out for different specific problems, and a good overview is given by White \cite[pp. 97-164]{Whit06}. (Further references are also given in this textbook for the interested reader) These problems are often very simple and idealized. Hence, numerical solutions are a necessity to obtain useful solutions to real-life problems. Such metods will be discussed in chapter xxx. 
 
 
 \section{Linear Elasticity}
-For an elastic medium the stress tensor has no pressure term, and the stress is related to the total displacement $\mathbf{U}$ rather than the velocity $\mathbf{v}$. The stress tensor for such a material reads:
+Linear elasticity is an approximation used for small deformations for elastic solids. As a rule of thumb the approximation of linear elasticity is usually valid for deformations up to 10\% relative to the solid. The stress tensor for a linear elastic medium is very similar to \eqref{Stress} describing an incompressible Newtonian fluid except there is no fluid pressure, and the stress is related to the total displacement $\mathbf{U}$ rather than the velocity $\mathbf{v}$. The stress tensor for such a material reads:
 $\sigma_s = 2\mu\epsilon(\mathbf{U}) + \lambda \nabla \cdot \mathbf{U}$
 \begin{align} 
 \rho \pdi{^2\mathbf{U}}{t^2} = \nabla \cdot \sigma_s \label{LE}
 \end{align}
 The left hand side can also be expressed from the solid velocity $\mathbf{v}$ using that $\pdi{^2\mathbf{U}}{t^2} = \pdi{\mathbf{v}}{t} $. The advantage of using $\mathbf{v}$ as the unkown will be discussed in chapter xxx 
 \section{Linear Poroelasticity}
-In this section, the equations describing fluid flowing trough a elastic medium is presented. For a more detailed discussion, derivation and history within the field we refer to \cite{Wang00} on Linear Poroelasticity. To keep the mathematics as similar to the fluid case as possible, we use $\mu$ and $\lambda$ instead of the possion ratio. 
+In this section, the equations describing fluid flowing trough a elastic medium is presented. For a more detailed discussion, derivation and history within the field we refer to \cite{Wang00} on Linear Poroelasticity. To keep the mathematics as similar to the fluid case as possible, we use $\mu$ and $\lambda$ instead of the possion ratio. The equations describing linear poroelasticity are often described as Biot's equations. 
 \\
 \\
-
-\subsection{Biot's Equations}
 The stress tensor for the Biot problem is 
 \[ \sigma_s = -\alpha pI + 2\mu \epsilon(\mathbf{U}) + (\mu + \lambda)\text{tr}(\epsilon(\mathbf{U}))I  \]
 Here $\mu$ and $\lambda$ are Lame's parameters for the solid. The parameter $\alpha = \frac{K}{H}$ is known as the Biot-Willis coefficient. $K$ is known as the drained bulk modulus, and $\frac{1}{K}$ denotes compressibility. $H$ is a poroelastic parameter describing how much the bulk volume changes due to a change in pore pressure while holding the applied stress constant. Again, conservation of momentum and mass, respectively, yields
@@ -141,16 +157,17 @@ Where $\mu_f$ is the dynamic viscosity of the fluid and the t-subscript denotes 
 Equations \eqref{MomentumS}-\eqref{ContinuityS} are nothing more than superpositioning of the tho phases. The material derivatives in \eqref{MomentumS} has been dropped under the assumption that these terms are small. This assumption is known as a quasistatic approximation. 
 \\
 
-\section{Descriptions of Motion}
+\section{Descriptions of Motion} \label{sec:DoM}
 In the previous section, we saw that the stress tensor for elastic solids were linked to the total displacement from the stress-free configuration of the material. The stresses and velocity in the material will depend on the current deformation of the material with respect to the stress-free configuration. To this end, it will be convenient to provide the reader with two classical descriptions of a continuum in motion. 
 \\
 \\
-We consider a domain $\Omega_{\mathbf{X}} \in \mathbb{R}^3$ consisting of material particles $\mathbf{X}$. The domain can undergo deformations, and the deformed domain, $\Omega_{\mathbf{x}}$, is the current configuration at time $t$. We define the mapping:
+\subsection{Lagrangian and Eulerian descriptions of motion}
+We consider a domain $\Omega_{\mathbf{X}} \in \mathbb{R}^3$ consisting of material particles $\mathbf{X}$. The domain can undergo deformations, and the deformed domain, $\Omega_{\mathbf{x}}$, is the current configuration at time $t$. We define the one-to-one mapping:
 \begin{align}
 \beta \,\, : \,\, \Omega_{\mathbf{X}} \times [0,T] \rightarrow  \Omega_{\mathbf{x}} \times [0,T] \\
 (\mathbf{X},t) \rightarrow \beta(\mathbf{X},t) = (\mathbf{x},t)
 \end{align}
-Which takes any point $\mathbf{X}$ in the reference configuration to a new position $\mathbf{x} = \beta(\mathbf{X},t)$ at time $t$. The time is measured with the same variable, $t$, in both domains. The gradient of $\beta$ with respect to $(\mathbf{X},t)$ can be written in matrix form as:
+Which takes any point $\mathbf{X}$ in the reference configuration to a new position $\mathbf{x} = \beta(\mathbf{X},t)$ at time $t$. As the mapping is one-to-one, it is also possible to keep track of the history of the motion by the inverse, $\beta^{-1}$. The time is measured with the same variable, $t$, in both domains. The gradient of $\beta$ with respect to $(\mathbf{X},t)$ can be written in matrix form as:
 \begin{align}
 \pdi{\beta}{(\mathbf{X},t)} = \begin{pmatrix} \pdi{\mathbf{x}}{\mathbf{X}} & \mathbf{v} \\
 											0^T & 1
@@ -161,47 +178,78 @@ where the material velocity
 \end{align}
 is the temporal change in the spatial variable $\mathbf{x}$ while holding \textbf{X} fixed. $0^T$ denotes a null vector. 
 \\
-The \textit{Lagrangian} description, where we follow a fixed set of material particles as suggested by the mapping $\beta$, is often used. In the Lagrangian description all quantities are expressed in terms of the reference configuration $\Omega_{\mathbf{X}}$ and time. In other words, even though the material is deformed, we can still compute displacements and particle velocities using the material coordinates $\mathbf{X}$. For instance, the displacement from the starting material configuration will be given as $\beta(\mathbf{X},t) - \mathbf{X}$ and the velocity as given in \eqref{MatVel}. \\ Because the grid coincides with the material coordinates, there are no convective terms in the Lagrangian description. When a material undergoes large deformations or for instance vortices or turbulence occour, the material velocity from the Lagrangian point of view becomes difficult to handle. 
+The \textit{Lagrangian} description, where we follow a fixed set of material particles as suggested by the mapping $\beta$, is often used. In the Lagrangian description all quantities are expressed in terms of the reference configuration $\Omega_{\mathbf{X}}$ and time. In other words, even though the material is deformed, we can still compute displacements and particle velocities using the material coordinates $\mathbf{X}$. For instance, the displacement from the starting material configuration will be given as $\beta(\mathbf{X},t) - \mathbf{X}$ and the velocity as given in \eqref{MatVel}. \\ Because the grid coincides with the material coordinates, there are no convective terms in the Lagrangian description. In the context of Reynold's Transport theorem, the Lagrangian approach coincides with a moving control volume consisting of the same material points at all time. When a material undergoes large deformations or for instance vortices or turbulence occour, the material velocity from the Lagrangian point of view becomes difficult to handle. 
 \\
 \\
 In fluid mechanics the \textit{Eulerian} description is the most used, which means that fluid flows through a fixed region in space and in each point we can measure various properties or quantities such as velocity, pressure and temperature. The conservation equations in the Eulerian description are expressed in terms of the spatial coordinates $\mathbf{x}$ and time, and are neither connected to a reference configuration nor the material coordinates. Compared to the Lagrangian approach, large material deformations is not a problem, as material can enter and leave the fixed domain. This movement of a material through a fixed region results in convective effects, and convection operators can often be problematic in computational fluid dynamics due to their non-symmetric nature. 
 \\
 \\
-To be able to couple the two, we still need some adjustment from the usual Eulerian description. The region is no longer fixed, and we will now desribe what is known as an \textit{arbitrary Lagrangian-Eulerian} (ALE) description.
-
-\subsection{The arbitrary Lagrangian-Eulerian description}
-The following derivation is inspired by the the works on Arbitrary Lagrangian-Eulerian methods by Donea et. al in \cite{Done04}. 
+\subsection{The Arbitrary Eulerian Lagrangian description}
+To be able to couple the Lagrangian approach for the solid with the Eulerian approach for the fluid, we need some referential system, not attached to the material points neither totally fixed in space. This type of description is common in FSI analysis and is known as the \textit{arbitrary Lagrangian-Eulerian} (ALE) description.
 \\
-We consider a domain $\Omega_{\mathbf{X}} \in \mathbb{R}^3$ consisting of material particles $\mathbf{X}$. The domain can undergo deformations, and in the spatial domain $\mathbf{x}$, we refer to the current configuration at time $t$ as $\Omega_\mathbf{x}$. We define the mapping:
+\\The following derivation is inspired by the the works on Arbitrary Lagrangian-Eulerian methods by Donea et. al in \cite{Done04}. 
+\\
+\\
+The need for an additional set of coordinates, an independent referential system with reference coordinates $\chi$ is introduced. This introduces two new mappings to relate all the different configurations as shown in fig. The mappings are defined similarly to $\beta$ as
 \begin{align}
-\beta \,\, : \,\, \Omega_{\mathbf{X}} \times [0,T] \rightarrow  \Omega_{\mathbf{x}} \times [0,T] \\
-(\mathbf{X},t) \rightarrow \beta(\mathbf{X},t) = (\mathbf{x},t)
+\gamma \,\, : \,\, \Omega_{\chi} \times [0,T] \rightarrow  \Omega_{\mathbf{x}} \times [0,T] \\
+(\chi,t) \rightarrow \gamma(\chi,t) = (\mathbf{x},t)
 \end{align}
-Which takes any point $\mathbf{X}$ in the reference configuration to a new position $\mathbf{x} = \beta(\mathbf{X},t)$ at time $t$. The time is measured with the same variable, $t$, in both domains. The gradient of $\beta$ with respect to $(\mathbf{X},t)$ can be written in matrix form as:
+and the gradient of $\gamma$
 \begin{align}
-\pdi{\beta}{(\mathbf{X},t)} = \begin{pmatrix} \pdi{\mathbf{x}}{\mathbf{X}} & \mathbf{v} \\
+\pdi{\gamma}{(\chi,t)} = \begin{pmatrix} \pdi{\mathbf{x}}{\chi} & \mathbf{w} \\
 											0^T & 1
-								\end{pmatrix}
+								\end{pmatrix} \label{gammaGradient}
 \end{align}
-where the material velocity
-\begin{align} \mathbf{v}(\mathbf{X},t) = \pdi{\mathbf{x}}{t}\Big{|}_{\mathbf{X}}
+In addition, 
+\begin{align} \mathbf{w}(\chi,t) = \pdi{\mathbf{X}}{t}\Big{|}_{\chi} \label{MeshVel}
 \end{align}
-is the temporal change in the spatial variable $\mathbf{x}$ while holding \textbf{X} fixed. $0^T$ denotes a null vector. 
-
-
-
-
-
-
-\begin{align} \mathbf{U}(\mathbf{X},t) = \chi(\mathbf{X},t) - \mathbf{X} & & \mathbf{w} = \pdi{\chi}{t} & & \mathbf{F} = \pdi{\chi}{\mathbf{X}},& & J = \text{det}\mathbf{F}
+denotes the mesh velocity. Both the mesh and the material can move independently of the laboratory. More precise, relative to some referential point in space, the fluid moves with veloctiy $\mathbf{v}$ and the domain moves with velocity $\mathbf{w}$. 
+\\
+\\
+To complete the relation between the different velocities, we define the inverse of $\alpha$ directly: 
+\begin{align}
+\alpha^{-1} \,\, : \,\, \Omega_{\mathbf{X}} \times [0,T] \rightarrow  \Omega_{\chi} \times [0,T] \\
+(\mathbf{X},t) \rightarrow \alpha^{-1}(\mathbf{X},t) = (\chi,t)
 \end{align}
-
-Relative to some fixed point in space, the fluid moves with veloctiy $\mathbf{v}$ and the domain moves with velocity $\mathbf{w}$. 
-
-
-
-
-
+The gradient is given as
+\begin{align}
+\pdi{\alpha^{-1}}{(\mathbf{X},t)} = \begin{pmatrix} \pdi{\chi}{\mathbf{X}} & \mathbf{\hat{v}} \\
+											0^T & 1
+								\end{pmatrix} \label{alpha_Gradient}
+\end{align}
+Where the velocity 
+\begin{align} \mathbf{\hat{v}}(\mathbf{X},t) = \pdi{\chi}{t}\Big{|}_{\mathbf{X}} \label{MeshVel}
+\end{align}
+denotes the temporal change in the referential system while holding the material particle $\mathbf{X}$ fixed. Therefore the velocity $\mathbf{\hat{v}}$ can be interpereted as the particle velocity in the referential domain. \\
+\\
+We define $\theta = \gamma \, \circ \, \alpha^{-1} = \gamma(\alpha^{-1}(\mathbf{X},t))$ and obtain a relation between the different velocities by differentiating $\theta$. 
+\begin{align}
+\pdi{\theta}{(X,t)}(\mathbf{X},t) & = \pdi{\gamma}{(\chi,t)}(\alpha^{-1}(\mathbf{X,t}))\, \pdi{\alpha^{-1}}{(\mathbf{X},t)}(\mathbf{X},t) \\
+& = \pdi{\gamma}{(\chi,t)}(\chi,t)\, \pdi{\alpha^{-1}}{(\mathbf{X},t)}(\mathbf{X},t)
+\end{align}
+In matrix form this equation is written:
+\begin{align}
+	\begin{pmatrix} \pdi{\mathbf{x}}{\mathbf{X}} & \mathbf{v} \\
+											0^T & 1
+	\end{pmatrix} 
+	= 
+	\begin{pmatrix} \pdi{\mathbf{x}}{\chi} & \mathbf{w} \\
+											0^T & 1
+	\end{pmatrix}
+	\begin{pmatrix} \pdi{\chi}{\mathbf{X}} & \mathbf{\hat{v}} \\
+											0^T & 1
+	\end{pmatrix}
+\end{align}
+After block-multiplication of the right hand side we end up with an equation relating all the different velocities:
+\begin{align}
+\mathbf{v} = \pdi{\mathbf{x}}{\chi}\cdot \mathbf{\hat{v}} + \mathbf{w}
+\end{align}
+To this end, it is convenient to define the convective velocity
+\begin{align}
+\mathbf{c}:= \mathbf{v}-\mathbf{w} = \pdi{\mathbf{x}}{\chi}\cdot \mathbf{\hat{v}}
+\end{align}
+which is the relative velocity between the material and the mesh. 
 
 
 
@@ -213,13 +261,13 @@ As in the benchmark case, consider a compressible structure defined by the regio
 \begin{align}
 \frac{\mathrm{d}}{\mathrm{d}t}\int_{\Omega_f^t} \rho_f \, \mathrm{d}V = \pdi{}{t}\int_{\Omega_f^t} \rho_f \, \mathrm{d}V + \int_{\partial \Omega_f^t} \rho_f(\mathbf{v}-\mathbf{w})\cdot \mathbf{n}_{\Omega_f^t} \mathrm{d}S = 0
 \end{align}
+The normal vector (from now on denoted $\mathbf{n}$) is defined to point out of the fluid and into the solid. 
 
 
 
 
 
-
-If the solid expands or contracts with speed $\mathbf{w}$, the rate of change of its volume will be 
+If the solid expands or contracts with speed $\mathbf{w}$ at the boundary, the rate of change of its volume will be 
 \begin{align}
 -\int_\Gamma \mathbf{w} \cdot \mathbf{n} \,\mathrm{d}S
 \end{align}
@@ -233,7 +281,8 @@ The left hand side can we rewritten by the transport theorem.
 \end{align}
 Where the boundary integral have been split up into two parts. If the boundary conditions $\mathbf{v}=\mathbf{w}$ on $\Gamma$, and $\mathbf{w} = 0$ on $\partial \Omega_f^t$ are taken into account we end up with: 
 \begin{align}
-\int_{\Omega_f^t} \pdi{\rho_f}{t} \, \mathrm{d}V + \int_{\partial \Omega_f^t} \rho_f \mathbf{v} \cdot \mathbf{n} \, \mathrm{d}S + \int_{\Gamma} \rho_f \mathbf{v} \cdot \mathbf{n} \, \mathrm{d}S = 0
+\int_{\Omega_f^t} \pdi{\rho_f}{t}\Big{|}_\mathbf{X} \, \mathrm{d}V + \int_{\partial \Omega} \rho_f (\mathbf{v-w}) \cdot \mathbf{n} \, \mathrm{d}S &  = \\
+\int_{\Omega_f^t} \pdi{\rho_f}{t}\Big{|}_\mathbf{\chi} + \mathbf{c} \cdot \nabla \rho_f \, \mathrm{d}V + \int_{\partial \Omega} \rho_f (\mathbf{v-w}) \cdot \mathbf{n}
 \end{align}
 Or with the use of Gauss theorem, one can conclude that the local form
 \begin{align}
