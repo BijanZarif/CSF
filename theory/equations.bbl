@@ -12,6 +12,11 @@ N.~K. Kylstad, ``Simulating the viscoelastic response of the spinal cord,''
 I.~N. Dr{\o}sdal, ``Porous and viscous modeling of cerebrospinal fluid flow in
   the spinal canal associated with syringomyelia,'' 2011.
 
+\bibitem{VanW95}
+D.~Van~Wynsberghe, C.~R. Noback, and R.~Carola, {\em Human anatomy and
+  physiology}.
+\newblock McGraw-Hill College, 1995.
+
 \bibitem{Quig04}
 M.~F. Quigley, B.~Iskandar, M.~A. Quigley, M.~Nicosia, and V.~Haughton,
   ``Cerebrospinal fluid flow in foramen magnum: temporal and spatial patterns
@@ -48,9 +53,9 @@ J.~Donea, A.~Huerta, J.-P. Ponthot, and A.~Rodriguez-Ferran, {\em Encyclopedia
   Lagrangian-Eulerian Methods}.
 \newblock Wiley \& Sons, 2004.
 
-\bibitem{Lang2}
-H.~P. Langtangen, {\em Finite Element Method}.
-\newblock 2015.
+\bibitem{Wins63}
+A.~M. Winslow, ``''equipotential''zoning of two-dimensional meshes,'' tech.
+  rep., California Univ., Livermore (USA). Lawrence Livermore Lab., 1963.
 
 \bibitem{Bren07}
 S.~Brenner and R.~Scott, {\em The mathematical theory of finite element

@@ -82,8 +82,17 @@ By using the Transport Theorem on the left hand side and with Gauss' theorem on 
 \end{align*}
 With the same argument as before the integrand has to be zero, and with some rearrangement:
 \begin{align}
-\pdi{\rho \mathbf{v}}{t} + \nabla \cdot (\rho \mathbf{v}\mathbf{v} ) = \nabla \cdot \sigma_f + \mathbf{F}_v \label{Momentum}
+\pdi{\rho \mathbf{v}}{t} + \nabla \cdot (\rho \mathbf{v}\mathbf{v} ) = \nabla \cdot \sigma_f + \mathbf{F}_v \label{M_0}
 \end{align} 
+The left hand side can be rewritten to
+\begin{align}
+\rho \pdi{\mathbf{v}}{t} + \mathbf{v} \pdi{\rho}{t} + \mathbf{v} \mathbf{v} \cdot \nabla \rho + \rho \mathbf{v} \cdot \nabla \mathbf{v} + \mathbf{v}\rho \cdot \nabla \mathbf{v} = \rho\Big{(}\pdi{\mathbf{v}}{t} + (\mathbf{v} \cdot \nabla ) \mathbf{v} \Big{)} + \Big{(}\pdi{\rho}{t} + \nabla \cdot (\mathbf{v} \rho)\Big{)}
+\end{align}
+And the last term is zero due to mass conservation. Equation \eqref{M_0} can then be written
+\begin{align}
+\rho \big{(}\pdi{\mathbf{v}}{t} + (\mathbf{v} \cdot \nabla ) \mathbf{v} \big{)} = \nabla \cdot \sigma_f + \mathbf{F}_v \label{Momentum}
+\end{align} 
+
 The stress tensor, $\sigma_f$, depends on fluid properties and will be defined in the next subsection. Equation \eqref{Momentum} is known as the momentum equation as it states conservation of momentum.
 \\
 \\
@@ -162,7 +171,15 @@ In the previous section, we saw that the stress tensor for elastic solids were l
 \\
 \\
 \subsection{Lagrangian and Eulerian descriptions of motion}
-We consider a domain $\Omega_{\mathbf{X}} \in \mathbb{R}^3$ consisting of material particles $\mathbf{X}$. The domain can undergo deformations, and the deformed domain, $\Omega_{\mathbf{x}}$, is the current configuration at time $t$. We define the one-to-one mapping:
+We consider a domain $\Omega_{\mathbf{X}} \in \mathbb{R}^3$ consisting of material particles $\mathbf{X}$. The domain can undergo deformations, and the deformed domain, $\Omega_{\textit{\textbf{x}}}$, is the current configuration at time $t$. 
+\begin{center}
+\begin{figure}[!ht]
+\includegraphics{figures/Lagrangian_domain} \label{Lagrangian}
+\caption{Lagrangian description of motion. The mapping $\beta$ maps the reference coordinates to the spatial ones}
+\end{figure}
+\end{center}
+
+We define the one-to-one mapping:
 \begin{align}
 \beta \,\, : \,\, \Omega_{\mathbf{X}} \times [0,T] \rightarrow  \Omega_{\mathbf{x}} \times [0,T] \\
 (\mathbf{X},t) \rightarrow \beta(\mathbf{X},t) = (\mathbf{x},t)
@@ -190,7 +207,15 @@ To be able to couple the Lagrangian approach for the solid with the Eulerian app
 \\The following derivation is inspired by the the works on Arbitrary Lagrangian-Eulerian methods by Donea et. al in \cite{Done04}. 
 \\
 \\
-The need for an additional set of coordinates, an independent referential system with reference coordinates $\chi$ is introduced. This introduces two new mappings to relate all the different configurations as shown in fig. The mappings are defined similarly to $\beta$ as
+The need for an additional set of coordinates, an independent referential system with reference coordinates $\chi$ is introduced. This introduces two new mappings to relate all the different configurations as shown in fig. 
+\begin{center}
+\begin{figure}[!ht]
+\includegraphics{figures/ALE_domain} \label{ALE_domain}
+\caption{The three domains needed in the ALE formulation}
+\end{figure}
+\end{center}
+
+The mappings are defined similarly to $\beta$ as
 \begin{align}
 \gamma \,\, : \,\, \Omega_{\chi} \times [0,T] \rightarrow  \Omega_{\mathbf{x}} \times [0,T] \\
 (\chi,t) \rightarrow \gamma(\chi,t) = (\mathbf{x},t)
@@ -219,13 +244,13 @@ The gradient is given as
 								\end{pmatrix} \label{alpha_Gradient}
 \end{align}
 Where the velocity 
-\begin{align} \mathbf{\hat{v}}(\mathbf{X},t) = \pdi{\chi}{t}\Big{|}_{\mathbf{X}} \label{MeshVel}
+\begin{align} \mathbf{\hat{v}}(\mathbf{X},t) = \pdi{\chi}{t}\Big{|}_{\mathbf{X}} \label{HatVel}
 \end{align}
 denotes the temporal change in the referential system while holding the material particle $\mathbf{X}$ fixed. Therefore the velocity $\mathbf{\hat{v}}$ can be interpereted as the particle velocity in the referential domain. \\
 \\
-We define $\theta = \gamma \, \circ \, \alpha^{-1} = \gamma(\alpha^{-1}(\mathbf{X},t))$ and obtain a relation between the different velocities by differentiating $\theta$. 
+We use that $\beta = \gamma \, \circ \, \alpha^{-1} = \gamma(\alpha^{-1}(\mathbf{X},t))$ and obtain a relation between the different velocities by differentiating $\beta$. 
 \begin{align}
-\pdi{\theta}{(X,t)}(\mathbf{X},t) & = \pdi{\gamma}{(\chi,t)}(\alpha^{-1}(\mathbf{X,t}))\, \pdi{\alpha^{-1}}{(\mathbf{X},t)}(\mathbf{X},t) \\
+\pdi{\beta}{(X,t)}(\mathbf{X},t) & = \pdi{\gamma}{(\chi,t)}(\alpha^{-1}(\mathbf{X,t}))\, \pdi{\alpha^{-1}}{(\mathbf{X},t)}(\mathbf{X},t) \\
 & = \pdi{\gamma}{(\chi,t)}(\chi,t)\, \pdi{\alpha^{-1}}{(\mathbf{X},t)}(\mathbf{X},t)
 \end{align}
 In matrix form this equation is written:
@@ -250,62 +275,111 @@ To this end, it is convenient to define the convective velocity
 \mathbf{c}:= \mathbf{v}-\mathbf{w} = \pdi{\mathbf{x}}{\chi}\cdot \mathbf{\hat{v}}
 \end{align}
 which is the relative velocity between the material and the mesh. 
-
-
-
-
-Because the domain itself is moving, we need to recall the balance equation from the Transport Theorem in the form \eqref{Reynolds}. The velocity carrying the net flux of mass across the boundary will now be $\mathbf{v}-\mathbf{w}$
 \\
 \\
-As in the benchmark case, consider a compressible structure defined by the region $\Omega_s^t$ immersed in an otherwise fixed region $\Omega_f^t$ containing an incompressible fluid. The outer boundaries of the fluid is named $\partial \Omega_f^t$. The interface is named $\Gamma$. \\
+To obtain relation between quantities to formulate the balance equations, we let a scalar quantity, $Q$ be defined as $Q(\mathbf{x},t), Q^*(\chi,t)$ and $Q^{**}(\mathbf{X},t)$ in the spatial, referential and material domains respectively. \\
+\\
+To obtain a relation between the spatial description, $Q$, and material description $Q^{**}$ we can utilize the previously described mapping $\beta$:
+
 \begin{align}
-\frac{\mathrm{d}}{\mathrm{d}t}\int_{\Omega_f^t} \rho_f \, \mathrm{d}V = \pdi{}{t}\int_{\Omega_f^t} \rho_f \, \mathrm{d}V + \int_{\partial \Omega_f^t} \rho_f(\mathbf{v}-\mathbf{w})\cdot \mathbf{n}_{\Omega_f^t} \mathrm{d}S = 0
+Q^{**}(\mathbf{X},t) = Q(\beta(\mathbf{X},t),t) = Q \, \circ \, \beta
 \end{align}
-The normal vector (from now on denoted $\mathbf{n}$) is defined to point out of the fluid and into the solid. 
 
-
-
-
-
-If the solid expands or contracts with speed $\mathbf{w}$ at the boundary, the rate of change of its volume will be 
+The gradient of $Q^{**}$ can then be computed as
 \begin{align}
--\int_\Gamma \mathbf{w} \cdot \mathbf{n} \,\mathrm{d}S
+\pdi{Q^{**}}{(\mathbf{X},t)}(\mathbf{X},t) = \pdi{Q}{(\mathbf{x},t)}(\mathbf{x},t) \, \pdi{\beta}{(\mathbf{X},t)}(\mathbf{X},t)  \label{Grad_Q}
 \end{align}
-Because of the rigid outer boundaries, the fluid will have the same rate of change, but with opposite sign. The fluid has a constant density, $\rho_f$, so the rate of change in mass in the fluid domain can be written 
+
 \begin{align}
-\frac{\mathrm{d}}{\mathrm{d}t}\int_{\Omega_f^t} \rho_f \, \mathrm{d}V = \int_\Gamma \rho_f \mathbf{w} \cdot \mathbf{n} \,\mathrm{d}S
+	\begin{pmatrix} \pdi{Q^{**}}{\mathbf{X}} & \pdi{Q^{**}}{t}
+	\end{pmatrix}
+	= 
+	\begin{pmatrix} \pdi{Q}{\mathbf{x}} & \pdi{Q}{t}
+	\end{pmatrix}
+	\begin{pmatrix} \pdi{\mathbf{x}}{\mathbf{X}} & \mathbf{v} \\
+											0^T & 1
+	\end{pmatrix} \label{Matrix_Q}
 \end{align}
-The left hand side can we rewritten by the transport theorem.
+After multiplication one can obtain the well known equation between material and spatial time derivaties:
 \begin{align}
-\int_{\Omega_f^t} \pdi{\rho_f}{t} \, \mathrm{d}V + \int_{\partial \Omega_f^t} \rho_f (\mathbf{v}-\mathbf{w}) \cdot \mathbf{n} \, \mathrm{d}S + \int_{\Gamma} \rho_f (\mathbf{v}-\mathbf{w}) \cdot \mathbf{n} \, \mathrm{d}S = \int_\Gamma \rho_f \mathbf{w} \cdot \mathbf{n} \,\mathrm{d}S
+\pdi{Q^{**}}{t} = \pdi{Q}{t} + \pdi{Q}{\mathbf{x}} \cdot \mathbf{v} \label{Mat_Spa}
 \end{align}
-Where the boundary integral have been split up into two parts. If the boundary conditions $\mathbf{v}=\mathbf{w}$ on $\Gamma$, and $\mathbf{w} = 0$ on $\partial \Omega_f^t$ are taken into account we end up with: 
+To ease notation we now recognize the material and spatial time derivatives $\pdi{Q^{**}}{t} = \pdi{Q}{t}\Big{|}_{\mathbf{X}}$, $\pdi{Q}{t} = \pdi{Q}{t}\Big{|}_{\mathbf{x}}$, and define the material and spatial derivatives the following way
 \begin{align}
-\int_{\Omega_f^t} \pdi{\rho_f}{t}\Big{|}_\mathbf{X} \, \mathrm{d}V + \int_{\partial \Omega} \rho_f (\mathbf{v-w}) \cdot \mathbf{n} \, \mathrm{d}S &  = \\
-\int_{\Omega_f^t} \pdi{\rho_f}{t}\Big{|}_\mathbf{\chi} + \mathbf{c} \cdot \nabla \rho_f \, \mathrm{d}V + \int_{\partial \Omega} \rho_f (\mathbf{v-w}) \cdot \mathbf{n}
+\frac{\mathrm{d}}{\mathrm{dt}} := \pdi{}{t}\Big{|}_{\mathbf{X}} \hspace{3cm} \pdi{}{t} := \pdi{}{t}\Big{|}_{\mathbf{x}}
 \end{align}
-Or with the use of Gauss theorem, one can conclude that the local form
+The relation \eqref{Mat_Spa} can now be written in a form probably already known to the reader
 \begin{align}
-\pdi{\rho_f}{d} + \nabla \cdot \rho_f \mathbf{v} = 0
+\frac{\mathrm{d}Q}{\mathrm{dt}} = \pdi{Q}{t} + \mathbf{v} \cdot \nabla Q \label{Material_derivative}
 \end{align}
-also holds in the ALE formulation. Therefore, independendtly of the compressibility of the solid, an incompressible fluid will still satisfy $\nabla \cdot \mathbf{v} = 0$
+The next step is to relate the material and the referential description of the quantity, $Q^{**}$ and $Q^*$ respectively, by the mapping $\alpha$. This relation is written as 
+\begin{align}
+Q^{**} = Q^* \, \circ \, \alpha^{-1}
+\end{align}
+By proceeding the exact same way as way as in \eqref{Grad_Q} and \eqref{Matrix_Q} the relation between material and referential time derivatives is written
+\begin{align}
+\pdi{Q^{**}}{t} = \pdi{Q^*}{t} + \pdi{Q^*}{\chi}\cdot \mathbf{\hat{v}}
+\end{align}
+If we rather want to express the spatial derivative of $Q^*$ in the spatial domain, we can use the definition of $\mathbf{\hat{v}}$ from \eqref{HatVel} to end up with
+\begin{align}
+\pdi{Q^{**}}{t} = \pdi{Q^*}{t} + \pdi{Q}{\mathbf{x}} \cdot \mathbf{c}
+\end{align}
+This equation can be written in more common notation, and the following is known as \textit{The fundamental ALE equation}
+\begin{align}
+\frac{\mathrm{d}Q}{\mathrm{dt}} = \pdi{Q}{t}\Big{|}_{\chi} + \mathbf{c} \cdot \nabla Q \label{Fundamental_ALE}
+\end{align}
+and states that the time derivative in the material configuration equals its local (referential) derivative plus a convective term taking into account the relative difference in velocity between the two systems. It should be noted that the relations presented also holds for vector quantities. 
+\\
+\\
+Also, by combining equations \eqref{Material_derivative} and \eqref{Fundamental_ALE}, we can relate the spatial time derivative with the referential time derivative as
+\begin{align}
+\pdi{Q}{t} = \pdi{Q}{t}\Big{|}_{\chi} - \mathbf{w} \cdot \nabla Q \label{Spatial_referential}
+\end{align}
 
 
-xx Read Donea paper \cite{Done04}
 
-Both equations need appropriate boundary conditions on the interface as well as the boundary of the domain. For the interface we have to ensure mass conservation and balance of the forces. These two conditions can be written as:
+\section{Balance equations in the ALE framework}
+To obtian appropriate balance equations in the ALE framework we start by noting that the balance equations can be written in terms of the material derivates as
+\begin{align}
+\frac{\mathrm{d}\rho}{\mathrm{dt}} = \pdi{\rho}{t} + \mathbf{v} \cdot \nabla \rho= -  \rho \cdot \nabla \mathbf{v}
+\end{align}
+\begin{align}
+\rho \frac{\mathrm{d}\mathbf{v}}{\mathrm{dt}} = \rho \Big{(} \pdi{\mathbf{v}}{t} + (\mathbf{v} \cdot \nabla ) \mathbf{v} \Big{)} = \nabla \cdot \sigma
+\end{align}
+By using \eqref{Spatial_referential}, the spatial time derivatives can be replaced to obtain equations for the ALE framework:
+\begin{align}
+\pdi{\rho}{t}\Big{|}_\chi + \mathbf{c} \cdot \nabla \rho= -  \rho \cdot \nabla \mathbf{v}
+\end{align}
+\begin{align}
+\rho \Big{(} \pdi{\mathbf{v}}{t}\Big{|}_\chi + (\mathbf{c} \cdot \nabla ) \mathbf{v} \Big{)} = \nabla \cdot \sigma
+\end{align}
+Which shows that all one have to do in order to transform the Eulerian form of the balance equations into the ALE formulation is to replace the convective velocity with the relative velocity between the material and the mesh. 
+\subsection{Mesh updating}
+The velocity $\mathbf{w}$ can be seen as the mesh velocity when a computational mesh is used. In FSI, the ALE framework provides flexibility to combine the Lagrangian and Eulerian descriptions of motion. On the structural part, as well as on the fluid-structure interface we take a Lagrangian approach. The domain $\Omega_s$ consists of the same material particles at all times and moves exactly with the material points within the structure. That is, $\mathbf{v}_s = \mathbf{w}_s$. The fluid domain has to follow the changes on the fluid-structure interface. Other than that the mesh velocity in the fluid domain is arbitrary in principle, but the choice of mesh velocity in the fluid domain is important for the accuracy of the solver. In general, important aspects to consider is disortion and squeeze of each element in the fluid domain. \\
+\\
+A Laplacian smoothing algorithm is used to update the mesh, consisting of solving a Laplace (or Poisson) equation for the mesh displacement in the fluid. The method is a mesh regularization method where the lines in the mesh have equal potential. This method was first introduced by Winslow in 1963 \cite{Wins63}.
+\section{Fluid Structure Interaction}
+In the case of an Newtonian incompressible fluid the mathematical problem consists of solving
+\begin{align}
+\begin{rcases}
+\rho \Big{(} \pdi{\mathbf{v}}{t} + ((\mathbf{v}-\mathbf{w})  \cdot & \nabla )  \mathbf{v} \Big{)}  =   \nabla \cdot \sigma_f(\mathbf{v},p)  \\
+& \nabla \cdot \mathbf{v} \, = 0 \\
+& \nabla ^2 \mathbf{U} \, = 0
+\end{rcases}
+& \text{ in } \Omega_f^t \\ \\
+\begin{rcases}
+\rho \pdi{\mathbf{v}}{t}  = &  \nabla \cdot \sigma_s(\mathbf{U}) \\
+\mathbf{w} =  \mathbf{v}
+\end{rcases}& \text{ in } \Omega_s^t 
+\end{align}
+In the case of fluid interacting with a solid structure, no material can cross the moving boundary and thus the fluid and solid velocity must be equal on the interface between the fluid and the solid. In addition the forces acting on the surface must be equal. A difference in forces from each material on the interface would result in infinite acceleration on the infinitely thin surface. Mathematicly, these two conditions can be stated as
 \begin{align}
 \begin{rcases}
 \sigma_f \cdot \mathbf{n} & =  \sigma_s \cdot \mathbf{n} \\
 \mathbf{v}_f & = \mathbf{v}_s
 \end{rcases}
-\text{ on } \Gamma_t
+\text{ on } \Gamma^t
 \end{align}
-
-
-
-
-
-
+And will be used at all interfaces in FSI simulations. Kinematic or dynamic boundary conditions will be needed on the other boundaries as well, but will differ depending on the problem considered. 
 
 

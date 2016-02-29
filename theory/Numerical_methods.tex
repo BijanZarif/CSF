@@ -1,6 +1,6 @@
 \chapter{Numerical Methods}
 \section{The Finite Element Method}
-The theory presented in this section is inspired by the great work of Langtangen in "Finite Element Method - INF5620 lecture notes" \cite{|lang2}  \\
+The theory presented in this section is partly inspired by the works of Langtangen in "Finite Element Method - INF5620 lecture notes" \cite{Lang2}  \\
 Consider the Poisson-equation
 \begin{align}
 -\nabla^2 v = f & \quad \text{ in } \Omega \label{Poisson}\\
@@ -25,7 +25,7 @@ This equation should hold for all $\phi$ in the function space $\hat{V}$. The tr
  In this thesis we will use two Sobolov spaces (named after the Russian mathematician Sergei Sobolov) widely used in Finite Element computing. For these definitions to be valid, we assume that the functions $v$ are all \textbf{|locally integrable} and in the case of definition \eqref{H1}, has one \textbf{weak derivative}. For more details on weak derivatives and the generalized concept of Sobolev spaces and functional analysis, we refer to the textbook by Brenner and Scott \cite{Bren07}.   
 \begin{definition}
 Let $\Omega$ be an open subset of $\mathbb{R}$ with a piecewise smooth boundary. We then define the $L^2$-norm as follows\\ \begin{center}
-$||v||_{|l^2(\Omega)} = (\int_\Omega v^2 \mathrm{d}x)^{\frac{1}{2}}$
+$||v||_{L^2(\Omega)} = (\int_\Omega v^2 \mathrm{d}x)^{\frac{1}{2}}$
 \end{center}
 The corresponding $L^2$-space is defined via
 \begin{center}
@@ -57,7 +57,9 @@ The first derivative of $v$ appears in the variational form. A common choice is 
  V := \{ v \in H^1(\Omega) : v = v_0 \text{ on } \partial \Omega_D \} \\
  \hat{V} := \{ v \in H^1(\Omega) : v = 0 \text{ on } \partial \Omega_D \}
 \end{align}
-, where the subscript $v_0$ denotes that $v = v_0$ on the Dirichlet part of the boundary. 
+
+
+
 \subsection{Finite elements}
 The next step is to approximate $v$ with a sum of basisfunctions in the finite-dimensional function space, $V = \text{span}\{\phi_0, \phi_1, ..., \phi_N \}$. Here, $\phi_i$ represents the basis functions and we search for a solution $v_h \in V$ such that $v_h$ can be written as a linear combination of the basis functions. 
 The first step in the finite element method consists of dividing the domain into smaller parts
@@ -71,22 +73,23 @@ where $N_e$ is the number of elements. Each element have a number of nodes withi
 				0 \quad \text{ for } i\neq j
 		 		\end{cases}
 \end{align*}
-That is, the basis functions $\phi_i$ are zero on all nodes except at node $i$. Each basis function is constructed by taking the Lagrange-polynomial which is 1 at the given node and 0 on all other nodes within the same element. Note that the basis functions for a node on the boundary of an element will have two Lagrange-polynomials "pieced together" depending on at which element the basis function is considered. For the rest of the domain the basis functions are defined to be 0. \\ \\
-
-\begin{figure}
+\begin{figure}[!ht]
   \begin{center}
     \includegraphics[scale=0.4]{figures/hats.png}
   \end{center}
-	\caption{The three first linear basis functions on the unit interval divided uniformly into 5 elements}
+	\caption{The three first linear basis functions on the unit interval divided uniformly into 5 elements, $\Omega_0 = [0,0.2], \Omega_1 = [0.2,0.4]$ and so on. In the case of Dirichlet Boundary conditions at $x=0$, $\phi_0$ will not be included in the funtcion space}
 	\label{fig:Hats}
 \end{figure}
+\\
+That is, the basis functions $\phi_i$ are zero on all nodes except at node $i$. Each basis function is constructed by taking the Lagrange-polynomial which is 1 at the given node and 0 on the neighboring nodes. Note that the basis functions are two Lagrange-polynomials "pieced together" at the node where it's value is 1. For the rest of the domain the basis functions are defined to be 0. \\ \\
+
 Now, let's return to the original problem \eqref{Poisson}-\eqref{Poisson_N} in scalar form. We start by approximating $v$ as a linear combination of all the basis functions. 
 \begin{align}
 v_h = \sum_{i=0}^N c_i \phi_i \label{u_hsum}
 \end{align}
 The definitions of $v_h$ and $V$ now give rise to a linear system. Using the Einstein summation convention, $x_i\,y_i = \sum_0^N x_i y_i $, \eqref{Weak_form} is now written 
 \begin{align}
--c_i(\nabla \phi_i, \phi_j)_\Omega = (f,\phi_j)_\Omega - (g, \phi_j)_{\partial \Omega_N} \label{|linear_system}
+-c_i(\nabla \phi_i, \nabla \phi_j)_\Omega = (f,\phi_j)_\Omega - (g, \phi_j)_{\partial \Omega_N} \label{|linear_system}
 \end{align}
 \\
 \\
@@ -204,7 +207,7 @@ The origin is set at the bottom left corner. We also set:
 \end{align}
 In addition to the interface, $\Gamma^t$, it may be convenient to define the fluid boundary, $\partial \Omega_f^t$ consisting of the outer rectangle and the part of the circle in contact with the fluid, and the solid boundary, $\partial \Omega_s^t$ consisting of the circle in contact with the solid.
 \subsection{CFD tests}
-For the CFD tests we perform tests treating the flag as a rigid object. This can be done by changing the structural parameters, or simply by adjust the mesh to include the fluid domain only. In this validation we choose the latter. 
+For the CFD tests we perform tests treating the flag as a rigid object. This can be done by changing the structural parameters, or simply by adjust the mesh to include the fluid domain only. In this validation we choose the latter. We show convergence with Mesh, where mesh 0 is the coarsest version. The \textbf{Ref.} are the reference values as given in the original benchmark paper. 
 
 \begin{table}[!ht]
 \begin{center}
@@ -222,11 +225,11 @@ For the CFD tests we perform tests treating the flag as a rigid object. This can
 \begin{table}[!ht]
 \begin{center}
   \begin{tabular}{|l | l | l | l|} \hline
-	Mesh refinement & Cells & Drag & Lift \\ \hline
+	Mesh & Cells & Drag & Lift \\ \hline
     0  & 1334 & 13.9344 & 1.0980  \\   \hline
     1 & 5336 & 14.1165 & 1.0836 \\ \hline
     2 & 21334 & 14.1865 & 1.0944  \\ \hline \hline
-    \textbf{Ref. (Hron, Turek)}  & & \textbf{14.29} & \textbf{1.119} \\ \hline 
+    \textbf{Ref.}  & & \textbf{14.29} & \textbf{1.119} \\ \hline 
     \hline
   \end{tabular}
 \end{center}
@@ -236,15 +239,35 @@ For the CFD tests we perform tests treating the flag as a rigid object. This can
 \begin{table}[!ht]
 \begin{center}
   \begin{tabular}{|l | l | l | l|} \hline
-	Mesh refinement & Cells & Drag & Lift \\ \hline
-    0  & 1 & 1 & 1 \\   \hline
-    1 & 1 & 1 & 1 \\ \hline
-    2 &.2 & 1 & 2   \\ \hline \hline
-    \textbf{Ref. (Hron, Turek)}  & & \textbf{136.7} & \textbf{10.53} \\ \hline 
+	Mesh & Cells & Drag & Lift \\ \hline
+    0  & 1334 & 130.092948352 & 10.9117261826 \\   \hline
+    1 & 5663 & 134.43022177 & 10.473965217 \\ \hline
+    2 & 21334 & 135.777285175 & 10.7118857057 \\ \hline \hline
+    \textbf{Ref.}  & & \textbf{136.7} & \textbf{10.53} \\ \hline 
     \hline
   \end{tabular}
 \end{center}
 \caption{Results for CFD2}
+\end{table}
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{|l | l | l | l|} \hline
+	Mesh & Cells & Drag & Lift \\ \hline
+    0  & 1334 &  & \\   \hline
+    1 & 1 & 1 & 1 \\ \hline
+    2 &.2 & 1 & 2   \\ \hline \hline
+    \hline
+  \end{tabular}
+  \begin{tabular}{|l | l | l | l|} \hline
+	Mesh & Cells & Drag & Lift \\ \hline
+    0  & 1 & 1 & 1 \\   \hline
+    1 & 1 & 1 & 1 \\ \hline
+    2 &.2 & 1 & 2   \\ \hline \hline
+    \textbf{Ref.}  & & \textbf{439.45 $\pm$ 5.6183} & \textbf{-11.893 $\pm$ 437.81} \\ \hline 
+    \hline
+  \end{tabular}
+\end{center}
+\caption{Results for CFD3}
 \end{table}
 \subsection{CSM tests}
 The structural tests are performmed by adding the gravitational force to the structural part only. The CSM3 test is computed as a time-dependent case, starting from the initial position while CSM1 and CSM2 are Steady State (SS) solutions. 
@@ -265,11 +288,11 @@ The structural tests are performmed by adding the gravitational force to the str
 \begin{table}[!h]
 \begin{center}
   \begin{tabular}{|l | l | l | l|} \hline
-	Mesh refinement & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$\\ \hline
+	Mesh & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$\\ \hline
     0  & 738 & -12.410569 & -60.599246 \\   \hline
     1 & 2952 & -12.419505 & -60.622920 \\ \hline
     2 & 11808 & -12.422290 & -60.630433   \\ \hline \hline
-    \textbf{Ref. (Hron, Turek)}  & & \textbf{-7.187} & \textbf{-66.10} \\ \hline 
+    \textbf{Ref.}  & & \textbf{-7.187} & \textbf{-66.10} \\ \hline 
     \hline
   \end{tabular}
 \end{center}
@@ -279,11 +302,11 @@ The structural tests are performmed by adding the gravitational force to the str
 \begin{table}[!h]
 \begin{center}
   \begin{tabular}{|l | l | l | l|} \hline
-	Mesh refinement & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$\\ \hline
+	Mesh & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$\\ \hline
     0  & 738 & -0.92479395 & -16.853778 \\   \hline
     1 & 2952 & -0.92558954 & -16.861757 \\ \hline
     2 & 11808 & -0.92583356 & -16.864252   \\ \hline \hline
-    \textbf{Ref. (Hron, Turek)}  & & \textbf{-0.4690} & \textbf{-16.97} \\ \hline 
+    \textbf{Ref.}  & & \textbf{-0.4690} & \textbf{-16.97} \\ \hline 
     \hline
   \end{tabular}
 \end{center}
@@ -317,14 +340,22 @@ The structural tests are performmed by adding the gravitational force to the str
   \end{tabular}
 \end{center}
 \end{table}
+\begin{center}
+\begin{figure}[!ht]
+\includegraphics[width=\linewidth]{figures/FSI1_mesh_med}
+\caption{Steady State displacement in y-direction for the FSI1 test case for the medium refinement version of the mesh. Note that the mesh around the structural part also has been slightly adjusted}
+\end{figure}
+\end{center}
+
+
 \begin{table}[!ht]
 \begin{center}
   \begin{tabular}{|l | l | l | l | l | l|} \hline
-	Mesh refinement & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Drag & Lift\\ \hline
+	Mesh & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Drag & Lift\\ \hline
     0  & 2698 & 0.015596 & 0.74221 & 14.0876279441 & 0.756130219216 \\   \hline
     1 & 10792 & 0.017738 & 0.77686 & 14.1777783843 & 0.763145083966 \\ \hline
     2 &  & $ $&  $ $ & $ $ & $ $   \\ \hline \hline
-    \textbf{Ref. (Hron, Turek)}  & & 0.0227 & 0.8209 & 14.295 & 0.7638\\ \hline 
+    \textbf{Ref.}  & & 0.0227 & 0.8209 & 14.295 & 0.7638\\ \hline 
     \hline
   \end{tabular}	
 \caption{Results for FSI1}
@@ -334,11 +365,11 @@ The structural tests are performmed by adding the gravitational force to the str
 \begin{table}[!ht]
   \begin{center}
   \begin{tabular}{|l | l | l | l | l | l|} \hline
-	Mesh refinement & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Drag & Lift\\ \hline
+	Mesh & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Drag & Lift\\ \hline
     0  & 2698 & $ -4.33 \pm 4.54$ & $ 1.40 \pm 29.96$ & $441.45 \pm 33.15 $ & $-2.30 \pm 178.00$\\   \hline
     1 & 10792 & $ $&  $ $ & $ $ & $ $\\ \hline
     2 &  & $ $&  $ $ & $ $ & $ $   \\ \hline \hline
-    \textbf{Ref. (Hron, Turek)}  & & \textbf{-2.69} $\pm$ \textbf{2.53} & \textbf{1.48} $\pm$ \textbf{34.38} & \textbf{457.3} $\pm$ \textbf{22.66} & \textbf{2.22} $\pm$ \textbf{149.78}\\ \hline 
+    \textbf{Ref.}  & & \textbf{-2.69} $\pm$ \textbf{2.53} & \textbf{1.48} $\pm$ \textbf{34.38} & \textbf{457.3} $\pm$ \textbf{22.66} & \textbf{2.22} $\pm$ \textbf{149.78}\\ \hline 
     \hline
 
   \end{tabular}
@@ -351,6 +382,38 @@ Ux: Max = 0.0002099, Min = -0.008879 \\
 Uy: Max = 0.03136, Min = -0.02856 \\
 Drag: Max = 474.6, Min = 408.3 \\
 Lift: Max = 175.7, Min = -180.3 (174.4, -177.0\\
+\begin{center}
+\begin{figure}[!ht]
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/coarse/FSI_mesh_1}
+\caption{t=10.88}
+\end{subfigure}
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/coarse/FSI_mesh_2}
+\caption{t=10.91}
+\end{subfigure} \\
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/coarse/FSI_mesh_3}
+\caption{t=10.94}
+\end{subfigure}
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/coarse/FSI_mesh_4}
+\caption{t=10.97}
+\end{subfigure} \\
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/coarse/FSI_mesh_5}
+\caption{t=11.00}
+\end{subfigure}
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/coarse/FSI_mesh_6}
+\caption{t=11.03}
+\end{subfigure}
+\caption{The colormap shows the magnitude of the velocity around the flag at six different states of time in fully developed flow. Maximum velocity reaches 4.37. The mesh consists of a smooth curve at the interface, and the domains are separated beforehand in FEniCS}
+\end{figure}
+\end{center}
+
+
+
 
 \section{Fluid Structure Interaction using the Finite Element method}
 The solver was implemented from scratch in Python using the DOLFIN library. FSI solvers within the FEniCS framework exists, e.g. under Unicorn or CBC.twist. For instance, Selin \cite{Seli11} implemented a partitioned solver in FEniCS in his PhD-thesis, using the already existing modules for solving fluid flow and structural deformations separately (CBC.Flow and CBC.Twist). However, the benefits of being in full control of the equations and all boundary conditions involved are obvious, especially in the process of understanding the complexity of the physical problem. In addition to this, it will be easier to adjust the solver with respect to the model. The equations can be changed whether we want the spinal cord to be porous, elastic, poroelastic or viscoelastic. The use of two separate solvers is also problematic for the monolithic approach, when all equations are solved simultaneously. On the other hand, solvers implemented by experienced and skilled research groups will probably be a lot more efficient and should already have been validated. 
@@ -368,17 +431,16 @@ a = inner(grad(v),grad(phi)*dx
 L = inner(f,phi)*dx
 \end{cverbatim}
 \end{center}
-In deriving variational forms, we try to keep this close link by recalling the symbols used for velocity ($\mathbf{v}$), total displacement ($\mathbf{U}$), pressure ($p$), and mesh velocity, ($\mathbf{w}$). Also recall that in the solid the mesh moves exactly with the velocty of the structure so $\mathbf{w}_s = \mathbf{u}_s$
+In deriving variational forms, we try to keep this close link by recalling the symbols used for velocity ($\mathbf{v}$), total displacement ($\mathbf{U}$), pressure ($p$), and mesh velocity, ($\mathbf{w}$). Also recall that in the solid the mesh moves exactly with the velocty of the structure so $\mathbf{w}_s = \mathbf{v}_s$
 \\
-\\
-The total displacement $\mathbf{U}$ can now be expressed as a function of the displacement from the previous time step, $\mathbf{U}^{(1)}$, and the mesh velocity $\mathbf{w}$. In an implicit shceme, for instance, $\mathbf{U} = \mathbf{U}^{(1)} + \Delta t\mathbf{w}$
 \subsection{A note on temporal discretization}
-Throughout the thesis we have used the notation $\mathbf{v} = \mathbf{v}^{n+1}$ to denote the unknown functions at the time step we want to proceed to.  
-If we use an implicit scheme in time, i.e, $(\pdi{\mathbf{v}}{t})^{n+1} \approx \frac{\mathbf{v}^{n+1}-\mathbf{v}^{n}}{\Delta t} $, and $\mathbf{U}^{n+1} = \mathbf{U}^{n} + \Delta t \mathbf{w}^{n+1}$ where n denotes time step number. For the known time step n, we have used $\mathbf{v}^{(1)} = v^n$ and for the guess in the linearized form, $v^{(0)}$.
+In order not to overload this thesis with notation and superscripts, we have used the notation $\mathbf{v} := \mathbf{v}^{n+1}$ to denote the value of a function at the next time-step. Similarly, we define $\mathbf{v^{(1)}} := \mathbf{v}^n$ to denote the (known) value of a function at the present time step. 
+\\
+\\The total displacement $\mathbf{U}$ can now be expressed as a function of the displacement from the previous time step, $\mathbf{U}^{(1)}$, and the mesh velocity $\mathbf{w}$. If we use an implicit scheme in time, i.e, $(\pdi{\mathbf{v}}{t})^{n+1} \approx \frac{\mathbf{v}^{n+1}-\mathbf{v}^{n}}{\Delta t} $, and $\mathbf{U} = \mathbf{U}^{(1)} + \Delta t \mathbf{w}$. 
 \\
 \\
 \subsection{Spatial discretization}
-Since we have three unknown functions, we use a mixed function space with three function spaces, $\Phi$, $\eta$ and $\Psi$. In the fluid we multiply the momentum equation with $\Phi$, the continuity equation with $\eta$ and the equation for mesh velocity with $\Psi$ and integrate over the domain in its \textit{current} configuration, $\Omega^t$. In the fluid, this yields
+When dealing with nonlinear equations, such as the Navier-Stokes equation, \textit{linearization} is needed in order to solve the equations. In the nonlinear terms, we simply replace one (or more) of the unknown $\mathbf{v}$'s with a "guess" to get an equation linear in $\mathbf{v}$. This guess is denoted as $\mathbf{v}^{(0)}$. Since we have three unknown functions, we use a mixed function space with three function spaces, $\Phi$, $\eta$ and $\Psi$. In the fluid we multiply the momentum equation with $\Phi$, the continuity equation with $\eta$ and the equation for mesh velocity with $\Psi$ and integrate over the domain in its \textit{current} configuration, $\Omega^t$. In the fluid, this yields
 \begin{align}
 \frac{\rho_f}{\Delta t}(\mathbf{v},\Phi)_{\Omega_f} + \rho_f(((\mathbf{v}-\mathbf{w})\cdot \nabla) \mathbf{v}^{(0)}, \Phi)_{\Omega_f^t} - (p,\nabla \cdot \Phi)_{\Omega_f^t} + 2\mu_f(\epsilon(\mathbf{v}), \epsilon(\Phi))_{\Omega_f^t} = \\ 
 \frac{\rho_f}{\Delta t}(\mathbf{v}^{(1)},\Phi)_{\Omega_f^t} - (\sigma_f(p,\mathbf{v})\cdot \mathbf{n}, \Phi)_{\partial \Omega_f^t} - (\sigma_f(p,\mathbf{v}) \cdot \mathbf{n}_f, \Phi)_{\Gamma^t} \label{VarMom}
@@ -432,8 +494,14 @@ On the outlet, we assign the stress-free condition $\sigma_f(p,\mathbf{v}) \cdot
 \\
 \\
 This means that all integrals involving boundaries will vanish in the variational form. The Dirichlet conditions are imposed in FEniCS as previously described.
-\subsection{A FSI solver in FEniCS}
-There will be some changes and a great leap in complexity compared to the previous example using FEniCS. The main differences and additions are explained here. The computational mesh is constructed in gmsh with a straight boundary dividing the fluid and the solid. This way, the class MeshFunction can be utilized by dividing the mesh in two subdomains. We now assume we have classes describing the solid and fluid region, implemented with functions simliary to the boundary functions in the Poisson example. 
+
+
+
+\subsection{FSI in FEniCS}
+There will be some changes and a great leap in complexity compared to the previous example using FEniCS. The main differences and additions are explained here. One thing to highlight is the always ongoing changes and updates in the dolfin library. Therefore, if a solver was to be used by someone other than the writer, it will constantly need updates and fixes. This thesis do not intend to present a solver with great complexity and many options, but rather outline the most important lines of code and explain difficulties behind the FSI problem in FEniCS. The explanation here intends that a reader somewhat familiar with FEniCS should be able to implement such a code within a short amount of time. 
+\\
+\\
+The computational mesh is constructed in gmsh with a straight boundary dividing the fluid and the solid. This way, the class MeshFunction can be utilized by dividing the mesh in two subdomains. We now assume we have classes describing the solid and fluid region, implemented with functions simliary to the boundary functions in the Poisson example. 
 \begin{cverbatim}
 mesh = Mesh('FSI_mesh.xml')
 SD = MeshFunction('uint', mesh, mesh.topology().dim())
@@ -479,6 +547,8 @@ ds = Measure('ds')[boundaries]
 dx_f = dx(0,subdomain_data=SD)
 dx_s = dx(1,subdomain_data=SD)
 \end{cverbatim}
+The last two lines simplifies the integrands in the variational form and make it more clear which expressions are to be used in the fluid domain and which should be used in the solid domain.
+\\
 Sometimes, it can be convinient to define the constants used in FEniCS as instances of the class Constant, to avoid re-compiling if the value of the constant is changed. e.g.
 \begin{cverbatim}
 dt = 0.0003
@@ -537,16 +607,14 @@ VPW_ = Function(VPW)
 This function will consist of all values for $\mathbf{v}$, $p$ and $\mathbf{w}$.
 \\
 \\
-The time loop runs until the current time exceeds the specified end time, T. The forms change in time, and thus needs to be assembled to be updated to use the correct values for $\mathbf{v}^{(1)}, \mathbf{w}^{(1)}, \mathbf{U}^{(1)}$ and $\mathbf{v}^{(0)}$. The linear form needs an update each time step, while the bilinear form needs to be updated every single iteration inside the time loop. For the iterative method, we have (for now) chosen the Picard iteration based on the simplicity of the algorithm compared to Newton's method, especially when dealing with a mixed function space consisting of three separate spaces. The iteration runs until the $L^2$ norm of $(\mathbf{v}-\mathbf{v}^({0}))$ is less than a given number, $\alpha$, or if the number of iterations becomes to large. 
-\ref{fig:Geometry}
-
+The time loop runs until the current time exceeds the specified end time, T. The forms change in time, and thus needs to be assembled to be updated to use the correct values for $\mathbf{v}^{(1)}, \mathbf{w}^{(1)}, \mathbf{U}^{(1)}$ and $\mathbf{v}^{(0)}$. The linear form needs an update each time step, while the bilinear form needs to be updated every single iteration inside the time loop. For the iterative method, we have (for now) chosen the Picard iteration based on the simplicity of the algorithm compared to Newton's method, especially when dealing with a mixed function space consisting of three separate spaces. The iteration runs until the $L^2$ norm of $(\mathbf{v}-\mathbf{v}^{(0)})$ is less than a given number, $\tau$, or if the number of iterations becomes to large. 
 
 \begin{cverbatim}
 while t < T:
 	...
 	b = assemble(L)
 	...
-	while error > alpha and k_iter < max_iter:
+	while error > tau and k_iter < max_iter:
 		A = assemble(a)
 		A = ident.zeros()
 		[bc.apply(A,b) for bc in bcs]
