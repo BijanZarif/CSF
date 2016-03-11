@@ -93,6 +93,9 @@ class FSI_Solver:
 		Cop2 = C1_Brucker2[:5]
 		C1_Brucker2 = append(Cop,Cop2)
 
+		Bertram09_Pressure = array([0, -100, 0, 0])
+		B09time = array([0, 2.5e-3, 5e-3, 0.829])
+
 		class MyExpression0(Expression):
 			def __init__(self,t_Brucker,C1_Brucker,t):
 				self.t = t
@@ -114,7 +117,8 @@ class FSI_Solver:
 
 			def value_shape(self):
 				return (2,)
-		return MyExpression0(t_Brucker,C1_Brucker,0.0)
+		#return MyExpression0(t_Brucker,C1_Brucker,0.0)
+		return MyExpression0(B09time, Bertram09_Pressure,0.0)
 	
 	def make_functions(self, mesh_file='meshes/wide_syrinx.xml',refine=0):
 		self.mesh = Mesh(mesh_file)
@@ -157,6 +161,10 @@ class FSI_Solver:
 		self.v0 = Function(V)
 		self.v1 = Function(V)
 		self.U = Function(V)
+	
+
+		
+
 		
 		v0,v1,U = self.v0, self.v1, self.U
 		
@@ -175,7 +183,7 @@ class FSI_Solver:
 		bcv7 = DirichletBC(VPW.sub(0),noslip,boundaries,7) # Fluid walls
 
 
-		bcv = [bcv1, bcv2, bcv3, bcv5, bcv7] # don't use bcv6 for FSI
+		bcv = [bcv3, bcv5, bcv7] # don't use bcv6 for FSI
 
 		# SOLID
 
@@ -211,6 +219,8 @@ class FSI_Solver:
 		def sigma_f(v):
 			return 2*mu_f*sym(grad(v))
 	
+		self.pressure = self.Brucker_inlet()
+	
 		self.dt = 0.01
 		k = self.dt
 
@@ -220,8 +230,8 @@ class FSI_Solver:
 			k*inner(sigma_dev(v),grad(phi))*dx_s
 
 		LMS = rho_s/k*inner(self.v1,phi)*dx_s - \
-			inner(sigma_dev(U),grad(phi))*dx_s# - \
-			#inner(g,phi)*dx_s
+			inner(sigma_dev(U),grad(phi))*dx_s #- \
+			#inner(self.pressure,phi)*ds(3)
 
 		aDS = epsilon*inner(v,psi)*dx_s - epsilon*inner(w,psi)*dx_s
 
@@ -238,7 +248,9 @@ class FSI_Solver:
 			 inner(p,div(phi))*dx_f + \
 			2*mu_f*inner(sym(grad(v)),sym(grad(phi)))*dx_f
 
-		LMF = rho_f/k*inner(self.v1,phi)*dx_f
+		LMF = rho_f/k*inner(self.v1,phi)*dx_f - \
+		      inner(self.pressure,phi)*ds(1) - \
+			  inner(self.pressure,phi)*ds(2)
 
 		aDF = k*inner(grad(w),grad(psi))*dx_f
 		LDF = -inner(grad(self.U),grad(psi))*dx_f
@@ -256,10 +268,10 @@ class FSI_Solver:
 		return [[v,w,p],[phi,eta,psi],[dx_f,dx_s]]
 
 	def run(self,dt,T,folder,save_count=5,solver=None, prec=None,max_iter=6,max_error=1E-6):
-		ufile = File("%s/velocity.xdmf"%folder) # xdmf
-		pfile = File("%s/pressure.xdmf"%folder)
-		dfile = File("%s/dU.xdmf"%folder)
-		tfile = File("%s/U.xdmf"%folder)
+		ufile = File("%s/velocity.pvd"%folder) # xdmf
+		pfile = File("%s/pressure.pvd"%folder)
+		dfile = File("%s/dU.pvd"%folder)
+		tfile = File("%s/U.pvd"%folder)
 		VPW_ = Function(self.VPW)
 		self.v0.vector().array()[:] = 0
 		self.v1.vector().array()[:] = 0
@@ -269,6 +281,7 @@ class FSI_Solver:
 		while t < T + DOLFIN_EPS:# and (abs(FdC) > 1e-3 or abs(FlC) > 1e-3):
 				self.vf_l.t=t
 				self.vf_r.t=t
+				self.pressure.t = t
 				b = assemble(self.L)
 				eps = 10
 				k_iter = 0

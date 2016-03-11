@@ -12,12 +12,13 @@
 \contentsline {subsection}{\numberline {3.1.4}Navier-Stokes equations for incompressible flow}{13}{subsection.3.1.4}
 \contentsline {section}{\numberline {3.2}Linear Elasticity}{14}{section.3.2}
 \contentsline {section}{\numberline {3.3}Linear Poroelasticity}{14}{section.3.3}
-\contentsline {section}{\numberline {3.4}Descriptions of Motion}{15}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Lagrangian and Eulerian descriptions of motion}{15}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}The Arbitrary Eulerian Lagrangian description}{16}{subsection.3.4.2}
-\contentsline {section}{\numberline {3.5}Balance equations in the ALE framework}{20}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}Mesh updating}{20}{subsection.3.5.1}
-\contentsline {section}{\numberline {3.6}Fluid Structure Interaction}{21}{section.3.6}
+\contentsline {subsection}{\numberline {3.3.1}Fluid flow through a porous media}{14}{subsection.3.3.1}
+\contentsline {section}{\numberline {3.4}Descriptions of Motion}{16}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Lagrangian and Eulerian descriptions of motion}{16}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}The Arbitrary Eulerian Lagrangian description}{18}{subsection.3.4.2}
+\contentsline {section}{\numberline {3.5}Balance equations in the ALE framework}{21}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Mesh updating}{22}{subsection.3.5.1}
+\contentsline {section}{\numberline {3.6}Fluid Structure Interaction}{22}{section.3.6}
 \contentsline {chapter}{\numberline {4}Numerical Methods}{23}{chapter.4}
 \contentsline {section}{\numberline {4.1}The Finite Element Method}{23}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Variational formulation}{23}{subsection.4.1.1}

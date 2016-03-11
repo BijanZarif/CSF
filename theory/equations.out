@@ -12,30 +12,31 @@
 \BOOKMARK [2][-]{subsection.3.1.4}{Navier-Stokes equations for incompressible flow}{section.3.1}% 12
 \BOOKMARK [1][-]{section.3.2}{Linear Elasticity}{chapter.3}% 13
 \BOOKMARK [1][-]{section.3.3}{Linear Poroelasticity}{chapter.3}% 14
-\BOOKMARK [1][-]{section.3.4}{Descriptions of Motion}{chapter.3}% 15
-\BOOKMARK [2][-]{subsection.3.4.1}{Lagrangian and Eulerian descriptions of motion}{section.3.4}% 16
-\BOOKMARK [2][-]{subsection.3.4.2}{The Arbitrary Eulerian Lagrangian description}{section.3.4}% 17
-\BOOKMARK [1][-]{section.3.5}{Balance equations in the ALE framework}{chapter.3}% 18
-\BOOKMARK [2][-]{subsection.3.5.1}{Mesh updating}{section.3.5}% 19
-\BOOKMARK [1][-]{section.3.6}{Fluid Structure Interaction}{chapter.3}% 20
-\BOOKMARK [0][-]{chapter.4}{Numerical Methods}{}% 21
-\BOOKMARK [1][-]{section.4.1}{The Finite Element Method}{chapter.4}% 22
-\BOOKMARK [2][-]{subsection.4.1.1}{Variational formulation}{section.4.1}% 23
-\BOOKMARK [2][-]{subsection.4.1.2}{Finite elements}{section.4.1}% 24
-\BOOKMARK [2][-]{subsection.4.1.3}{Implementation in FEniCS}{section.4.1}% 25
-\BOOKMARK [1][-]{section.4.2}{A bencmark FSI-problem}{chapter.4}% 26
-\BOOKMARK [2][-]{subsection.4.2.1}{Domain, Initial- and boundary conditions}{section.4.2}% 27
-\BOOKMARK [2][-]{subsection.4.2.2}{CFD tests}{section.4.2}% 28
-\BOOKMARK [2][-]{subsection.4.2.3}{CSM tests}{section.4.2}% 29
-\BOOKMARK [2][-]{subsection.4.2.4}{FSI tests}{section.4.2}% 30
-\BOOKMARK [1][-]{section.4.3}{Fluid Structure Interaction using the Finite Element method}{chapter.4}% 31
-\BOOKMARK [2][-]{subsection.4.3.1}{A note on temporal discretization}{section.4.3}% 32
-\BOOKMARK [2][-]{subsection.4.3.2}{Spatial discretization}{section.4.3}% 33
-\BOOKMARK [2][-]{subsection.4.3.3}{Treatment of boundary conditions}{section.4.3}% 34
-\BOOKMARK [2][-]{subsection.4.3.4}{FSI in FEniCS}{section.4.3}% 35
-\BOOKMARK [1][-]{section.4.4}{A Discontinuous Galerkin method}{chapter.4}% 36
-\BOOKMARK [2][-]{subsection.4.4.1}{Stokes flow}{section.4.4}% 37
-\BOOKMARK [0][-]{chapter.5}{Material parameters}{}% 38
-\BOOKMARK [0][-]{chapter.6}{Simulating interaction between CSF and the Spinal Cord}{}% 39
-\BOOKMARK [1][-]{section.6.1}{Overview of previous studies}{chapter.6}% 40
-\BOOKMARK [1][-]{section.6.2}{Assessment of CSF velocities before and after decompression surgery}{chapter.6}% 41
+\BOOKMARK [2][-]{subsection.3.3.1}{Fluid flow through a porous media}{section.3.3}% 15
+\BOOKMARK [1][-]{section.3.4}{Descriptions of Motion}{chapter.3}% 16
+\BOOKMARK [2][-]{subsection.3.4.1}{Lagrangian and Eulerian descriptions of motion}{section.3.4}% 17
+\BOOKMARK [2][-]{subsection.3.4.2}{The Arbitrary Eulerian Lagrangian description}{section.3.4}% 18
+\BOOKMARK [1][-]{section.3.5}{Balance equations in the ALE framework}{chapter.3}% 19
+\BOOKMARK [2][-]{subsection.3.5.1}{Mesh updating}{section.3.5}% 20
+\BOOKMARK [1][-]{section.3.6}{Fluid Structure Interaction}{chapter.3}% 21
+\BOOKMARK [0][-]{chapter.4}{Numerical Methods}{}% 22
+\BOOKMARK [1][-]{section.4.1}{The Finite Element Method}{chapter.4}% 23
+\BOOKMARK [2][-]{subsection.4.1.1}{Variational formulation}{section.4.1}% 24
+\BOOKMARK [2][-]{subsection.4.1.2}{Finite elements}{section.4.1}% 25
+\BOOKMARK [2][-]{subsection.4.1.3}{Implementation in FEniCS}{section.4.1}% 26
+\BOOKMARK [1][-]{section.4.2}{A bencmark FSI-problem}{chapter.4}% 27
+\BOOKMARK [2][-]{subsection.4.2.1}{Domain, Initial- and boundary conditions}{section.4.2}% 28
+\BOOKMARK [2][-]{subsection.4.2.2}{CFD tests}{section.4.2}% 29
+\BOOKMARK [2][-]{subsection.4.2.3}{CSM tests}{section.4.2}% 30
+\BOOKMARK [2][-]{subsection.4.2.4}{FSI tests}{section.4.2}% 31
+\BOOKMARK [1][-]{section.4.3}{Fluid Structure Interaction using the Finite Element method}{chapter.4}% 32
+\BOOKMARK [2][-]{subsection.4.3.1}{A note on temporal discretization}{section.4.3}% 33
+\BOOKMARK [2][-]{subsection.4.3.2}{Spatial discretization}{section.4.3}% 34
+\BOOKMARK [2][-]{subsection.4.3.3}{Treatment of boundary conditions}{section.4.3}% 35
+\BOOKMARK [2][-]{subsection.4.3.4}{FSI in FEniCS}{section.4.3}% 36
+\BOOKMARK [1][-]{section.4.4}{A Discontinuous Galerkin method}{chapter.4}% 37
+\BOOKMARK [2][-]{subsection.4.4.1}{Stokes flow}{section.4.4}% 38
+\BOOKMARK [0][-]{chapter.5}{Material parameters}{}% 39
+\BOOKMARK [0][-]{chapter.6}{Simulating interaction between CSF and the Spinal Cord}{}% 40
+\BOOKMARK [1][-]{section.6.1}{Overview of previous studies}{chapter.6}% 41
+\BOOKMARK [1][-]{section.6.2}{Assessment of CSF velocities before and after decompression surgery}{chapter.6}% 42

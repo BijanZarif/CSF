@@ -143,13 +143,42 @@ $\sigma_s = 2\mu\epsilon(\mathbf{U}) + \lambda \nabla \cdot \mathbf{U}$
 \begin{align} 
 \rho \pdi{^2\mathbf{U}}{t^2} = \nabla \cdot \sigma_s \label{LE}
 \end{align}
-The left hand side can also be expressed from the solid velocity $\mathbf{v}$ using that $\pdi{^2\mathbf{U}}{t^2} = \pdi{\mathbf{v}}{t} $. The advantage of using $\mathbf{v}$ as the unkown will be discussed in chapter xxx 
+The left hand side can also be expressed from the solid velocity $\mathbf{v}$ using that $\pdi{^2\mathbf{U}}{t^2} = \pdi{\mathbf{v}}{t} $. The advantage of using $\mathbf{v}$ as the unkown will be discussed in chapter xxx.
+\\
+Therefore, the governing equation for the Linear Elasticity problem will be
+\begin{align}
+\rho \pdi{\mathbf{v}}{t} = \nabla \cdot \sigma_s \label{LE2}
+\end{align}
 \section{Linear Poroelasticity}
-In this section, the equations describing fluid flowing trough a elastic medium is presented. For a more detailed discussion, derivation and history within the field we refer to \cite{Wang00} on Linear Poroelasticity. To keep the mathematics as similar to the fluid case as possible, we use $\mu$ and $\lambda$ instead of the possion ratio. The equations describing linear poroelasticity are often described as Biot's equations. 
+In this section, the equations describing fluid flowing trough an elastic, porous medium is presented. For a more detailed discussion, derivation and history within the field we refer to \cite{Wang00} on Linear Poroelasticity. To keep the mathematics as similar to the fluid case as possible, we use $\mu$ and $\lambda$ instead of the possion ratio. The equations describing linear poroelasticity are often described as Biot's equations. 
 \\
 \\
+\subsection{Fluid flow through a porous media}
+A porous medium is a material with pores in which fluid can flow. The principles of modeling porous flow consist of macroscopic averaging over the pores. The material part is often known as the skeleton, matrix or frame and in general all the pores will have different size and shape. In this section the skeleton is assumed rigid. The nature of the material defines whether we will be able to fully solve the problem with no-slip conditions on all skeleton parts, or if some kind of volumetric averaging can be done. If the observer is interested in velocity variations on the scales of the pores, conventional fluid dynamics must be used. When there are many pores and channels, the complexity of the problem makes the full Navier-Stokes system difficult to solve. In these cases, macroscopic volume averaging is usually done, where the effects of the skeleton is modeled by introducing parameters constant over the material considered, such as permeability and conductivity. 
+\\
+These kinds of simplifications results in the famous Darcy's law, here generalized in three dimensions
+\begin{align}
+\mathbf{v} = -\mu \mathbf{K} \cdot \nabla p \label{Darcy3}
+\end{align}
+Where $\mathbf{K}$ is the permability tensor, and $\mu$ is the dynamics viscosity of the fluid. If the medium considered is isotropic, the permeability is a scalar value and \eqref{Darcy3} can be expressed as
+\begin{align}
+\mathbf{v} = -\frac{K}{\mu} \nabla p \label{Darcy}
+\end{align}
+\begin{center}
+\begin{figure}[!ht]
+\includegraphics[scale=0.3]{figures/Porous_REV}
+\caption{Representation of porous media where the averaging approach is used. From Nield and Bejan}
+\end{figure}
+\end{center}
+\begin{center}
+\begin{figure}[!ht]
+\includegraphics[width=0.9\linewidth]{figures/Porous_Islands}
+\caption{River flow around two islands representing the pores. The full Navier-Stokes system should be solved for this problem}
+\end{figure}
+\end{center}
+\subsection{Biot's equations}
 The stress tensor for the Biot problem is 
-\[ \sigma_s = -\alpha pI + 2\mu \epsilon(\mathbf{U}) + (\mu + \lambda)\text{tr}(\epsilon(\mathbf{U}))I  \]
+\[ \sigma_s = -pI + 2\mu \epsilon(\mathbf{U}) + \lambda\text{tr}(\epsilon(\mathbf{U}))I  \]
 Here $\mu$ and $\lambda$ are Lame's parameters for the solid. The parameter $\alpha = \frac{K}{H}$ is known as the Biot-Willis coefficient. $K$ is known as the drained bulk modulus, and $\frac{1}{K}$ denotes compressibility. $H$ is a poroelastic parameter describing how much the bulk volume changes due to a change in pore pressure while holding the applied stress constant. Again, conservation of momentum and mass, respectively, yields
 \begin{align}
 	 - \mu \nabla ^2 \mathbf{U}
@@ -372,7 +401,7 @@ In the case of an Newtonian incompressible fluid the mathematical problem consis
 \mathbf{w} =  \mathbf{v}
 \end{rcases}& \text{ in } \Omega_s^t 
 \end{align}
-In the case of fluid interacting with a solid structure, no material can cross the moving boundary and thus the fluid and solid velocity must be equal on the interface between the fluid and the solid. In addition the forces acting on the surface must be equal. A difference in forces from each material on the interface would result in infinite acceleration on the infinitely thin surface. Mathematicly, these two conditions can be stated as
+In the case of fluid interacting with a solid structure, no material can cross the moving boundary and thus the fluid and solid velocity must be equal on the interface between the fluid and the solid. In general, one have to ensure mass conservation on the boundary. In addition the forces acting on the surface must be equal. A difference in forces from each material on the interface would result in infinite acceleration on the infinitely thin surface. Mathematicly, these two conditions can be stated as
 \begin{align}
 \begin{rcases}
 \sigma_f \cdot \mathbf{n} & =  \sigma_s \cdot \mathbf{n} \\
@@ -381,5 +410,6 @@ In the case of fluid interacting with a solid structure, no material can cross t
 \text{ on } \Gamma^t
 \end{align}
 And will be used at all interfaces in FSI simulations. Kinematic or dynamic boundary conditions will be needed on the other boundaries as well, but will differ depending on the problem considered. 
+\\
 
 

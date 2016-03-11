@@ -1,6 +1,7 @@
-from domains_and_boundaries import *
-from pylab import zeros, where, linspace, ones, show, array
-import pylab as plt
+#from domains_and_boundaries import *
+from domains_3D import *
+#from pylab import zeros, where, linspace, ones, show, array
+#import pylab as plt
 import sys
 set_log_active(False)
 parameters['allow_extrapolation']=True
@@ -19,11 +20,11 @@ if initial_files:
 	boundaries = MeshFunction('size_t',mesh,'%s/facet_func.xml'%folder)
 
 else:
-	mesh = Mesh('meshes/wide_syrinx.xml')#cord_w_csc_mm.xml')
+	#mesh = Mesh('meshes/wide_syrinx.xml')#cord_w_csc_mm.xml')
+	mesh = Mesh('meshes/drosdal3D.xml')
 	#mesh = refine(mesh)
 	#mesh = refine(mesh)
 	LEN = len(mesh.coordinates())
-	print 'len(mesh.coord)', LEN
 	SD = MeshFunction('size_t', mesh, mesh.topology().dim())
 	SD.set_all(0)
 	Solid().mark(SD,1)
@@ -32,8 +33,9 @@ else:
 	# DEFINING BOUNDARIES
 	boundaries = FacetFunction("size_t",mesh)
 	boundaries.set_all(0)
-	Fluid_in_l().mark(boundaries,1)
-	Fluid_in_r().mark(boundaries,2)
+	#Fluid_in_l().mark(boundaries,1)
+	#Fluid_in_r().mark(boundaries,2)
+	Fluid_in().mark(boundaries,1)
 	Solid_in().mark(boundaries,3)
 	Fluid_out().mark(boundaries,4)
 	Solid_out().mark(boundaries,5)
@@ -58,13 +60,14 @@ else:
 
 
 
-dt = 0.001   # use 0.0003 for oscillations
-T = 3.0
+dt = 0.0002   # use 0.0003 for oscillations
+T = 1.0
 # TEST AND TRIALFUNCTIONS
 V = VectorFunctionSpace(mesh,'CG',2)
 P = FunctionSpace(mesh,'CG',1)
 W = FunctionSpace(mesh,'CG', 2)
 VPW = MixedFunctionSpace([V,P,V])
+print 'dof: ', VPW.dim()
 
 v,p,w = TrialFunctions(VPW)
 phi,eta,psi = TestFunctions(VPW)
@@ -76,7 +79,8 @@ h = mesh.hmin()
 # INITIAL AND BOUNDARY CONDITIONS
 
 # FLUID
-noslip = Constant((0.0,0.0))
+noslip = Constant((0.0,0.0,0))
+'''
 vf_l = Expression(('0.0','20*(std::exp(-pow(t-0.8,2)/0.05)+std::exp(-pow(t-1.7,2)/0.05)+std::exp(-pow(t-2.6,2)/0.05))*(x[0]+x0)*(x1+x[0])/4.0'),x0=x0,x1=x1,t=0)
 vf_r = Expression(('0.0','-20*(std::exp(-pow(t-0.8,2)/0.05)+std::exp(-pow(t-1.7,2)/0.05)+std::exp(-pow(t-2.6,2)/0.05))*(x[0]-x0)*(x1-x[0])/4.0'),x0=x0,x1=x1,t=0)
 
@@ -113,18 +117,21 @@ class MyExpression0(Expression):
 		yval = C1_Brucker
 		idx = plt.find(t_Brucker >= t)[0] - 1
 
-		values[1] = -(yval[idx] + (yval[idx+1]-yval[idx])*(t-tval[idx])/(tval[idx+1]-tval[idx]))
+		values[2] = -(yval[idx] + (yval[idx+1]-yval[idx])*(t-tval[idx])/(tval[idx+1]-tval[idx]))
 		values[0] = 0
+		values[1] = 0
 
 	def value_shape(self):
-		return (2,)
+		return (3,)
 
 vf_l = MyExpression0(t_Brucker,C1_Brucker,0.0)
 vf_r = MyExpression0(t_Brucker,C1_Brucker,0.0)
+'''
 
+vf_l = Constant((0,0,-0.1))
+vf_r = Constant((0,0,-0.1))
+pressure = Expression('55*std::exp(-pow(t-0.08,2)/0.005) + 3*std::exp(-pow(t-0.42,2)/0.01) - 5*std::exp(-pow(t-0.72,2)/0.05) - 6',t=0)
 
-vf_l = Constant((0,-0.1))
-vf_r = Constant((0,-0.1))
 
 
 slip = Constant((0.1,0))
@@ -138,7 +145,7 @@ bcv6 = DirichletBC(VPW.sub(0),noslip,boundaries,6) # Interface
 bcv7 = DirichletBC(VPW.sub(0),noslip,boundaries,7) # Fluid walls
 
 
-bcv = [bcv1, bcv2, bcv3, bcv5, bcv7] # don't use bcv6 for FSI
+bcv = [bcv1,bcv3, bcv5, bcv7] # don't use bcv6 for FSI
 
 # SOLID
 
@@ -151,7 +158,7 @@ bcw4 = DirichletBC(VPW.sub(2),noslip,boundaries,4)  # Fluid out
 bcw5 = DirichletBC(VPW.sub(2),noslip,boundaries,5)  # Solid out
 bcw6 = DirichletBC(VPW.sub(2),noslip,boundaries,6)  # Interface
 bcw7 = DirichletBC(VPW.sub(2),noslip,boundaries,7) # Fluid walls
-bcw = [bcw1,bcw2,bcw3,bcw4,bcw5,bcw7]
+bcw = [bcw1,bcw3,bcw4,bcw5,bcw7]
 
 # CREATE FUNCTIONS
 v0 = Function(V)
@@ -188,7 +195,7 @@ dx_s = dx(1,subdomain_data=SD)
 
 
 def sigma_dev(U):
-	return 2*mu_s*sym(grad(U)) + lamda*tr(sym(grad(U)))*Identity(2)
+	return 2*mu_s*sym(grad(U)) + lamda*tr(sym(grad(U)))*Identity(3)
 
 def sigma_f(v):
 	return 2*mu_f*sym(grad(v))
@@ -212,12 +219,7 @@ aS = aMS + aDS# + aCS
 LS = LMS
 
 # FLUID
-'''
-aFW = rho_f/k*inner(u,v)*dx_f + \
-	rho_f*inner(grad(u0)*(u-d),v)*dx_f - \
-	 inner(p,div(v))*dx_f + \
-	mu_f*inner(grad(v),grad(u))*dx_f
-'''
+
 aMF = rho_f/k*inner(v,phi)*dx_f + \
 	rho_f*inner(grad(v0)*(v-w),phi)*dx_f - \
 	 inner(p,div(phi))*dx_f + \
@@ -247,6 +249,7 @@ if initial_files:
 
 else:
 	t = dt
+	'''
 	xA = where(mesh.coordinates()[:,0] == 0.6)
 	yA = where(mesh.coordinates()[:,1] == 0.2)
 
@@ -255,7 +258,7 @@ else:
 	nx = dot(n1,n)
 	ny = dot(n2,n)
 	nt = as_vector((ny,-nx))
-	'''
+	
 	xA = plt.where(abs(mesh.coordinates()[:,0] - 0.6) < h)
 	yA = plt.where(abs(mesh.coordinates()[:,1] - 0.2) < h)
 	for idx in xA[0]:
@@ -268,22 +271,24 @@ count = 0
 
 
 change_vf = True
-Fd = plt.zeros(1e6)
-Fl = plt.zeros(1e6)
-Fd[-1], Fl[-1] = 1,1
-FdC, FlC = 1,1
+#Fd = plt.zeros(1e6)
+#Fl = plt.zeros(1e6)
+#Fd[-1], Fl[-1] = 1,1
+#FdC, FlC = 1,1
 ydisp = []
 xdisp = []
 time = []
+'''
 n1 = as_vector((1.0,0))
 n2 = as_vector((0,1.0))
 nx = dot(n1,n)
 ny = dot(n2,n)
 nt = as_vector((ny,-nx))
-
+'''
 while t < T + DOLFIN_EPS:# and (abs(FdC) > 1e-3 or abs(FlC) > 1e-3):
-	vf_l.t=t
-	vf_r.t=t
+	#vf_l.t=t
+	#vf_r.t=t
+	pressure.t=t
 	b = assemble(L)
 	eps = 10
 	k_iter = 0
@@ -299,30 +304,6 @@ while t < T + DOLFIN_EPS:# and (abs(FdC) > 1e-3 or abs(FlC) > 1e-3):
 	    k_iter += 1
 	    print 'k: ',k_iter, 'error: %.3e' %eps
 	    v0.assign(v_)
-	'''
-	D = interpolate(w_,V)
-	uf = interpolate(v_,V)
-	pf = interpolate(p_,P)
-	ut = dot(uf,nt)
-	DragSolid = -assemble((rho_f*nu*dot(n('-'),grad(ut('-')))*ny('-') - pf('-')*nx('-'))*dS(5))
-	LiftSolid = assemble((rho_f*nu*dot(n('-'),grad(ut('-')))*nx('-') + pf('-')*ny('-'))*dS(5))
-	ut = dot(uf,nt)
-	Drag = -assemble((rho_f*nu*dot(n,grad(ut))*ny - pf*nx)*ds(6))
-	Lift = assemble((rho_f*nu*dot(n,grad(ut))*nx + pf*ny)*ds(6))
-	print 'Drag: ', Drag + DragSolid
-	print 'Lift: ', Lift + LiftSolid
-	#bcu[-1] = DirichletBC(VQW.sub(0),d_,boundaries,5) # interface
-	Fd[count] = DragSolid + Drag
-	Fl[count] = LiftSolid + Lift
-	FdC = 100*(Fd[count]/Fd[count-1]-1)
-	FlC = 100*(Fl[count]/Fl[count-1]-1)
-	#print 'percent change: Fd: %.3f       Fl: %.3f' %(FdC, FlC)
-	YD = mesh.coordinates()[coord,1]-yA
-	XD = mesh.coordinates()[coord,0]-xA
-	ydisp.append(YD)
-	xdisp.append(XD)
-	time.append(t)
-	'''
 	if count%1==0:
 		ufile << v_
 		pfile << p_

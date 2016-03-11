@@ -57,6 +57,10 @@ J.~Donea, A.~Huerta, J.-P. Ponthot, and A.~Rodriguez-Ferran, {\em Encyclopedia
 A.~M. Winslow, ``''equipotential''zoning of two-dimensional meshes,'' tech.
   rep., California Univ., Livermore (USA). Lawrence Livermore Lab., 1963.
 
+\bibitem{Lang2}
+H.~P. Langtangen, {\em Finite Element Method}.
+\newblock 2015.
+
 \bibitem{Bren07}
 S.~Brenner and R.~Scott, {\em The mathematical theory of finite element
   methods}, vol.~15.

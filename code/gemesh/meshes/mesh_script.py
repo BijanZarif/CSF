@@ -1,14 +1,14 @@
 from dolfin import *
+import sys
 
 mesh = Mesh('jvmesh.xml')
-print len(mesh.coordinates())
-mesh = UnitCubeMesh(10,10,10)
-print len(mesh.coordinates())
 V = VectorFunctionSpace(mesh,'CG',2)
 P = FunctionSpace(mesh,'CG',1)
 ufile = File('v.pvd')
 
 VPW = MixedFunctionSpace([V,P])
+print VPW.dim()
+
 v,p = TrialFunctions(VPW)
 phi,eta = TestFunctions(VPW)
 
@@ -49,13 +49,13 @@ eps = 1e-14
 
 class Outlet(SubDomain):
 	def inside(self,x,on_bnd):
-		return x[0] > 1 - eps and on_bnd
+		return x[1] < 286.107 and on_bnd
 class Inlet(SubDomain):
 	def inside(self,x,on_bnd):
-		return x[0] < eps and on_bnd
+		return x[1] > 340.42 and on_bnd
 class Boundary(SubDomain):
 	def inside(self,x,on_bnd):
-		return on_bnd and x[0] > -eps and x[0] < 1 + eps
+		return on_bnd
 print 'hi'
 mf = FacetFunction('size_t',mesh)
 Boundary().mark(mf,2)
@@ -63,7 +63,7 @@ Outlet().mark(mf,0)
 Inlet().mark(mf,1)
 
 noslip = Constant((0,0,0))
-inlet = Constant((1,0,0))
+inlet = Constant((0,-1,0))
 #noslip = Constant((0,0))
 #inlet = Constant((1,0))
 
@@ -73,12 +73,12 @@ bcs = [bc1,bc0]
 
 t = dt
 T = 20*dt
-list_krylov_solver_methods()
+
 while t < T:
 	A = assemble(aF)
 	b = assemble(LF)
 	[bc.apply(A,b) for bc in bcs]
-	solve(A, VPW_.vector(), b, 'cg','amg')
+	solve(A, VPW_.vector(), b)#, 'cg','amg')
 	v_,p_ = VPW_.split(True)
 	v0.assign(v1)
 	v1.assign(v_)
