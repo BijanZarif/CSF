@@ -56,7 +56,7 @@ Here, $\mathbf{v}$ denotes fluid velocity, and $\mathbf{n}$ denotes the outward 
 \end{align}
 where \[ \nabla = \mathbf{i}_j\pdi{}{x_j} \]
 \subsection{Conservation of mass and momentum}
-Choose $Q(\mathbf{x},t) = \rho$. Conservation of mass means that
+Choose $Q(\mathbf{x},t) = \rho$, where $\rho$ is fluid density. Conservation of mass means that
 \begin{align*} 
 \frac{\mathrm{d}}{\mathrm{d}t} \int_{V_0} \rho \, \mathrm{d}V = 0
 \end{align*}
@@ -119,24 +119,47 @@ It can be shown that symmetry of $\sigma_f$ and $\epsilon$ also requires symmetr
 \begin{align}
 \sigma_{f_{ij}} = -p\delta_{ij} + 2\mu\epsilon_{ij} + \lambda \nabla \cdot \mathbf{v} \label{Stress}
 \end{align}
-where $\epsilon = \frac{1}{2}(\pdi{u_i}{x_j} + \pdi{u_j}{x_i})$, $p$ is the fluid pressure and $\mu$ and $\lambda$ are known as Lame's constants. In the present study we only consider incompressible flow where $\rho$ is constant. From the continuity equation \eqref{Continuity}, this implies $\nabla \cdot \mathbf{v} = 0$ and the last term in \eqref{Stress} vanishes. Furthermore, 
+where $\epsilon_{i,j} = \frac{1}{2}(\pdi{u_i}{x_j} + \pdi{u_j}{x_i})$, $p$ is the fluid pressure and $\mu$ and $\lambda$ are known as Lame's constants. In the present study we only consider incompressible flow where $\rho$ is constant. From the continuity equation \eqref{Continuity}, this implies $\nabla \cdot \mathbf{v} = 0$ and the last term in \eqref{Stress} vanishes. Furthermore, 
 \begin{align*}
 \nabla \cdot \epsilon = \pdi{}{x_j}(\pdi{u_j}{x_i} + \pdi{u_i}{x_j})\mathbf{i}_i = (\pdi{}{x_i}\pdi{u_j}{x_j} + \pdi{u_i}{x_j \partial x_j})\mathbf{i}_i = \pdi{u_i}{x_j \partial x_j} \mathbf{i}_i
 \end{align*}
 Which simplifies the representation of $\nabla \cdot \sigma_f$ in \eqref{Momentum} for an incompressible fluid
 
-\subsection{Navier-Stokes equations for incompressible flow}
-Stating both conservation of mass and momentum of a fluid together with suitable boundary conditions gives us all the information we need to be able to define the flow field and the corresponding pressure. This requires a solution to the system \eqref{Continuity}-\eqref{Momentum}, equations which are commonly referred to as the Navier-Stokes equations. With the simplifications described in the previous section the system of equations can be written
+\section{Navier-Stokes equations for incompressible flow}
+The system \eqref{Continuity},\eqref{Momentum} are commonly referred to as the Navier-Stokes equations written in \textit{divergence form}, where the Cauchy stress tensor, $\sigma$ is explicitly included in the momentum equation and contributes to the momentum through its divergence. However, in the case of Newtonian incompressible fluids, the simplifications described in the previous section allows us to write the system of equations in \textit{laplace form}
 \begin{align}
 \rho(\pdi{\mathbf{v}}{t} + (\mathbf{v} \cdot \nabla) \mathbf{v}) = -\nabla p + \mu\nabla^2 \mathbf{v} + \mathbf{F}_v \label{Navier}
 \end{align}
 \begin{align}
 \nabla \cdot \mathbf{v} = 0 \label{Stokes}
 \end{align}
-The parameters $\rho$ and $\mu$ describe density and dynamic viscosity. Often, the momentum equation is written in terms of the kinematic viscosity $\nu = \frac{\mu}{\rho}$ by dividing the momentum equation with $\rho$. \\
-These equations are coupled and non-linear and can generally not be solved analytically. However, numeruous analytical solutions have been carried out for different specific problems, and a good overview is given by White \cite[pp. 97-164]{Whit06}. (Further references are also given in this textbook for the interested reader) These problems are often very simple and idealized. Hence, numerical solutions are a necessity to obtain useful solutions to real-life problems. Such metods will be discussed in chapter xxx. 
-
-
+The parameters $\rho$ and $\mu$ describe fluid density and dynamic viscosity. Often, the momentum equation is written in terms of the kinematic viscosity $\nu = \frac{\mu}{\rho}$ by dividing the momentum equation with $\rho$. \\
+\\
+It should be noted that the two formulations of the momuentum equation are equivalent in their original form. In textbooks, see e.g. \cite{Newm77,Whit06,Kund2012}, the laplace form is usually the form first presented as the Navier-Stokes equations probably because it is the simplest form explicitly including the two unknowns $\mathbf{v}$ and $p$. \\
+\\
+The Navier-Stokes equations are coupled and non-linear and can generally not be solved analytically. However, numeruous analytical solutions have been carried out for different specific problems, and a good overview is given by White \cite[pp. 97-164]{Whit06}. (Further references are also given in this textbook for the interested reader) These problems are often very simple and idealized. Hence, numerical solutions are a necessity to obtain useful solutions to real-life problems. Such metods will be discussed in chapter 4. 
+\subsection{Boundary conditions}
+Before the equations can be solved, appropriate boundary conditions needs to be imposed on all boundaries of the domain. For a specific fluid occupying a domain, the treatment of boundary conditions is what distinguishes different flow patterns as the governing equations inside the domain stays exactly the same. 
+\\
+A fluid generally moves around between solid boundaries, $\Gamma_D$ and boundaries known as traction boundaries $\Gamma_N$.
+\\
+On $\Gamma_D$ e.g. the interface between a fluid and a solid wall, the fluid velocity must equal the wall velocity in all directions, often known as the no-slip boundary condition. For instance at a rigid wall, the boundary condition will be $\mathbf{v} = 0 \text{ on } \Gamma_D$, or in general 
+\begin{align}
+\mathbf{v} = \mathbf{v_0} \,\,\, \text{ on } \Gamma_D
+\end{align}
+\\
+On $\Gamma_N$ external forces on the system must be imposed. At surfaces where arbitrary forces $\mathbf{\overline{F}}$ are acting, the fluid stress on the surface must equal these external forces. This can be written
+\begin{align}
+\sigma \cdot \mathbf{n} = \mathbf{\overline{F}}\,\,\, \text{ on } \Gamma_N
+\end{align}
+Where $\mathbf{n}$ is the outward normal unit vector. 
+\\
+This is also the case of a free surface, except the shear forces are negligible and that only external pressures are applied. This yields
+\begin{align}
+\sigma \cdot \mathbf{n} = -p_0 \mathbf{n} \,\,\, \text{ on } \Gamma_N
+\end{align}
+where $p_0$ is a known external pressure, for instance atmoshperic pressure at the ocean 
+surface. 
 \section{Linear Elasticity}
 Linear elasticity is an approximation used for small deformations for elastic solids. As a rule of thumb the approximation of linear elasticity is usually valid for deformations up to 10\% relative to the solid. The stress tensor for a linear elastic medium is very similar to \eqref{Stress} describing an incompressible Newtonian fluid except there is no fluid pressure, and the stress is related to the total displacement $\mathbf{U}$ rather than the velocity $\mathbf{v}$. The stress tensor for such a material reads:
 $\sigma_s = 2\mu\epsilon(\mathbf{U}) + \lambda \nabla \cdot \mathbf{U}$

@@ -1,6 +1,7 @@
 from domains_and_boundaries import *
-from pylab import zeros, where, linspace, ones, show, array
+from pylab import zeros, where, linspace, ones, show, array, loadtxt
 import pylab as plt
+import scipy.interpolate as Spline
 import sys
 set_log_active(False)
 parameters['allow_extrapolation']=True
@@ -20,6 +21,10 @@ if initial_files:
 
 else:
 	mesh = Mesh('meshes/wide_syrinx.xml')#cord_w_csc_mm.xml')
+	P1 = Point(-9,0)
+	P2 = Point(-5,60)
+	mesh = RectangleMesh(P1,P2,10,40)
+	
 	#mesh = refine(mesh)
 	#mesh = refine(mesh)
 	LEN = len(mesh.coordinates())
@@ -58,14 +63,14 @@ else:
 
 
 
-dt = 0.0001   # use 0.0003 for oscillations
-T = 200*dt
+dt = 0.001   # use 0.0003 for oscillations
+T = 10.0
 # TEST AND TRIALFUNCTIONS
 V = VectorFunctionSpace(mesh,'CG',2)
 P = FunctionSpace(mesh,'CG',1)
-W = FunctionSpace(mesh,'CG', 2)
-VPW = MixedFunctionSpace([V,P,V])
-
+W = VectorFunctionSpace(mesh,'CG', 1)
+VPW = MixedFunctionSpace([V,P,W])
+print VPW.dim()
 v,p,w = TrialFunctions(VPW)
 phi,eta,psi = TestFunctions(VPW)
 
@@ -101,24 +106,27 @@ Bertram09_Pressure = array([0, -100, 0, 0])
 B09time = array([0, 2.5e-3, 5e-3, 0.829])
 
 class MyExpression0(Expression):
-	def __init__(self,t_Brucker,C1_Brucker,t):
+	def __init__(self,t_Brucker,C1_Brucker,t,amp=1):
 		self.t = t
 		self.t_Brucker = t_Brucker
 		self.C1_Brucker = C1_Brucker
+		self.amp = amp
 
 	def eval(self,values,x):
 		t = self.t
 		t_Brucker = self.t_Brucker
 		C1_Brucker = self.C1_Brucker
-		while t > 0.829: 
-			t -= 0.829
+		while t > self.t_Brucker[-1]:
+			t -= self.t_Brucker[-1]
 		tval = t_Brucker
 		yval = C1_Brucker
 		idx = plt.find(t_Brucker >= t)[0] - 1
-		values[1] = -(yval[idx] + (yval[idx+1]-yval[idx])*(t-tval[idx])/(tval[idx+1]-tval[idx]))
-		values[0] = 0
-	def value_shape(self):
-		return (2,)
+		#values[1] = -(yval[idx] + (yval[idx+1]-yval[idx])*(t-tval[idx])/(tval[idx+1]-tval[idx]))
+		#values[0] = 0
+		#values[1] = amp*Spline.UnivariateSpline(tval,yval)(t)
+		values[0] = self.amp*Spline.UnivariateSpline(tval,yval)(t)
+	#def value_shape(self):
+	#	return (2,)
 
 vf_l = MyExpression0(t_Brucker,C1_Brucker,0.0)
 vf_r = MyExpression0(t_Brucker,C1_Brucker,0.0)
@@ -127,7 +135,16 @@ vf_r = MyExpression0(t_Brucker,C1_Brucker,0.0)
 
 vf_l = Constant((0,-0.1))
 vf_r = Constant((0,-0.1))
-pressure = MyExpression0(B09time,Bertram09_Pressure,0.0)
+[T_Eide, P_Eide] = loadtxt('Eide_normalized.txt').transpose()
+P_Eide *= -1#33*6./50    # Convert to Pa and make downwards
+
+t_Erika = linspace(0,1.1,23)
+P_Erika = array([-0.011,-0.03,-0.02, 0.002,-0.001, -0.002,-0.003, -0.004,0.001, 0.002,0.003, 0.003, 0.004, 0.004,0.003, 0.004,0.006, 0.04,0.045, 0.01, -0.01,-0.01,-0.01])
+P_Erika *= 133*6
+pressure = MyExpression0(t_Erika,P_Erika,0.0,amp=1)
+
+#pressure = Expression(('amp*sin(2*pi*t)'),t=0,amp=1)
+pressure2 = Expression(('-amp*sin(2*pi*t)'),t=0,amp=1)
 
 slip = Constant((0.1,0))
 
@@ -140,7 +157,12 @@ bcv6 = DirichletBC(VPW.sub(0),noslip,boundaries,6) # Interface
 bcv7 = DirichletBC(VPW.sub(0),noslip,boundaries,7) # Fluid walls
 
 
-bcv = [bcv3, bcv5, bcv7] # don't use bcv6 for FSI
+bcv = [bcv3, bcv5, bcv7, bcv6] # don't use bcv6 for FSI
+
+bcp1 = DirichletBC(VPW.sub(1),pressure,boundaries,1)
+bcp2 = DirichletBC(VPW.sub(1),pressure,boundaries,2)
+bcp4 = DirichletBC(VPW.sub(1),pressure2,boundaries,4)
+bcp = [bcp1,bcp2,bcp4]
 
 # SOLID
 
@@ -159,11 +181,11 @@ bcw = [bcw1,bcw2,bcw3,bcw4,bcw5,bcw7]
 v0 = Function(V)
 if initial_files:
 	v1 = Function(V,'%s/u.xml'%folder)
-	U = Function(V,'%s/U.xml'%folder)
+	U = Function(W,'%s/U.xml'%folder)
 	#plot(u1)
 else:
 	v1 = Function(V)#,'initial_data/u.xml')
-	U = Function(V)
+	U = Function(W)
 
 
 VPW_ = Function(VPW)
@@ -218,11 +240,16 @@ LS = LMS
 aMF = rho_f/k*inner(v,phi)*dx_f + \
 	rho_f*inner(grad(v0)*(v-w),phi)*dx_f - \
 	 inner(p,div(phi))*dx_f + \
-	2*mu_f*inner(sym(grad(v)),sym(grad(phi)))*dx_f
+	2*mu_f*inner(sym(grad(v)),sym(grad(phi)))*dx_f - \
+	mu_f*inner(grad(v).T*n,phi)*ds(1) - \
+	mu_f*inner(grad(v).T*n,phi)*ds(2) - \
+	mu_f*inner(grad(v).T*n,phi)*ds(4)
 
-LMF = rho_f/k*inner(v1,phi)*dx_f - \
-	  inner(pressure,phi)*ds(1) - \
-	  inner(pressure,phi)*ds(2)
+LMF = rho_f/k*inner(v1,phi)*dx_f  - \
+	inner(pressure*n,phi)*ds(1) - \
+	inner(pressure*n,phi)*ds(2) - \
+	inner(pressure2*n,phi)*ds(4)
+
 
 aDF = k*inner(grad(w),grad(psi))*dx_f
 LDF = -inner(grad(U),grad(psi))*dx_f
@@ -285,7 +312,9 @@ nt = as_vector((ny,-nx))
 while t < T + DOLFIN_EPS:# and (abs(FdC) > 1e-3 or abs(FlC) > 1e-3):
 	#vf_l.t=t
 	#vf_r.t=t
-	pressure.t=t
+	if t < 2.0:
+		pressure.amp=t/2.0
+	pressure.t = t
 	b = assemble(L)
 	eps = 10
 	k_iter = 0
@@ -295,6 +324,7 @@ while t < T + DOLFIN_EPS:# and (abs(FdC) > 1e-3 or abs(FlC) > 1e-3):
 	    A.ident_zeros()
 	    [bc.apply(A,b) for bc in bcv]
 	    [bc.apply(A,b) for bc in bcw]
+	    #[bc.apply(A,b) for bc in bcp]
 	    solve(A,VPW_.vector(),b,'lu')
 	    v_,p_,w_ = VPW_.split(True)
 	    eps = errornorm(v_,v0,degree_rise=3)

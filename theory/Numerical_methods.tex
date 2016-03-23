@@ -60,7 +60,7 @@ The first derivative of $v$ appears in the variational form. A common choice is 
 
 
 
-\subsection{Finite elements}
+\subsection{Finite elements} \label{FinEle}
 The next step is to approximate $v$ with a sum of basisfunctions in the finite-dimensional function space, $V = \text{span}\{\phi_0, \phi_1, ..., \phi_N \}$. Here, $\phi_i$ represents the basis functions and we search for a solution $v_h \in V$ such that $v_h$ can be written as a linear combination of the basis functions. 
 The first step in the finite element method consists of dividing the domain into smaller parts
 \begin{align*}
@@ -170,8 +170,8 @@ Within CFD, a benchmark is a configuration or a test case which should help test
 \label{fig:Geometry}
 \end{figure}
 \\
-A proper validation of a FSI solver requires separate verification of the fluid and structural parts as well as coupled tests. In the present study we first solve the equations with a \textit{monolithic} approach, i.e fully coupling between the fluid and solid. The alternative would be a \textit{partitioned} approach, where the fluid and solid equations are solved separately. For instance, one can solve the fluid equations independently and then proceed by solving the solid equation with prescribed stress on the interface computed from the fluid solution. Iteration back and forth would be needed until convergence. \\
-The fully coupled monolithic scheme is usually preferred with respect to accuracy and stability. Also, when the systems are strongly coupled in nature, i.e. the solid movement is affected by the fluid movement and vice versa, a monolithic scheme would be advantageous. The partitioned approach, on the other hand, can benefit from numeruous previous studies where efficiency and stability for various solution techniques have been investigated. See e.g. \cite{Tang14} for a short review. 
+A proper validation of a FSI solver requires separate verification of the fluid and structural parts as well as coupled tests. In the present study we solve the system of equations with a \textit{monolithic} approach, i.e. full coupling between the fluid and solid. The alternative would be a \textit{partitioned} approach, where the fluid and solid equations are solved separately. For instance, one can solve the fluid equations independently and then proceed by solving the solid equation with prescribed stress on the interface computed from the fluid solution. Iteration back and forth would be needed until convergence. \\
+The fully coupled monolithic scheme is usually preferred with respect to accuracy and stability. Also, when the systems are strongly coupled in nature, i.e. the solid movement is affected by the fluid movement and vice versa, a monolithic scheme would be advantageous. The partitioned approach, on the other hand, can benefit from numeruous previous studies where efficiency and stability for various solution techniques have been investigated. See e.g. \cite{Tang14} for a short review. In addition, solving many smaller matrix systems will be way faster than solving one large system with the same number of unknowns.
 \\
 \\
 \subsection{Domain, Initial- and boundary conditions}
@@ -270,7 +270,7 @@ For the CFD tests we perform tests treating the flag as a rigid object. This can
 \caption{Results for CFD3}
 \end{table}
 \subsection{CSM tests}
-The structural tests are performmed by adding the gravitational force to the structural part only. The CSM3 test is computed as a time-dependent case, starting from the initial position while CSM1 and CSM2 are Steady State (SS) solutions. 
+The structural tests are performmed by adding the gravitational force to the structural part only. The CSM3 test is computed as a time-dependent case, starting from the initial position while CSM1 and CSM2 are Steady State (SS) solutions. For CSM3, the total energy is not conserved as the Backward Euler scheme used to discretize in time sligthly recudes the amplitude for oscillating solutions. For this reason, a third parameter of interest is included in the results, namely the reduction of amplitude from one cycle to the next. From the reference results it appears that the flag bounces above the initial position in steady state, meaning that some energy must have been added due to their choice of scheme. This was not further discussed, and no time-dependent amplitude was reported.  
 \begin{table}[!ht]
 \begin{center}
   \begin{tabular}{|l | l | l | l|} \hline
@@ -313,11 +313,55 @@ The structural tests are performmed by adding the gravitational force to the str
 \caption{Results for CSM2}
 \end{table}
 
+\begin{table}[!h]
+\begin{center}
+  \begin{tabular}{|l | l | l | l| l|} \hline
+	Mesh & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Amp reduction y (\%) \\ \hline
+    0  & 738 & -44.175 $\pm$ 44.007 & -72.712 $\pm$ 65.281 & 5.4  \\   \hline
+    1 & 2952 & -44.176 $\pm$ 44.001 & -72.720 $\pm$ 65.281 & 5.4 \\ \hline
+    2 & 11808 & -44.177 $\pm$ 44.001 & -72.720 $\pm$ 65.281 & 5.4  \\ \hline \hline
+    \textbf{Ref.}  & & -\textbf{14.305} $\pm$ \textbf{14.305} & -\textbf{63.607} $\pm$ \textbf{65.160} \\ \hline 
+    \hline
+  \end{tabular}
+\end{center}
+\end{table}
 
 
+\begin{table}[!h]
+\begin{center}
+  \begin{tabular}{|l | l | l | l| l|} \hline
+	Mesh & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Amp reduction y (\%) \\ \hline
+    0  & 738 & -44.631 $\pm$ 44.628 & -69.702 $\pm$ 69.290 & 0.3  \\   \hline
+    1 & 2952 & -44.633 $\pm$ 44.629 & -69.701 $\pm$ 69.289 & 0.3 \\ \hline
+    2 & 11808 & -44.094 $\pm$ 44.091 & -69.703 $\pm$ 69.289 & 0.3  \\ \hline \hline
+    \textbf{Ref.}  & & -\textbf{14.305} $\pm$ \textbf{14.305} & -\textbf{63.607} $\pm$ \textbf{65.160} \\ \hline 
+    \hline
+  \end{tabular}
+\end{center}
+\caption{Results for CSM3, $\Delta t= 0.01, 0.001$}
+\end{table}
+
+
+\begin{figure}[!ht]
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/CSM3/CSM3_Full_x}\caption{displacement x vs time}
+\end{subfigure}
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/CSM3/CSM3_2_x}\caption{displacement x vs time}
+\end{subfigure}
+\end{figure}
+\begin{figure}[!ht]
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/CSM3/CSM3_Y_full}\caption{displacement y vs time}
+\end{subfigure}
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/CSM3/CSM3_2_y}\caption{displacement y vs time}
+\end{subfigure}
+\end{figure}
+\clearpage
 \subsection{FSI tests}
 
-\begin{table}[!ht]
+\begin{table}[!h]
 \begin{center}
   \begin{tabular}{|l | l | l | l|} \hline
 	Parameter & FS1 & FSI2 & FSI3 \\ \hline
@@ -330,7 +374,7 @@ The structural tests are performmed by adding the gravitational force to the str
 \end{center}
 \end{table}
 
-\begin{table}[!ht]
+\begin{table}[!h]
 \begin{center}
   \begin{tabular}{|l | l | l | l|} \hline
 	Parameter & FSI1 & FSI2 & FSI3 \\ \hline
@@ -341,14 +385,14 @@ The structural tests are performmed by adding the gravitational force to the str
 \end{center}
 \end{table}
 \begin{center}
-\begin{figure}[!ht]
+\begin{figure}[!h]
 \includegraphics[width=\linewidth]{figures/FSI1_mesh_med}
 \caption{Steady State displacement in y-direction for the FSI1 test case for the medium refinement version of the mesh. Note that the mesh around the structural part also has been slightly adjusted}
 \end{figure}
 \end{center}
 
 
-\begin{table}[!ht]
+\begin{table}[!h]
 \begin{center}
   \begin{tabular}{|l | l | l | l | l | l|} \hline
 	Mesh & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Drag & Lift\\ \hline
@@ -362,7 +406,7 @@ The structural tests are performmed by adding the gravitational force to the str
 \end{center}
 \end{table}
 
-\begin{table}[!ht]
+\begin{table}[!h]
   \begin{center}
   \begin{tabular}{|l | l | l | l | l | l|} \hline
 	Mesh & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Drag & Lift\\ \hline
@@ -463,6 +507,11 @@ And in the solid
 \frac{1}{\delta}(\mathbf{v},\Psi)_{\Omega_s} - \frac{1}{\delta}(\mathbf{w},\Psi)_{\Omega_s} = 0 \label{VarMesh2}
 \end{align}
 The parameter $\delta $ should be small and ensures the importance of $\mathbf{v_s} = \mathbf{w_s}$ inside the solid. On the interface, we have distinguished between the normal vector with respect to the fluid and solid domain. In general $\mathbf{n}_f = -\mathbf{n}_s$. To be able to set up and assemble the matrices for this system, the equations should be added to form one bilinear form and one linear form. 
+\subsection{A discussion on functionspaces}
+We have previously defined the $L^2$ (def. \ref{|l2}) and $H^1$ (def. \ref{H1}) spaces, as well as the linear continuous galerkin basis functions (section \ref{FinEle}). In order to have a well posed-problem, we need a triple $(\Phi,\eta, \Psi)$ to satisfy given conditions. \\
+\\
+For the incompressible Navier-Stokes equations, possible pairs $(\Phi, \eta)$ have been investigated 
+
 \subsection{Treatment of boundary conditions}
 In addition to the boundary conditions described in the original benchmark paper from Turek and Hron, homogenuous Dirichlet conditions are prescribed to the mesh displacement velocity on the domain boundary, i.e 
 \begin{align} 
@@ -472,12 +521,12 @@ Except for the fluid velocity on the outlet, the domain boundaries (not interfac
 If we add all the equations in the previous section together, the contributions to the boundary integral on the interface gives:
 \begin{align}- (\sigma_f(p,\mathbf{v}) \cdot \mathbf{n}_f, \Phi)_{\Gamma^t} - ([\sigma_s(\mathbf{U}^{(1)}) + \Delta t \sigma_s(\mathbf{w})]\cdot \mathbf{n}_s, \Phi)_{\Gamma^t}
 \end{align}
-Dropping this contribution from the variational form gives
-\begin{align} \sigma_f(p,\mathbf{v}) \cdot \mathbf{n} = [\sigma_s(\mathbf{U}^{(1)}) + \Delta t \sigma_s(\mathbf{w})] \cdot \mathbf{n} = \sigma_s(\mathbf{U}) \cdot \mathbf{n}
+By leaving this out of the variational form, we weakly impose
+\begin{align} \sigma_f(p,\mathbf{v}) \cdot \mathbf{n} = \sigma_s(\mathbf{U}) \cdot \mathbf{n}
 \end{align}
-where the choice of $\mathbf{n}$ ($\mathbf{n} = \mathbf{n}_f$ or $\mathbf{n} = \mathbf{n}_s$) is arbitrary, but the same for each side of the equation. \\
+On the interface. The choice of $\mathbf{n}$ ($\mathbf{n} = \mathbf{n}_f$ or $\mathbf{n} = \mathbf{n}_s$) is arbitrary, but the same for each side of the equation. \\
 \\
-Because we use the same function for fluid velocity and solid velocity we will also achieve the no-slip condition for the fluid on the structure
+Because we use the same function for fluid velocity and solid velocity, the no-slip condition is naturally incorporated for the fluid on the structure
 \begin{align}
 \mathbf{v}_f = \mathbf{v}_s \text{ on } \Gamma^t
 \end{align}
@@ -488,14 +537,12 @@ The additional equation for $\mathbf{w}$ in the fluid also gives rise to boundar
 \begin{align}
 \nabla \mathbf{U} \cdot \mathbf{n} = 0
 \end{align}
-and let the parameter $\delta$ underline the importance of $\mathbf{w} = \mathbf{v}$ \textit{inside} the solid, whereas $\mathbf{w}$ in the fluid should just be smoothed out. \\
+and rather let the parameter $\delta$ underline the importance of $\mathbf{w} = \mathbf{v}$ \textit{inside} the solid, whereas $\mathbf{w}$ in the fluid should just ensure a smooth mesh displacement. \\
 \\
 On the outlet, we assign the stress-free condition $\sigma_f(p,\mathbf{v}) \cdot \mathbf{n} = 0$ so the boundary integral also vanish on the outlet for the momentum equation in the fluid. 
 \\
 \\
 This means that all integrals involving boundaries will vanish in the variational form. The Dirichlet conditions are imposed in FEniCS as previously described.
-
-
 
 
 \subsection{FSI in FEniCS}
@@ -528,8 +575,8 @@ We need a function spaces for all three testfunctions, corresponding to $\mathbf
 \begin{cverbatim}
 V = VectorFunctionSpace(mesh,'CG',2)
 P = FunctionSpace(mesh,'CG',1)
-W = FunctionSpace(mesh,'CG', 2)
-VPW = MixedFunctionSpace([V,P,V])
+W = VectorFunctionSpace(mesh,'CG', 2)
+VPW = MixedFunctionSpace([V,P,W])
 v,p,w = TrialFunctions(VPW)
 phi,eta,psi = TestFunctions(VPW)
 \end{cverbatim}
@@ -608,7 +655,7 @@ VPW_ = Function(VPW)
 This function will consist of all values for $\mathbf{v}$, $p$ and $\mathbf{w}$.
 \\
 \\
-The time loop runs until the current time exceeds the specified end time, T. The forms change in time, and thus needs to be assembled to be updated to use the correct values for $\mathbf{v}^{(1)}, \mathbf{w}^{(1)}, \mathbf{U}^{(1)}$ and $\mathbf{v}^{(0)}$. The linear form needs an update each time step, while the bilinear form needs to be updated every single iteration inside the time loop. For the iterative method, we have (for now) chosen the Picard iteration based on the simplicity of the algorithm compared to Newton's method, especially when dealing with a mixed function space consisting of three separate spaces. The iteration runs until the $L^2$ norm of $(\mathbf{v}-\mathbf{v}^{(0)})$ is less than a given number, $\tau$, or if the number of iterations becomes to large. 
+The time loop runs until the current time exceeds the specified end time, T. The forms change in time, and thus needs to be assembled to be updated to use the correct values for $\mathbf{v}^{(1)}, \mathbf{w}^{(1)}, \mathbf{U}^{(1)}$ and $\mathbf{v}^{(0)}$. The linear form needs an update each time step, while the bilinear form needs to be updated every single iteration inside the time loop. For the iterative method, we have chosen the Picard iteration based on the simplicity of the algorithm compared to Newton's method, especially when dealing with a mixed function space consisting of three separate spaces. The iteration runs until the $L^2$ norm of $(\mathbf{v}-\mathbf{v}^{(0)})$ is less than a given number, $\tau$, or if the number of iterations becomes to large. 
 
 \begin{cverbatim}
 while t < T:
@@ -626,7 +673,7 @@ while t < T:
 		
 		v0.assign(v_)
 \end{cverbatim}
-The second statement within the iteration loop is needed because the lack of an equation for $p$ within the solid. The \textit{ident.zeros()} function replaces zeros with ones on the diagonal of the matrix block, and the solution vector for $p$ will be zero inside the solid. To assign a new value for v0, and later be able to calculate drag and lift, we split the solution vector with the argument True. The solver is 'lu' by default, but in this case it is written explicitly. When converging iterative solvers are in general way faster, but in this case no Krylov Solver was found to converge. 
+The second statement within the iteration loop is needed because the lack of an equation for $p$ within the solid. The \textit{ident.zeros()} function replaces zeros with ones on the diagonal of the matrix block, and the solution vector for $p$ will be zero inside the solid. In FEniCS, a Function has to be defined over the whole mesh, and adjusting the linear system as described is a way to overcome this issue in the present version of DOLFIN (1.6.0). To assign a new value for v0, and later be able to calculate drag and lift, we split the solution vector with the argument True. The solver is 'lu' by default, but in this case it is written explicitly. Iterative solvers are in general way faster, but in this case no Krylov Solver was found to converge. 
 \\
 \\
 The next problem to address is how the mesh should be updated. The domain should now move with velocity $\mathbf{w}$, so we want to move the mesh with $\Delta t \mathbf{w}$ from one time step to the next. For the total displacement, the update $\mathbf{U} = U^{(1)} + \Delta t \mathbf{w}$ should also be taken into account. The actual update of the mesh is done with the functions \textit{move()} and \textit{bounding\_box\_tree().build()}

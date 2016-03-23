@@ -12,7 +12,7 @@ mu_f = Constant(nu_f*rho_f)		# g/(mm*s)
 
 
 ## from Karen/Nina
-E = (5*10**3) # Pa --- Ozawa rabbit spinal cord 5*10**3 (No Pia) 16*10^3 (w Pia)
+E = (16*10**3) # Pa --- Ozawa rabbit spinal cord 5*10**3 (No Pia) 16*10^3 (w Pia)
 Pr = 0.479#0.479       #
 
 rho_s = Constant(2*rho_f)

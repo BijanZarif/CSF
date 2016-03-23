@@ -39,6 +39,14 @@ F.~White, {\em Viscous Fluid Flow}.
 \newblock McGraw-Hill series in mechanical engineering, McGraw-Hill, 3~ed.,
   2006.
 
+\bibitem{Newm77}
+J.~N. Newman, {\em Marine Hydrodynamics}.
+\newblock The MIT Press, 1977.
+
+\bibitem{Kund2012}
+C.~I.~M. Kundu, P.~K. and D.~R. Dowling, {\em Fluid Mechanics}.
+\newblock Elsevier, Academic Press, 5~ed., 2012.
+
 \bibitem{Wang00}
 H.~F. Wang, {\em Theory of linear poroelasticity}.
 \newblock 2000.
@@ -116,6 +124,16 @@ S.~Cheng, D.~Fletcher, S.~Hemley, M.~Stoodley, and L.~Bilston, ``Effects of
   subarachnoid space,'' {\em Journal of biomechanics}, vol.~47, no.~11,
   pp.~2826--2830, 2014.
 
+\bibitem{Bert05}
+C.~Bertram, A.~Brodbelt, and M.~Stoodley, ``The origins of syringomyelia:
+  numerical models of fluid/structure interactions in the spinal cord,'' {\em
+  Journal of biomechanical engineering}, vol.~127, no.~7, pp.~1099--1109, 2005.
+
+\bibitem{Bert08}
+C.~Bertram, L.~Bilston, and M.~Stoodley, ``Tensile radial stress in the spinal
+  cord related to arachnoiditis or tethering: a numerical model,'' {\em Medical
+  \& biological engineering \& computing}, vol.~46, no.~7, pp.~701--707, 2008.
+
 \bibitem{Bert09}
 C.~Bertram, ``A numerical investigation of waves propagating in the spinal cord
   and subarachnoid space in the presence of a syrinx,'' {\em Journal of Fluids
@@ -125,16 +143,65 @@ C.~Bertram, ``A numerical investigation of waves propagating in the spinal cord
 B.~Williams, ``On the pathogenesis of syringomyelia: a review.,'' {\em Journal
   of the Royal Society of Medicine}, vol.~73, no.~11, p.~798, 1980.
 
+\bibitem{Will81}
+B.~Williams, ``Simultaneous cerebral and spinal fluid pressure recordings,''
+  {\em Acta neurochirurgica}, vol.~59, no.~1-2, pp.~123--142, 1981.
+
+\bibitem{Hack01}
+M.~H{\"a}ckel, V.~Bene{\v{s}}, and M.~Mohapl, ``Simultaneous cerebral and
+  spinal fluid pressure recordings in surgical indications of the chiari
+  malformation without myelodysplasia,'' {\em Acta neurochirurgica}, vol.~143,
+  no.~9, pp.~909--918, 2001.
+
+\bibitem{Eide11_Rand}
+P.~K. Eide, G.~Bentsen, A.~G. Sorteberg, P.~B. Marthinsen, A.~Stubhaug, and
+  W.~Sorteberg, ``A randomized and blinded single-center trial comparing the
+  effect of intracranial pressure and intracranial pressure wave
+  amplitude-guided intensive care management on early clinical state and
+  12-month outcome in patients with aneurysmal subarachnoid hemorrhage,'' {\em
+  Neurosurgery}, vol.~69, no.~5, pp.~1105--1115, 2011.
+
+\bibitem{Eide10_Amp}
+P.~K. Eide and A.~Brean, ``Cerebrospinal fluid pulse pressure amplitude during
+  lumbar infusion in idiopathic normal pressure hydrocephalus can predict
+  response to shunting,'' {\em Cerebrospinal Fluid Res}, vol.~7, no.~5, 2010.
+
+\bibitem{Eide11_Hyper}
+P.~K. Eide and E.~Kerty, ``Static and pulsatile intracranial pressure in
+  idiopathic intracranial hypertension,'' {\em Clinical neurology and
+  neurosurgery}, vol.~113, no.~2, pp.~123--128, 2011.
+
+\bibitem{Eide10_Diag}
+P.~K. Eide and W.~Sorteberg, ``Diagnostic intracranial pressure monitoring and
+  surgical management in idiopathic normal pressure hydrocephalus: A 6-year
+  review of 214 patients,'' {\em Neurosurgery}, vol.~66, no.~1, pp.~80--91,
+  2010.
+
 \bibitem{Fric15}
 R.~Fri{\v{c}} and P.~K. Eide, ``Comparison of pulsatile and static pressures
   within the intracranial and lumbar compartments in patients with chiari
   malformation type 1: a prospective observational study,'' {\em Acta
   neurochirurgica}, vol.~157, no.~8, pp.~1411--1423, 2015.
 
-\bibitem{Fric16}
-R.~Fri{\v{c}} and P.~K. Eide, ``Perioperative monitoring of pulsatile and
-  static intracranial pressure in patients with chiari malformation type 1
-  undergoing foramen magnum decompression,'' {\em Acta neurochirurgica},
-  vol.~158, no.~2, pp.~341--347, 2016.
+\bibitem{Czos04}
+M.~Czosnyka and J.~D. Pickard, ``Monitoring and interpretation of intracranial
+  pressure,'' {\em Journal of Neurology, Neurosurgery \& Psychiatry}, vol.~75,
+  no.~6, pp.~813--821, 2004.
+
+\bibitem{Will76}
+B.~Williams, ``Cerebrospinal fluid pressure changes in response to coughing.,''
+  {\em Brain: a journal of neurology}, vol.~99, no.~2, pp.~331--346, 1976.
+
+\bibitem{Sans03}
+C.~A. Sansur, J.~D. Heiss, H.~L. DeVroom, E.~Eskioglu, R.~Ennis, and E.~H.
+  Oldfield, ``Pathophysiology of headache associated with cough in patients
+  with chiari i malformation,'' {\em Journal of neurosurgery}, vol.~98, no.~3,
+  pp.~453--458, 2003.
+
+\bibitem{Mart09Syrinx}
+B.~A. Martin, R.~Labuda, T.~J. Royston, J.~N. Oshinski, B.~Iskandar, and
+  F.~Loth, ``Pathological biomechanics of cerebrospinal fluid pressure in
+  syringomyelia: Fluid structure interaction of an in vitro coaxial elastic
+  tube system,'' pp.~941--942, 2009.
 
 \end{thebibliography}

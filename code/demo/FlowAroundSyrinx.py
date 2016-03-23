@@ -6,6 +6,7 @@ from cbcpost import PostProcessor
 
 from os import path
 #set_log_active(False)
+from LinearExp import *
 
 files = [path.join(path.dirname(path.realpath(__file__)),"cbcflow-data/cylinder_0.6k.xml.gz"),
          path.join(path.dirname(path.realpath(__file__)),"cbcflow-data/cylinder_2k.xml.gz"),
@@ -89,8 +90,14 @@ class FlowAroundCylinder(NSProblem):
         c0 = Constant(0)
         c1 = Constant(1)
         p0 = Constant(0)
-	p1 = Expression('-10.0*cos(2*t)',t=t)
-	p2 = Expression('100.0*sin(2*pi*t)',t=t)
+	p1 = Expression('-10.0*cos(2*t)',t=0.1)
+	p2 = Expression('100.0*sin(2*pi*t)',t=0.1)
+	time1 = plt.array([0, 0.16, 1.1])
+	time2 = plt.array([0, 0.4, 1.1])
+	p1 = plt.array([3,10,3])
+	p2 = plt.array([10, 11.5, 10])
+	P1 = MyExpression0(time1,p1,t=t)
+	P2 = MyExpression0(time2,p2,t=t)
 
         # Create inflow and no-slip boundary conditions for velocity
         u0 = Expression(('2*cos(4*pi*t)','0.0'),t=t)
@@ -100,8 +107,9 @@ class FlowAroundCylinder(NSProblem):
 
         # Create boundary conditions for pressure
         bcpR = (c0, 2)
-        bcpR2 = (p2, 2)
-	bcpL = (p1, 1)
+        bcpR2 = (P2, 2)
+	bcpL = (P1, 1)
+		
 	
         # Collect and return
         bcu = [noslip]

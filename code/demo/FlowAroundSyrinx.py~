@@ -6,6 +6,7 @@ from cbcpost import PostProcessor
 
 from os import path
 #set_log_active(False)
+from LinearExp import *
 
 files = [path.join(path.dirname(path.realpath(__file__)),"cbcflow-data/cylinder_0.6k.xml.gz"),
          path.join(path.dirname(path.realpath(__file__)),"cbcflow-data/cylinder_2k.xml.gz"),
@@ -22,14 +23,9 @@ class RightBoundary(SubDomain):
     def inside(self, x, on_boundary):
         return on_boundary and near(x[0], 10.0)
 
-class Cylinder(SubDomain):
-    def inside(self, x, on_boundary):
-        return (on_boundary and x[0] > 2.5-DOLFIN_EPS and x[0]<7.5+DOLFIN_EPS and x[1] >0.25-DOLFIN_EPS and x[1] < 0.75+DOLFIN_EPS)
-
 class Wall(SubDomain):
     def inside(self, x, on_boundary):
-        return on_boundary and (x[1]<0.75+DOLFIN_EPS and x[1]>0.25-DOLFIN_EPS)
-
+        return on_boundary and not (near(x[0],10.0) or near(x[0], 0.0))
 
 
 class FlowAroundCylinder(NSProblem):
@@ -41,7 +37,7 @@ class FlowAroundCylinder(NSProblem):
         params = NSProblem.default_params()
         params.replace(
             # Time parameters
-            T=1.0,
+            T=3.0,
             dt=0.005,
             # Physical parameters
             rho=1.0,
@@ -73,13 +69,14 @@ class FlowAroundCylinder(NSProblem):
 
         # Create boundary markers
         facet_domains = FacetFunction("size_t", mesh)
-        facet_domains.set_all(4)
+        facet_domains.set_all(3)
         Wall().mark(facet_domains, 0)
         #Cylinder().mark(facet_domains, 0)
         LeftBoundary().mark(facet_domains, 1)
         RightBoundary().mark(facet_domains, 2)
         # Store mesh and markers
         self.initialize_geometry(mesh, facet_domains=facet_domains)
+        
 
     def initial_conditions(self, spaces, controls):
         "Setting the flow at rest as initial conditions"
@@ -92,23 +89,31 @@ class FlowAroundCylinder(NSProblem):
 
         c0 = Constant(0)
         c1 = Constant(1)
-        p2 = Constant(0)
-	#p0 = Expression('-10.0*cos(2*t)',t=t)
-	p1 = Expression('100.0*sin(2*pi*t)',t=t)
+        p0 = Constant(0)
+	p1 = Expression('-10.0*cos(2*t)',t=0.1)
+	p2 = Expression('100.0*sin(2*pi*t)',t=0.1)
+	time1 = plt.array([0, 0.16, 1.1])
+	time2 = plt.array([0, 0.4, 1.1])
+	p1 = plt.array([3,10,3])
+	p2 = plt.array([10, 11.5, 10])
+	P1 = MyExpression0(time1,p1,t=t)
+	P2 = MyExpression0(time2,p2,t=t)
 
         # Create inflow and no-slip boundary conditions for velocity
-        u0 = Expression(('0.5*sin(2*pi*t)','0.0'),t=t)
+        u0 = Expression(('2*cos(4*pi*t)','0.0'),t=t)
+        
         inflow = (u0, 1)
         noslip = ([c0, c0], 0)
 
         # Create boundary conditions for pressure
-        #bcp0 = (c0, 2)
-        bcp2 = (p2, 2)
-	bcp1 = (p1, 1)
+        bcpR = (c0, 2)
+        bcpR2 = (P2, 2)
+	bcpL = (P1, 1)
+		
 	
         # Collect and return
-        bcu = [noslip,inflow]
-        bcp = [bcp2]
+        bcu = [noslip]
+        bcp = [bcpR2,bcpL]
         return (bcu, bcp)
 
 
@@ -122,11 +127,10 @@ def main():
     postprocessor = PostProcessor({"casedir": casedir})
 
     # Creating fields to plot and save
-    plot_and_save = dict(plot=True, save=True)
+    plot_and_save = dict(plot=False, save=True)
     fields = [
         Pressure(plot_and_save),
         Velocity(plot_and_save),
-        StreamFunction(plot_and_save),
         ]
 
     # Add fields to postprocessor

@@ -1,7 +1,7 @@
 #from domains_and_boundaries import *
 from domains_3D import *
-#from pylab import zeros, where, linspace, ones, show, array
-#import pylab as plt
+from pylab import zeros, where, linspace, ones, show, array
+import pylab as plt
 import sys
 set_log_active(False)
 parameters['allow_extrapolation']=True
@@ -28,7 +28,7 @@ else:
 	SD = MeshFunction('size_t', mesh, mesh.topology().dim())
 	SD.set_all(0)
 	Solid().mark(SD,1)
-	#CSC().mark(SD,1)
+	CSC().mark(SD,1)
 
 	# DEFINING BOUNDARIES
 	boundaries = FacetFunction("size_t",mesh)
@@ -42,6 +42,7 @@ else:
 	Interface().mark(boundaries,6)
 	Fluid_walls().mark(boundaries,7)
 	CSC_bnd().mark(boundaries,8)
+
 
 # Pr = 0.479
 # x max for U is 3.17*10^-5 for E = 5*10^6 and rho = 0.001*rho_f at time 0.4 (timestep 40 for dt = 0.01)
@@ -60,15 +61,14 @@ else:
 
 
 
-dt = 0.0002   # use 0.0003 for oscillations
-T = 1.0
+dt = 0.002   # use 0.0003 for oscillations
+T = 0.5
 # TEST AND TRIALFUNCTIONS
 V = VectorFunctionSpace(mesh,'CG',2)
 P = FunctionSpace(mesh,'CG',1)
-W = FunctionSpace(mesh,'CG', 2)
-VPW = MixedFunctionSpace([V,P,V])
+W = VectorFunctionSpace(mesh,'CG', 1)
+VPW = MixedFunctionSpace([V,P,W])
 print 'dof: ', VPW.dim()
-
 v,p,w = TrialFunctions(VPW)
 phi,eta,psi = TestFunctions(VPW)
 
@@ -80,7 +80,7 @@ h = mesh.hmin()
 
 # FLUID
 noslip = Constant((0.0,0.0,0))
-'''
+
 vf_l = Expression(('0.0','20*(std::exp(-pow(t-0.8,2)/0.05)+std::exp(-pow(t-1.7,2)/0.05)+std::exp(-pow(t-2.6,2)/0.05))*(x[0]+x0)*(x1+x[0])/4.0'),x0=x0,x1=x1,t=0)
 vf_r = Expression(('0.0','-20*(std::exp(-pow(t-0.8,2)/0.05)+std::exp(-pow(t-1.7,2)/0.05)+std::exp(-pow(t-2.6,2)/0.05))*(x[0]-x0)*(x1-x[0])/4.0'),x0=x0,x1=x1,t=0)
 
@@ -126,11 +126,17 @@ class MyExpression0(Expression):
 
 vf_l = MyExpression0(t_Brucker,C1_Brucker,0.0)
 vf_r = MyExpression0(t_Brucker,C1_Brucker,0.0)
-'''
+
 
 vf_l = Constant((0,0,-0.1))
 vf_r = Constant((0,0,-0.1))
-pressure = Expression('55*std::exp(-pow(t-0.08,2)/0.005) + 3*std::exp(-pow(t-0.42,2)/0.01) - 5*std::exp(-pow(t-0.72,2)/0.05) - 6',t=0)
+
+Bertram09_Pressure = array([0, -100, 0, 0])
+B09time = array([0, 2.5e-3, 5e-3, 0.829])
+t_Erika = linspace(0,1.1,23)
+P_Erika = array([-0.011,-0.03,-0.02, 0.002,-0.001, -0.002,-0.003, -0.004,0.001, 0.002,0.003, 0.003, 0.004, 0.004,0.003, 0.004,0.006, 0.04,0.045, 0.01, -0.01,-0.01,-0.01])
+P_Erika *= 1*133
+pressure = MyExpression0(t_Erika,P_Erika,0.0)
 
 
 
@@ -145,7 +151,7 @@ bcv6 = DirichletBC(VPW.sub(0),noslip,boundaries,6) # Interface
 bcv7 = DirichletBC(VPW.sub(0),noslip,boundaries,7) # Fluid walls
 
 
-bcv = [bcv1,bcv3, bcv5, bcv7] # don't use bcv6 for FSI
+bcv = [bcv3, bcv5, bcv7] # don't use bcv6 for FSI
 
 # SOLID
 
@@ -164,11 +170,11 @@ bcw = [bcw1,bcw3,bcw4,bcw5,bcw7]
 v0 = Function(V)
 if initial_files:
 	v1 = Function(V,'%s/u.xml'%folder)
-	U = Function(V,'%s/U.xml'%folder)
+	U = Function(W,'%s/U.xml'%folder)
 	#plot(u1)
 else:
 	v1 = Function(V)#,'initial_data/u.xml')
-	U = Function(V)
+	U = Function(W)
 
 
 VPW_ = Function(VPW)
@@ -225,12 +231,13 @@ aMF = rho_f/k*inner(v,phi)*dx_f + \
 	 inner(p,div(phi))*dx_f + \
 	2*mu_f*inner(sym(grad(v)),sym(grad(phi)))*dx_f
 
-LMF = rho_f/k*inner(v1,phi)*dx_f
+LMF = rho_f/k*inner(v1,phi)*dx_f - \
+	  inner(pressure, phi)*ds(1)
 
 aDF = k*inner(grad(w),grad(psi))*dx_f
 LDF = -inner(grad(U),grad(psi))*dx_f
 
-aCF = -inner(div(v),eta)*dx_f
+aCF = -inner(div(v),eta)*dx_f# - 0.2*mesh.hmin()**2*inner(p,eta)*dx_f
 LFQ = Constant(0)*eta*dx_f
 
 aF = aMF + aDF + aCF

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.1.20)  2 MAR 2016 10:56
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Debian) (format=pdflatex 2016.1.20)  23 MAR 2016 16:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -438,7 +438,7 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Overfull \hbox (1.16615pt too wide) in paragraph at lines 42--42
+Overfull \hbox (1.16615pt too wide) in paragraph at lines 46--46
  [][] [][][]\OT1/cmr/m/n/10 Assessment of CSF ve-loc-i-ties be-fore and af-ter 
 de-com-pres-sion surgery[][] [][]  
  []
@@ -460,7 +460,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 2--5
 
 ]
 Chapter 2.
-<figures/Spinal_Cord.png, id=244, 764.8575pt x 656.4525pt>
+<figures/Spinal_Cord.png, id=264, 764.8575pt x 656.4525pt>
 File: figures/Spinal_Cord.png Graphic file (type png)
 
 <use figures/Spinal_Cord.png>
@@ -481,7 +481,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 12--17
 
  []
 
-[5] <figures/Ida_CSF.png, id=252, 446.66875pt x 170.6375pt>
+[5] <figures/Ida_CSF.png, id=272, 446.66875pt x 170.6375pt>
 File: figures/Ida_CSF.png Graphic file (type png)
 
 <use figures/Ida_CSF.png>
@@ -558,7 +558,7 @@ me-eps-converted-to.pdf figures/Fixed_control_volume.eps>
 (epstopdf)             \includegraphics on input line 34.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/Fixed_control_volume-eps-converted-to.pdf, id=280, 467.7475pt x 272.01
+<figures/Fixed_control_volume-eps-converted-to.pdf, id=300, 467.7475pt x 272.01
 625pt>
 File: figures/Fixed_control_volume-eps-converted-to.pdf Graphic file (type pdf)
 
@@ -583,7 +583,7 @@ ume-eps-converted-to.pdf figures/Moving_control_volume.eps>
 (epstopdf)             \includegraphics on input line 41.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/Moving_control_volume-eps-converted-to.pdf, id=282, 412.54124pt x 195.
+<figures/Moving_control_volume-eps-converted-to.pdf, id=302, 412.54124pt x 195.
 73125pt>
 File: figures/Moving_control_volume-eps-converted-to.pdf Graphic file (type pdf
 )
@@ -617,23 +617,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 96--100
  []
 
 [12] [13]
+Underfull \hbox (badness 10000) in paragraph at lines 135--141
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 135--141
+
+ []
+
 Missing character: There is no Â in font cmr10!
 Missing character: There is no   in font cmr10!
-
-Underfull \hbox (badness 10000) in paragraph at lines 153--156
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 153--156
+[14]
+Underfull \hbox (badness 10000) in paragraph at lines 176--179
 
  []
 
-[14] <figures/Porous_REV.png, id=349, 1007.765pt x 575.14874pt>
+
+Underfull \hbox (badness 10000) in paragraph at lines 176--179
+
+ []
+
+[15] <figures/Porous_REV.png, id=379, 1007.765pt x 575.14874pt>
 File: figures/Porous_REV.png Graphic file (type png)
 
 <use figures/Porous_REV.png>
-Package pdftex.def Info: figures/Porous_REV.png used on input line 169.
+Package pdftex.def Info: figures/Porous_REV.png used on input line 192.
 (pdftex.def)             Requested size: 302.33183pt x 172.54594pt.
 Package epstopdf Info: Source file: <figures/Porous_Islands.eps>
 (epstopdf)                    date: 2016-03-02 10:19:19
@@ -644,28 +653,29 @@ f>
 (epstopdf)                    size: 4559 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/Porous_Islands-eps
 -converted-to.pdf figures/Porous_Islands.eps>
-(epstopdf)             \includegraphics on input line 175.
+(epstopdf)             \includegraphics on input line 198.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/Porous_Islands-eps-converted-to.pdf, id=350, 499.8675pt x 130.4875pt>
+<figures/Porous_Islands-eps-converted-to.pdf, id=380, 499.8675pt x 130.4875pt>
 File: figures/Porous_Islands-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/Porous_Islands-eps-converted-to.pdf>
 Package pdftex.def Info: figures/Porous_Islands-eps-converted-to.pdf used on in
-put line 175.
+put line 198.
 (pdftex.def)             Requested size: 310.4979pt x 81.0567pt.
- [15 <./figures/Porous_REV.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 191--196
+ [16 <./figures/Porous_REV.png> <./figures/Porous_Islands-eps-converted-to.pdf>
+]
+Underfull \hbox (badness 10000) in paragraph at lines 215--220
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 198--201
+Underfull \hbox (badness 10000) in paragraph at lines 222--225
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 198--201
+Underfull \hbox (badness 10000) in paragraph at lines 222--225
 
  []
 
@@ -678,46 +688,50 @@ Package epstopdf Info: Source file: <figures/Lagrangian_domain.eps>
 (epstopdf)                    size: 8379 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/Lagrangian_domain-
 eps-converted-to.pdf figures/Lagrangian_domain.eps>
-(epstopdf)             \includegraphics on input line 205.
+(epstopdf)             \includegraphics on input line 229.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/Lagrangian_domain-eps-converted-to.pdf, id=361, 351.3125pt x 109.40875
+<figures/Lagrangian_domain-eps-converted-to.pdf, id=397, 351.3125pt x 109.40875
 pt>
 File: figures/Lagrangian_domain-eps-converted-to.pdf Graphic file (type pdf)
  <use figures/Lagrangian_domain-eps-converted-to.pdf>
 Package pdftex.def Info: figures/Lagrangian_domain-eps-converted-to.pdf used on
- input line 205.
+ input line 229.
 (pdftex.def)             Requested size: 351.31163pt x 109.40846pt.
 
-Overfull \hbox (6.31163pt too wide) in paragraph at lines 205--206
+Overfull \hbox (6.31163pt too wide) in paragraph at lines 229--230
 [][]
  []
 
-[16 <./figures/Porous_Islands-eps-converted-to.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 223--232
+[17]
+Underfull \hbox (badness 10000) in paragraph at lines 247--256
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 223--232
+Underfull \hbox (badness 10000) in paragraph at lines 247--256
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 223--232
-
- []
-
-[17 <./figures/Lagrangian_domain-eps-converted-to.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 233--239
+Underfull \hbox (badness 10000) in paragraph at lines 247--256
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 233--239
+Underfull \hbox (badness 10000) in paragraph at lines 257--263
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 257--263
+
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [18 <./figures/Lagrangian_domain-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <figures/ALE_domain.eps>
 (epstopdf)                    date: 2016-02-24 16:01:30
 (epstopdf)                    size: 83472 bytes
@@ -726,47 +740,43 @@ Package epstopdf Info: Source file: <figures/ALE_domain.eps>
 (epstopdf)                    size: 9441 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/ALE_domain-eps-con
 verted-to.pdf figures/ALE_domain.eps>
-(epstopdf)             \includegraphics on input line 241.
+(epstopdf)             \includegraphics on input line 265.
 Package epstopdf Info: Output file is already uptodate.
-<figures/ALE_domain-eps-converted-to.pdf, id=407, 351.3125pt x 217.81375pt>
+
+<figures/ALE_domain-eps-converted-to.pdf, id=436, 351.3125pt x 217.81375pt>
 File: figures/ALE_domain-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/ALE_domain-eps-converted-to.pdf>
 Package pdftex.def Info: figures/ALE_domain-eps-converted-to.pdf used on input 
-line 241.
+line 265.
 (pdftex.def)             Requested size: 351.31163pt x 217.8132pt.
 
-Overfull \hbox (6.31163pt too wide) in paragraph at lines 241--242
+Overfull \hbox (6.31163pt too wide) in paragraph at lines 265--266
 [][]
  []
 
-[18 <./figures/ALE_domain-eps-converted-to.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 259--264
+
+Underfull \hbox (badness 10000) in paragraph at lines 283--288
+
+ []
+
+[19 <./figures/ALE_domain-eps-converted-to.pdf>]
+Underfull \hbox (badness 10000) in paragraph at lines 300--304
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 276--280
-
- []
-
-[19]
-Underfull \hbox (badness 10000) in paragraph at lines 304--311
+Underfull \hbox (badness 10000) in paragraph at lines 328--335
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 304--311
+Underfull \hbox (badness 10000) in paragraph at lines 328--335
 
  []
 
 [20]
-Underfull \hbox (badness 10000) in paragraph at lines 358--363
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 386--389
+Underfull \hbox (badness 10000) in paragraph at lines 382--387
 
  []
 
@@ -775,7 +785,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 410--413
 
  []
 
-) (./Numerical_methods.tex [22]
+[22]
+Underfull \hbox (badness 10000) in paragraph at lines 434--437
+
+ []
+
+) (./Numerical_methods.tex [23] [24
+
+]
 Chapter 4.
 
 Underfull \hbox (badness 10000) in paragraph at lines 9--13
@@ -792,9 +809,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 21--24
 
  []
 
-[23
-
-]
+[25]
 Underfull \hbox (badness 10000) in paragraph at lines 27--27
 
  []
@@ -814,7 +829,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 45--47
 
  []
 
-[24] <figures/hats.png, id=485, 865.0719pt x 560.8152pt>
+[26] <figures/hats.png, id=519, 865.0719pt x 560.8152pt>
 File: figures/hats.png Graphic file (type png)
 
 <use figures/hats.png>
@@ -835,7 +850,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 75--85
 
  []
 
-[25 <./figures/hats.png>]
+[27 <./figures/hats.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 93--96
 
  []
@@ -860,14 +875,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 112--118
 
  []
 
-[26] [27] <figures/poisson_f_20x.png, id=507, 602.25pt x 401.5pt>
+[28] [29] <figures/poisson_f_20x.png, id=540, 602.25pt x 401.5pt>
 File: figures/poisson_f_20x.png Graphic file (type png)
 
 <use figures/poisson_f_20x.png>
 Package pdftex.def Info: figures/poisson_f_20x.png used on input line 158.
 (pdftex.def)             Requested size: 301.12425pt x 200.7495pt.
 
-<figures/Hron_Turek_geometry.png, id=510, 1096.095pt x 639.38875pt>
+<figures/Hron_Turek_geometry.png, id=543, 1096.095pt x 639.38875pt>
 File: figures/Hron_Turek_geometry.png Graphic file (type png)
 
 <use figures/Hron_Turek_geometry.png>
@@ -884,192 +899,172 @@ Underfull \hbox (badness 10000) in paragraph at lines 165--177
 
  []
 
-[28 <./figures/poisson_f_20x.png (PNG copy)>]
+[30 <./figures/poisson_f_20x.png (PNG copy)>]
 Underfull \hbox (badness 10000) in paragraph at lines 178--187
 
  []
 
-
-Underfull \vbox (badness 4144) has occurred while \output is active []
-
- [29 <./figures/Hron_Turek_geometry.png>] [30]
+[31 <./figures/Hron_Turek_geometry.png>] [32]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[31] <figures/FSI1_mesh_med.png, id=542, 1514.65875pt x 582.175pt>
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Overfull \hbox (20.36084pt too wide) in paragraph at lines 318--326
+ [] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Overfull \hbox (20.36084pt too wide) in paragraph at lines 332--340
+ [] 
+ []
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<figures/CSM3/CSM3_Full_x.png, id=567, 586.8324pt x 442.2924pt>
+File: figures/CSM3/CSM3_Full_x.png Graphic file (type png)
+
+<use figures/CSM3/CSM3_Full_x.png>
+Package pdftex.def Info: figures/CSM3/CSM3_Full_x.png used on input line 347.
+(pdftex.def)             Requested size: 172.5pt x 130.00946pt.
+
+<figures/CSM3/CSM3_2_x.png, id=568, 586.8324pt x 442.2924pt>
+File: figures/CSM3/CSM3_2_x.png Graphic file (type png)
+
+<use figures/CSM3/CSM3_2_x.png>
+Package pdftex.def Info: figures/CSM3/CSM3_2_x.png used on input line 350.
+(pdftex.def)             Requested size: 172.5pt x 130.00946pt.
+
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 346--352
+[][] [] 
+ []
+
+<figures/CSM3/CSM3_Y_full.png, id=569, 976.3677pt x 628.0263pt>
+File: figures/CSM3/CSM3_Y_full.png Graphic file (type png)
+
+<use figures/CSM3/CSM3_Y_full.png>
+Package pdftex.def Info: figures/CSM3/CSM3_Y_full.png used on input line 355.
+(pdftex.def)             Requested size: 172.5pt x 110.95078pt.
+
+<figures/CSM3/CSM3_2_y.png, id=570, 976.3677pt x 628.0263pt>
+File: figures/CSM3/CSM3_2_y.png Graphic file (type png)
+
+<use figures/CSM3/CSM3_2_y.png>
+Package pdftex.def Info: figures/CSM3/CSM3_2_y.png used on input line 358.
+(pdftex.def)             Requested size: 172.5pt x 110.95078pt.
+
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 354--360
+[][] [] 
+ []
+
+[33]
+
+LaTeX Warning: Text page 34 contains only floats.
+
+[34 <./figures/CSM3/CSM3_Full_x.png> <./figures/CSM3/CSM3_2_x.png>] [35 <./figu
+res/CSM3/CSM3_Y_full.png> <./figures/CSM3/CSM3_2_y.png>]
+<figures/FSI1_mesh_med.png, id=598, 1514.65875pt x 582.175pt>
 File: figures/FSI1_mesh_med.png Graphic file (type png)
 
 <use figures/FSI1_mesh_med.png>
-Package pdftex.def Info: figures/FSI1_mesh_med.png used on input line 345.
+Package pdftex.def Info: figures/FSI1_mesh_med.png used on input line 389.
 (pdftex.def)             Requested size: 345.0pt x 132.60048pt.
 
-Overfull \hbox (32.85896pt too wide) in paragraph at lines 353--361
+Overfull \hbox (32.85896pt too wide) in paragraph at lines 397--405
  [] 
  []
 
 
-Overfull \hbox (35.96915pt too wide) in paragraph at lines 367--376
+Overfull \hbox (35.96915pt too wide) in paragraph at lines 411--420
  [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 379--385
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 423--429
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 379--385
+Underfull \hbox (badness 10000) in paragraph at lines 423--429
 
  []
 
-[32 <./figures/FSI1_mesh_med.png (PNG copy)>]
-<figures/FSI3/coarse/FSI_mesh_1.png, id=551, 1514.65875pt x 582.175pt>
+[36
+
+ <./figures/FSI1_mesh_med.png (PNG copy)>]
+<figures/FSI3/coarse/FSI_mesh_1.png, id=607, 1514.65875pt x 582.175pt>
 File: figures/FSI3/coarse/FSI_mesh_1.png Graphic file (type png)
 
 <use figures/FSI3/coarse/FSI_mesh_1.png>
 Package pdftex.def Info: figures/FSI3/coarse/FSI_mesh_1.png used on input line 
-388.
+432.
 (pdftex.def)             Requested size: 172.5pt x 66.29579pt.
 
-<figures/FSI3/coarse/FSI_mesh_2.png, id=552, 1514.65875pt x 582.175pt>
+<figures/FSI3/coarse/FSI_mesh_2.png, id=608, 1514.65875pt x 582.175pt>
 File: figures/FSI3/coarse/FSI_mesh_2.png Graphic file (type png)
 
 <use figures/FSI3/coarse/FSI_mesh_2.png>
 Package pdftex.def Info: figures/FSI3/coarse/FSI_mesh_2.png used on input line 
-392.
+436.
 (pdftex.def)             Requested size: 172.5pt x 66.29579pt.
 
-<figures/FSI3/coarse/FSI_mesh_3.png, id=553, 1514.65875pt x 582.175pt>
+<figures/FSI3/coarse/FSI_mesh_3.png, id=609, 1514.65875pt x 582.175pt>
 File: figures/FSI3/coarse/FSI_mesh_3.png Graphic file (type png)
 
 <use figures/FSI3/coarse/FSI_mesh_3.png>
 Package pdftex.def Info: figures/FSI3/coarse/FSI_mesh_3.png used on input line 
-396.
+440.
 (pdftex.def)             Requested size: 172.5pt x 66.29579pt.
 
-<figures/FSI3/coarse/FSI_mesh_4.png, id=554, 1514.65875pt x 582.175pt>
+<figures/FSI3/coarse/FSI_mesh_4.png, id=610, 1514.65875pt x 582.175pt>
 File: figures/FSI3/coarse/FSI_mesh_4.png Graphic file (type png)
 
 <use figures/FSI3/coarse/FSI_mesh_4.png>
 Package pdftex.def Info: figures/FSI3/coarse/FSI_mesh_4.png used on input line 
-400.
+444.
 (pdftex.def)             Requested size: 172.5pt x 66.29579pt.
 
-<figures/FSI3/coarse/FSI_mesh_5.png, id=555, 1514.65875pt x 582.175pt>
+<figures/FSI3/coarse/FSI_mesh_5.png, id=611, 1514.65875pt x 582.175pt>
 File: figures/FSI3/coarse/FSI_mesh_5.png Graphic file (type png)
 
 <use figures/FSI3/coarse/FSI_mesh_5.png>
 Package pdftex.def Info: figures/FSI3/coarse/FSI_mesh_5.png used on input line 
-404.
+448.
 (pdftex.def)             Requested size: 172.5pt x 66.29579pt.
 
-<figures/FSI3/coarse/FSI_mesh_6.png, id=556, 1514.65875pt x 582.175pt>
+<figures/FSI3/coarse/FSI_mesh_6.png, id=612, 1514.65875pt x 582.175pt>
 File: figures/FSI3/coarse/FSI_mesh_6.png Graphic file (type png)
 
 <use figures/FSI3/coarse/FSI_mesh_6.png>
 Package pdftex.def Info: figures/FSI3/coarse/FSI_mesh_6.png used on input line 
-408.
+452.
 (pdftex.def)             Requested size: 172.5pt x 66.29579pt.
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 387--411
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 431--455
 [][] [] 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 387--411
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 431--455
 [] [] 
  []
 
 
-Overfull \hbox (2.22221pt too wide) in paragraph at lines 387--411
+Overfull \hbox (2.22221pt too wide) in paragraph at lines 431--455
 [] [] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 419--423
-
- []
-
-
-Underfull \vbox (badness 1360) has occurred while \output is active []
-
-
-Overfull \hbox (55.94203pt too wide) has occurred while \output is active
-\OT1/cmr/m/sl/10 4.3.  FLUID STRUCTURE INTERACTION USING THE FINITE ELEMENT MET
-HOD \OT1/cmr/m/n/10 33
- []
-
-[33]
-Underfull \hbox (badness 10000) in paragraph at lines 434--436
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 437--442
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 437--442
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 437--442
-
- []
-
-[34 <./figures/FSI3/coarse/FSI_mesh_1.png (PNG copy)> <./figures/FSI3/coarse/FS
-I_mesh_2.png (PNG copy)> <./figures/FSI3/coarse/FSI_mesh_3.png (PNG copy)> <./f
-igures/FSI3/coarse/FSI_mesh_4.png (PNG copy)> <./figures/FSI3/coarse/FSI_mesh_5
-.png (PNG copy)> <./figures/FSI3/coarse/FSI_mesh_6.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 470--473
-
- []
-
-
-Overfull \hbox (55.94203pt too wide) has occurred while \output is active
-\OT1/cmr/m/sl/10 4.3.  FLUID STRUCTURE INTERACTION USING THE FINITE ELEMENT MET
-HOD \OT1/cmr/m/n/10 35
- []
-
-[35]
-Underfull \hbox (badness 10000) in paragraph at lines 477--481
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 483--488
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 490--497
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 490--497
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 502--511
-
- []
-
-[36]
-Underfull \hbox (badness 10000) in paragraph at lines 523--535
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 523--535
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 541--550
+Underfull \hbox (badness 10000) in paragraph at lines 463--467
 
  []
 
@@ -1079,16 +1074,36 @@ Overfull \hbox (55.94203pt too wide) has occurred while \output is active
 HOD \OT1/cmr/m/n/10 37
  []
 
-[37]
-Overfull \hbox (37.74675pt too wide) in paragraph at lines 565--565
-[][][][][][]  
+[37 <./figures/FSI3/coarse/FSI_mesh_1.png (PNG copy)> <./figures/FSI3/coarse/FS
+I_mesh_2.png (PNG copy)> <./figures/FSI3/coarse/FSI_mesh_3.png (PNG copy)> <./f
+igures/FSI3/coarse/FSI_mesh_4.png (PNG copy)> <./figures/FSI3/coarse/FSI_mesh_5
+.png (PNG copy)> <./figures/FSI3/coarse/FSI_mesh_6.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 478--480
+
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \hbox (badness 10000) in paragraph at lines 481--486
 
- [38]
-Underfull \hbox (badness 10000) in paragraph at lines 608--612
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 481--486
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 481--486
+
+ []
+
+[38]
+Underfull \hbox (badness 10000) in paragraph at lines 511--514
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 519--522
 
  []
 
@@ -1099,25 +1114,90 @@ HOD \OT1/cmr/m/n/10 39
  []
 
 [39]
-Underfull \hbox (badness 10000) in paragraph at lines 629--640
+Underfull \hbox (badness 10000) in paragraph at lines 526--530
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 641--642
+Underfull \hbox (badness 10000) in paragraph at lines 532--537
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 539--546
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 539--546
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 549--558
 
  []
 
 [40]
-Overfull \hbox (31.53134pt too wide) in paragraph at lines 665--665
+Underfull \hbox (badness 10000) in paragraph at lines 570--582
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 570--582
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 588--597
+
+ []
+
+
+Overfull \hbox (55.94203pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/10 4.3.  FLUID STRUCTURE INTERACTION USING THE FINITE ELEMENT MET
+HOD \OT1/cmr/m/n/10 41
+ []
+
+[41]
+Overfull \hbox (37.74675pt too wide) in paragraph at lines 612--612
+[][][][][][]  
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [42]
+Underfull \hbox (badness 10000) in paragraph at lines 655--659
+
+ []
+
+
+Overfull \hbox (55.94203pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/10 4.3.  FLUID STRUCTURE INTERACTION USING THE FINITE ELEMENT MET
+HOD \OT1/cmr/m/n/10 43
+ []
+
+[43]
+Underfull \hbox (badness 10000) in paragraph at lines 676--687
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 688--689
+
+ []
+
+[44]
+Overfull \hbox (31.53134pt too wide) in paragraph at lines 712--712
 [] 
  []
 
-) (./material_parameters.tex [41] [42
+) (./material_parameters.tex [45] [46
 
 ]
 Chapter 5.
-) (./Spinal_Cord_Simulations.tex [43] [44
+) (./Spinal_Cord_Simulations.tex [47] [48
 
 ]
 Chapter 6.
@@ -1137,102 +1217,161 @@ Underfull \hbox (badness 10000) in paragraph at lines 2--6
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 9--24
+Underfull \hbox (badness 10000) in paragraph at lines 9--27
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 9--24
+Underfull \hbox (badness 10000) in paragraph at lines 9--27
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 9--24
+Underfull \hbox (badness 10000) in paragraph at lines 9--27
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 9--24
+Underfull \hbox (badness 10000) in paragraph at lines 9--27
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 9--24
+Underfull \hbox (badness 10000) in paragraph at lines 9--27
 
  []
 
-[45]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Underfull \hbox (badness 10000) in paragraph at lines 9--27
+
+ []
+
+[49]
+Overfull \hbox (4.1584pt too wide) in paragraph at lines 29--29
+[]\OT1/cmr/bx/n/12 Pressure mea-sure-ments in pa-tients with sy-ringomelia 
+ []
 
 
 Overfull \hbox (68.44205pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/10 46 \OT1/cmr/m/sl/10 CHAPTER 6.  SIMULATING INTERACTION BETWEEN 
+\OT1/cmr/m/n/10 50 \OT1/cmr/m/sl/10 CHAPTER 6.  SIMULATING INTERACTION BETWEEN 
 CSF AND THE SPINAL CORD
  []
 
-[46] <figures/Syrinx_Subject.png, id=644, 73.9125pt x 151.767pt>
+[50] <figures/Eide_pressure_Syrinx.png, id=716, 454.69875pt x 401.5pt>
+File: figures/Eide_pressure_Syrinx.png Graphic file (type png)
+
+<use figures/Eide_pressure_Syrinx.png>
+Package pdftex.def Info: figures/Eide_pressure_Syrinx.png used on input line 34
+.
+(pdftex.def)             Requested size: 137.9979pt x 121.85387pt.
+
+<figures/Eide_static.png, id=717, 617.30624pt x 569.12625pt>
+File: figures/Eide_static.png Graphic file (type png)
+
+<use figures/Eide_static.png>
+Package pdftex.def Info: figures/Eide_static.png used on input line 35.
+(pdftex.def)             Requested size: 129.375pt x 119.27687pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 39--42
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 39--42
+
+ []
+
+<figures/ICP_and_LP.png, id=723, 412.54124pt x 525.965pt>
+File: figures/ICP_and_LP.png Graphic file (type png)
+
+<use figures/ICP_and_LP.png>
+Package pdftex.def Info: figures/ICP_and_LP.png used on input line 44.
+(pdftex.def)             Requested size: 206.27011pt x 262.98184pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 49--53
+
+ []
+
+
+Overfull \hbox (106.3578pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/10 6.2.  ASSESSMENT OF CSF VELOCITIES BEFORE AND AFTER DECOMPRESS
+ION SURGERY \OT1/cmr/m/n/10 51
+ []
+
+[51 <./figures/Eide_pressure_Syrinx.png> <./figures/Eide_static.png>]
+<figures/Syrinx_Subject.png, id=736, 73.9125pt x 151.767pt>
 File: figures/Syrinx_Subject.png Graphic file (type png)
 
 <use figures/Syrinx_Subject.png>
-Package pdftex.def Info: figures/Syrinx_Subject.png used on input line 33.
+Package pdftex.def Info: figures/Syrinx_Subject.png used on input line 61.
 (pdftex.def)             Requested size: 175.9481pt x 361.3095pt.
 
-<figures/Syrinx_PostOp.png, id=645, 57.816pt x 127.7865pt>
+<figures/Syrinx_PostOp.png, id=737, 57.816pt x 127.7865pt>
 File: figures/Syrinx_PostOp.png Graphic file (type png)
 
 <use figures/Syrinx_PostOp.png>
-Package pdftex.def Info: figures/Syrinx_PostOp.png used on input line 33.
+Package pdftex.def Info: figures/Syrinx_PostOp.png used on input line 61.
 (pdftex.def)             Requested size: 163.52966pt x 361.45767pt.
 
-<figures/Syrinx_Levels.png, id=646, 272.01625pt x 451.6875pt>
+<figures/Syrinx_Levels.png, id=738, 272.01625pt x 451.6875pt>
 File: figures/Syrinx_Levels.png Graphic file (type png)
 
 <use figures/Syrinx_Levels.png>
-Package pdftex.def Info: figures/Syrinx_Levels.png used on input line 43.
+Package pdftex.def Info: figures/Syrinx_Levels.png used on input line 71.
 (pdftex.def)             Requested size: 163.211pt x 271.01459pt.
 ) (./equations.bbl
-Overfull \hbox (106.3578pt too wide) has occurred while \output is active
-\OT1/cmr/m/sl/10 6.2.  ASSESSMENT OF CSF VELOCITIES BEFORE AND AFTER DECOMPRESS
-ION SURGERY \OT1/cmr/m/n/10 47
- []
-
-[47 <./figures/Syrinx_Subject.png> <./figures/Syrinx_PostOp.png>]
 Overfull \hbox (68.44205pt too wide) has occurred while \output is active
-\OT1/cmr/m/n/10 48 \OT1/cmr/m/sl/10 CHAPTER 6.  SIMULATING INTERACTION BETWEEN 
+\OT1/cmr/m/n/10 52 \OT1/cmr/m/sl/10 CHAPTER 6.  SIMULATING INTERACTION BETWEEN 
 CSF AND THE SPINAL CORD
  []
 
-[48 <./figures/Syrinx_Levels.png>] [49
+[52 <./figures/ICP_and_LP.png>]
+Overfull \hbox (106.3578pt too wide) has occurred while \output is active
+\OT1/cmr/m/sl/10 6.2.  ASSESSMENT OF CSF VELOCITIES BEFORE AND AFTER DECOMPRESS
+ION SURGERY \OT1/cmr/m/n/10 53
+ []
+
+[53 <./figures/Syrinx_Subject.png> <./figures/Syrinx_PostOp.png>]
+Overfull \hbox (68.44205pt too wide) has occurred while \output is active
+\OT1/cmr/m/n/10 54 \OT1/cmr/m/sl/10 CHAPTER 6.  SIMULATING INTERACTION BETWEEN 
+CSF AND THE SPINAL CORD
+ []
+
+[54 <./figures/Syrinx_Levels.png>] [55
 
 ]
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no “ in font cmr10!
 
-Underfull \hbox (badness 1424) in paragraph at lines 90--93
+Underfull \hbox (badness 1424) in paragraph at lines 98--101
 []\OT1/cmr/m/n/10 B. Rivi^^Rere, \OT1/cmr/m/it/10 Dis-con-tin-u-ous Galerkin me
 th-ods for solv-ing el-lip-tic and
  []
 
-)
+[56])
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 16.
- [50] [51]
+ [57] [58]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 16.
  (./equations.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 16.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 16.
 Package rerunfilecheck Info: File `equations.out' has not changed.
-(rerunfilecheck)             Checksum: 9FFD9CE24157BC660231F698E9B67297;3157.
+(rerunfilecheck)             Checksum: A80BCF98771A79639C2AE1742C23A22B;3482.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 16.
  ) 
 Here is how much of TeX's memory you used:
- 9821 strings out of 494985
- 146646 string characters out of 6180356
- 340304 words of memory out of 5000000
- 12692 multiletter control sequences out of 15000+600000
+ 9907 strings out of 494985
+ 148245 string characters out of 6180356
+ 343943 words of memory out of 5000000
+ 12740 multiletter control sequences out of 15000+600000
  11629 words of font info for 42 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
- 43i,19n,43p,1135b,522s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,19n,43p,1239b,513s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb></usr/share/texli
@@ -1254,10 +1393,10 @@ ype1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/pu
 blic/amsfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmtt10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
 s/symbols/msbm10.pfb>
-Output written on equations.pdf (51 pages, 4262603 bytes).
+Output written on equations.pdf (58 pages, 4618014 bytes).
 PDF statistics:
- 775 PDF objects out of 1000 (max. 8388607)
- 667 compressed objects within 7 object streams
- 178 named destinations out of 1000 (max. 500000)
- 442 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 882 PDF objects out of 1000 (max. 8388607)
+ 754 compressed objects within 8 object streams
+ 208 named destinations out of 1000 (max. 500000)
+ 509 words of extra memory for PDF output out of 10000 (max. 10000000)
 

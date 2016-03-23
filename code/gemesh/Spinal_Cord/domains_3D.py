@@ -12,7 +12,7 @@ mu_f = Constant(nu_f*rho_f)		# g/(mm*s)
 
 
 ## from Karen/Nina
-E = (62.5*10**3) # Pa --- Ozawa rabbit spinal cord 5*10**3 (No Pia) 16*10^3 (w Pia)
+E = (20*10**3) # Pa --- Ozawa rabbit spinal cord 5*10**3 (No Pia) 16*10^3 (w Pia)
 Pr = 0.479#0.479       #
 
 rho_s = Constant(2*rho_f)
@@ -29,7 +29,7 @@ x0 = 5		# inner wall
 x1 = 9		# outer wall
 s = 3		# central spinal canal
 
-tol = 5e-1
+tol = 1e-1
 
 class Fluid_out(SubDomain):
 	def inside(self,x,on_boundary):
@@ -77,7 +77,7 @@ class Solid(SubDomain):
 		yb = h/6.0 - tol < x[2] < h/6.0 + tol
 		yt = 5*h/6.0 - tol < x[2] < 5*h/6.0 + tol
 		csc_bnd = (xin and (yb or yt)) or (yval and xval)
-		return sqrt(x[0]**2+x[1]**2) < x0 + tol and (not csc or csc_bnd)   
+		return sqrt(x[0]**2+x[1]**2) < x0 + tol# and (not csc or csc_bnd)   
 
 class Fluid(SubDomain):
 	def inside(self,x,on_bounary):

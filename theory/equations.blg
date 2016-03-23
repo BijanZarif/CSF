@@ -6,48 +6,51 @@ Database file #1: bib.bib
 Warning--empty journal in Stov14
 Warning--empty journal in Kyls14
 Warning--empty journal in Dros11
+Too many commas in name 1 of "Kundu, P. K., Cohen, I. M. and Dowling, D. R." for entry Kund2012
+while executing---line 969 of file ieeetr.bst
 Warning--empty publisher in Wang00
 Warning--empty publisher in Lang2
 Warning--empty journal in Seli11
-You've used 28 entries,
+Warning--empty journal in Mart09Syrinx
+You've used 41 entries,
             1876 wiz_defined-function locations,
-            660 strings with 8047 characters,
-and the built_in function-call counts, 6354 in all, are:
-= -- 628
-> -- 229
+            753 strings with 10801 characters,
+and the built_in function-call counts, 10335 in all, are:
+= -- 1052
+> -- 366
 < -- 0
-+ -- 90
-- -- 62
-* -- 407
-:= -- 907
-add.period$ -- 39
-call.type$ -- 28
-change.case$ -- 20
++ -- 141
+- -- 100
+* -- 694
+:= -- 1449
+add.period$ -- 54
+call.type$ -- 41
+change.case$ -- 32
 chr.to.int$ -- 0
-cite$ -- 34
-duplicate$ -- 341
-empty$ -- 655
-format.name$ -- 62
-if$ -- 1560
+cite$ -- 48
+duplicate$ -- 540
+empty$ -- 1015
+format.name$ -- 100
+if$ -- 2537
 int.to.chr$ -- 0
-int.to.str$ -- 28
-missing$ -- 38
-newline$ -- 98
-num.names$ -- 28
-pop$ -- 113
+int.to.str$ -- 41
+missing$ -- 53
+newline$ -- 139
+num.names$ -- 41
+pop$ -- 140
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 181
+skip$ -- 331
 stack$ -- 0
-substring$ -- 334
-swap$ -- 111
+substring$ -- 662
+swap$ -- 205
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 6
-while$ -- 56
-width$ -- 30
-write$ -- 268
-(There were 6 warnings)
+warning$ -- 7
+while$ -- 99
+width$ -- 43
+write$ -- 404
+(There was 1 error message)

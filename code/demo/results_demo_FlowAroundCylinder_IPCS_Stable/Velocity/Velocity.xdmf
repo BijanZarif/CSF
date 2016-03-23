@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<Xdmf Version="2.0" xmlns:xi="http://www.w3.org/2001/XInclude">
+  <Domain>
+    <Grid Name="TimeSeries" GridType="Collection" CollectionType="Temporal">
+      <Time TimeType="List">
+        <DataItem Format="XML" Dimensions="2"> 0 0.005</DataItem>
+      </Time>
+      <Grid Name="grid_1" GridType="Uniform">
+        <Topology NumberOfElements="29528" TopologyType="Triangle">
+          <DataItem Format="HDF" Dimensions="29528 3">Velocity.h5:/Mesh/0/topology</DataItem>
+        </Topology>
+        <Geometry GeometryType="XY">
+          <DataItem Format="HDF" Dimensions="15822 2">Velocity.h5:/Mesh/0/coordinates</DataItem>
+        </Geometry>
+        <Attribute Name="Velocity" AttributeType="Vector" Center="Node">
+          <DataItem Format="HDF" Dimensions="15822 3">Velocity.h5:/VisualisationVector/0</DataItem>
+        </Attribute>
+      </Grid>
+      <Grid Name="grid_2" GridType="Uniform">
+        <Topology NumberOfElements="29528" TopologyType="Triangle">
+          <DataItem Format="HDF" Dimensions="29528 3">Velocity.h5:/Mesh/0/topology</DataItem>
+        </Topology>
+        <Geometry GeometryType="XY">
+          <DataItem Format="HDF" Dimensions="15822 2">Velocity.h5:/Mesh/0/coordinates</DataItem>
+        </Geometry>
+        <Attribute Name="Velocity" AttributeType="Vector" Center="Node">
+          <DataItem Format="HDF" Dimensions="15822 3">Velocity.h5:/VisualisationVector/1</DataItem>
+        </Attribute>
+      </Grid>
+    </Grid>
+  </Domain>
+</Xdmf>
