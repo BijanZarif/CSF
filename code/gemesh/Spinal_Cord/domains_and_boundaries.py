@@ -1,25 +1,8 @@
 from dolfin import *
 import numpy as np
 
-#mesh = Mesh('meshes/drosdal2D.xml')
-
-#mesh = refine(mesh)
-#mesh = refine(mesh)	
-
-rho_f = Constant(1./1000)		# g/mm
-nu_f = Constant(0.658)			# mm**2/s
-mu_f = Constant(nu_f*rho_f)		# g/(mm*s)
-
-
-## from Karen/Nina
-E = (16*10**3) # Pa --- Ozawa rabbit spinal cord 5*10**3 (No Pia) 16*10^3 (w Pia)
-Pr = 0.479#0.479       #
-
-rho_s = Constant(2*rho_f)
-lamda = Constant(E*Pr/((1.0+Pr)*(1.0-2*Pr)))
-mu_s = Constant(E/(2*(1.0+Pr)))
-
 K_perm = Constant(1.4*10**(-15)*(10**6))  # mm^2 use (1.3*10-16 - 1.4*10-14) m^2
+
 
 #mu_s, lamda_s = mu_s*1000, lamda_s*1000
 

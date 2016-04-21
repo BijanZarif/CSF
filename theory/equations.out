@@ -32,15 +32,19 @@
 \BOOKMARK [2][-]{subsection.4.2.3}{CSM tests}{section.4.2}% 32
 \BOOKMARK [2][-]{subsection.4.2.4}{FSI tests}{section.4.2}% 33
 \BOOKMARK [1][-]{section.4.3}{Fluid Structure Interaction using the Finite Element method}{chapter.4}% 34
-\BOOKMARK [2][-]{subsection.4.3.1}{A note on temporal discretization}{section.4.3}% 35
+\BOOKMARK [2][-]{subsection.4.3.1}{Temporal discretization}{section.4.3}% 35
 \BOOKMARK [2][-]{subsection.4.3.2}{Spatial discretization}{section.4.3}% 36
 \BOOKMARK [2][-]{subsection.4.3.3}{A discussion on functionspaces}{section.4.3}% 37
 \BOOKMARK [2][-]{subsection.4.3.4}{Treatment of boundary conditions}{section.4.3}% 38
 \BOOKMARK [2][-]{subsection.4.3.5}{FSI in FEniCS}{section.4.3}% 39
 \BOOKMARK [1][-]{section.4.4}{A Discontinuous Galerkin method}{chapter.4}% 40
 \BOOKMARK [2][-]{subsection.4.4.1}{Stokes flow}{section.4.4}% 41
-\BOOKMARK [0][-]{chapter.5}{Material parameters}{}% 42
-\BOOKMARK [0][-]{chapter.6}{Simulating interaction between CSF and the Spinal Cord}{}% 43
-\BOOKMARK [1][-]{section.6.1}{Overview of previous studies}{chapter.6}% 44
-\BOOKMARK [2][-]{subsection.6.1.1}{Pressure measurements in patients with syringomelia}{section.6.1}% 45
-\BOOKMARK [1][-]{section.6.2}{Assessment of CSF velocities before and after decompression surgery}{chapter.6}% 46
+\BOOKMARK [1][-]{section.4.5}{Womersley Flow}{chapter.4}% 42
+\BOOKMARK [2][-]{subsection.4.5.1}{A penalty method for the boundary conditions}{section.4.5}% 43
+\BOOKMARK [0][-]{chapter.5}{Material parameters}{}% 44
+\BOOKMARK [0][-]{chapter.6}{Simulating interaction between CSF and the Spinal Cord}{}% 45
+\BOOKMARK [1][-]{section.6.1}{Overview of previous studies}{chapter.6}% 46
+\BOOKMARK [2][-]{subsection.6.1.1}{Pressure measurements in patients with syringomelia}{section.6.1}% 47
+\BOOKMARK [1][-]{section.6.2}{Assessment of CSF velocities before and after decompression surgery}{chapter.6}% 48
+\BOOKMARK [1][-]{section.6.3}{Linear Results}{chapter.6}% 49
+\BOOKMARK [1][-]{section.6.4}{Nonlinear Results}{chapter.6}% 50

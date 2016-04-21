@@ -1,126 +1,224 @@
 from dolfin import *
-from pylab import find,array, linspace
-set_log_active(False)
+from pylab import where, find,array, linspace, sin, cos, sinh, cosh, log
 import scipy.interpolate as Spline
+import pylab as plt
+set_log_active(False)
 
-class MyExpression0(Expression):
-	def __init__(self,t_Brucker,C1_Brucker,t,amp=1):
-		self.t = t
-		self.t_Brucker = t_Brucker
-		self.C1_Brucker = C1_Brucker
-		self.amp = amp
-
-	def eval(self,values,x):
-		t = self.t
-		t_Brucker = self.t_Brucker
-		C1_Brucker = self.C1_Brucker
-		while t > self.t_Brucker[-1]:
-			t -= self.t_Brucker[-1]
-		tval = t_Brucker
-		yval = C1_Brucker
-		values[0] = self.amp*Spline.UnivariateSpline(tval,yval)(t)
-
-h = 4
+h = 2
 l = 60
 
-P1 = Point(0,0)
+P1 = Point(0,-h)
 P2 = Point(l,h)
 
-Nx = 60
-Ny = 8
+E1 = [1]
+H = [1]
+E2 = [1]
 
-mesh = RectangleMesh(P1,P2,Nx,Ny)
+print r'\begin{center}'+ '\n'  +r'  \begin{tabular}{l | l | l | l | l | l}' + '\n'
+print r'    N & dofs & L2 error & rate & H1 error & rate \\ \hline'
 
-E = Expression(('2*x[0]','0'))
+for j in range(4,5):
+	Nx = 2**3*4
+	Ny = 2**3*4
 
-V = VectorFunctionSpace(mesh,'CG',2)
-P = FunctionSpace(mesh,'CG',1)
-VP = V*P
+	mesh = RectangleMesh(P1,P2,Nx,Ny)
 
-u,p = TrialFunctions(VP)
-v,q = TestFunctions(VP)
+	V = VectorFunctionSpace(mesh,'CG',2)
+	P = FunctionSpace(mesh,'CG',1)
+	W = VectorFunctionSpace(mesh,'CG',5)
+	VP = V*P
 
-eps = 1e-8
+	u,p = TrialFunctions(VP)
+	v,q = TestFunctions(VP)
 
-class Walls(SubDomain):
-	def inside(self,x,on_bnd):
-		return (x[1] > h - eps or x[1] < eps) and on_bnd
-class Inlet(SubDomain):
-	def inside(self,x,on_bnd):
-		return x[0] < eps and on_bnd
-class Outlet(SubDomain):
-	def inside(self,x,on_bnd):
-		return x[0] > l - eps and on_bnd
+	eps = 1e-8
 
-
-bnd = FacetFunction('size_t',mesh)
-Walls().mark(bnd,1)
-Outlet().mark(bnd,2)
-Inlet().mark(bnd,3)
-noslip = Constant((0,0))
-ds = Measure('ds')[bnd]
-bcs = [DirichletBC(VP.sub(0),noslip,bnd,1),DirichletBC(VP.sub(1),Constant(0),bnd,2),DirichletBC(VP.sub(1),Constant(1),bnd,3)]
+	class Walls(SubDomain):
+		def inside(self,x,on_bnd):
+			return abs(h-abs(x[1])) < eps and on_bnd
+	class InOut(SubDomain):
+		def inside(self,x,on_bnd):
+			return x[0] < eps or x[0] > l - eps and on_bnd
 
 
-ufile = File('results_channel/v.pvd')
-pfile = File('results_channel/p.pvd')
 
-VP_ = Function(VP)
-u0 = Function(V)
-u1 = Function(V)
-dt = 0.001
-k = Constant(dt)
+	bnd = FacetFunction('size_t',mesh)
+	Walls().mark(bnd,1)
+	InOut().mark(bnd,2)
 
-time1 = array([0, 0.16, 1.1])
-press1 = array([2.9, 10, 2.9])
-time2 = array([0, 0.3, 1.1])
-press2 = array([10, 11.5, 10])
-pressure1 = MyExpression0(time1,-press1,dt)
-pressure2 = MyExpression0(time2,press2,dt)
+	om = 2*pi
+	C = 1000
+	rho_f = Constant(1./1000)		# g/mm
+	nu_f = Constant(0.658)			# mm**2/s
+	mu_f = Constant(nu_f*rho_f)		# g/(mm*s)
+	K = float(sqrt(om/(2*nu_f)))
 
-t_Erika = linspace(0,1.1,23)
-P_Erika = array([-0.011,-0.03,-0.02, 0.002,-0.001, -0.002,-0.003, -0.004,0.001, 0.002,0.003, 0.003, 0.004, 0.004,0.003, 0.004,0.006, 0.04,0.045, 0.01, -0.01,-0.01,-0.01])
-P_Erika *= 133*6
-pressure = MyExpression0(t_Erika,P_Erika,0.0,amp=1)
+	pressure = Expression('rho*C*cos(omega*t)*(x[0]-L)',t=0,L=l,omega=om,C=C,rho=rho_f)
 
-pressure2 = Expression(('-10*sin(2*pi*t)'),t=0)
-rho_f = Constant(1./1000)		# g/mm
-nu_f = Constant(0.658)			# mm**2/s
-mu_f = Constant(nu_f*rho_f)		# g/(mm*s)
+	def ss(x):
+		return sin(x)*sinh(x)
+	def cc(x):
+		return cos(x)*cosh(x)
 
-n = FacetNormal(mesh)
-def epsilon(u):
-	return sym(grad(u))
+	def f1(w,x3):
+		return cc(K*x3)*cc(K*h) + ss(K*x3)*ss(K*h)
+	def f2(w,x3):
+		return cc(K*x3)*ss(K*h) - ss(K*x3)*cc(K*h)
+	def f3(w):
+		return cc(w)**2 + ss(w)**2
+
+	def v_exact(x,y,t):
+		return C/om*((f1(om,y)/f3(K*h)-1)*sin(om*t) - f2(om,y)/f3(K*h)*cos(om*t))
 
 
-a = rho_f*1/k*inner(u,v)*dx + rho_f*inner(grad(u0)*u,v)*dx + 2*mu_f*inner(epsilon(u),epsilon(v))*dx + inner(v,grad(p))*dx - inner(div(u),q)*dx# - mu_f*inner(grad(u).T*n,v)*ds(3) - inner(grad(u).T*n,v)*ds(2)
-L = rho_f*1/k*inner(u1,v)*dx# - inner(pressure*n,v)*ds(3)# - inner(pressure2*n,v)*ds(2)
+	class v_analytical(Expression):
+		def __init__(self,t,h=2,om=2*pi,C=10):
+			self.t, self.h, self.om, self.C = t,h,om,C
 
-t = dt
-T = 2
+		def eval(self,values,x):
+			values[1] = 0
+			values[0] = v_exact(0,x[1],(self.t))
+		def value_shape(self):
+			return (2,)
 
-while t < T + DOLFIN_EPS:
-	#if t < 2.0:
-	#	pressure1.amp = t/2.
-	#pressure.t=t
-	b = assemble(L)
-	err = 10
-	k_iter = 0
-	max_iter = 8
-	while err > 1E-10 and k_iter < max_iter:
-		A = assemble(a)
-		[bc.apply(A,b) for bc in bcs]
-		solve(A,VP_.vector(),b,'lu')
-		u_,p_ = VP_.split(True)
-		err = errornorm(u_,u0,degree_rise=3)
-		k_iter += 1
-		u0.assign(u_)
-		print 'k: ',k_iter, 'error: %.3e' %err
-	ufile << u_
-	pfile << p_
-	u1.assign(u_)
-	print 't=%.4f'%t
-	t += dt
+
+
+
+	'''
+	plt.ion()
+
+	for t in range(0,200):
+		plt.plot(y,v_exact(0,y,0.04*t))
+		plt.axis([-h, h, -2, 2])
+		plt.draw()
+		plt.show()
+		plt.clf()
+	sys.exit()
+	'''
+	noslip = Constant((0,0))
+	ds = Measure('ds')[bnd]
+	bcs = [DirichletBC(VP.sub(0),noslip,bnd,1)]
+
+
+	ufile = File('results_channel/v.pvd')
+	pfile = File('results_channel/p.pvd')
+	dt = 1e-2
+	VP_ = Function(VP)
+	BE = False
+	if BE:
+		u1 = interpolate(v_analytical(0,h=h,om=om,C=C),V)
+	else:
+		u1 = interpolate(v_analytical(dt,h=h,om=om,C=C),V)
+		u_1 = interpolate(v_analytical(0,h=h,om=om,C=C),V)#Function(V)
+	u0 = interpolate(v_analytical(0,h=h,om=om,C=C),V)
+	k = Constant(dt)
+
+
+
+	n = FacetNormal(mesh)
+	def epsilon(u):
+		return sym(grad(u))
+
+	eps = mesh.hmin()*0.05
+		# WeakForm
+
+	n = FacetNormal(mesh)
+	if BE:
+		a = rho_f*1/k*inner(u,v)*dx \
+			+ rho_f*inner(grad(u)*u0,v)*dx \
+			+ mu_f*inner(grad(u)+grad(u).T, grad(v))*dx \
+			- inner(div(v),p)*dx \
+			- inner(div(u),q)*dx \
+			- mu_f*inner(grad(u).T*n,v)*ds(2) \
+		    + eps**-2*(inner(u, v) - inner(dot(u, n), dot(v, n)))*ds(2)
+
+		L = rho_f/k*inner(u1,v)*dx  - inner(pressure*n,v)*ds(2)
+		
+		t = dt
+		T = dt
+	else:
+
+		a = rho_f/k*inner(u,v)*dx \
+			+ 0.5*rho_f*inner(grad(u)*(3./2*u1-0.5*u_1),v)*dx \
+			+ mu_f*inner(epsilon(u), grad(v))*dx \
+			- inner(div(v), p)*dx \
+			- inner(div(u), q)*dx \
+			- mu_f*inner(grad(u).T*n,v)*ds(2) \
+			+ eps**-2*(inner(u, v) - inner(dot(u, n), dot(v, n)))*ds(2)
+
+		L = rho_f/k*inner(u1,v)*dx  - inner(pressure*n,v)*ds(2) \
+			- mu_f*inner(epsilon(u1), grad(v))*dx \
+			- 0.5*rho_f*inner(grad(u1)*(3./2*u1-0.5*u_1),v)*dx
+		t = 2*dt
+		T = 0.2
+	
+#Err = 0.0021 for BE  T=0.7
+
+#Err = 0.065 for BE T=0.1 C =1000
+
+	x_l = l#l/2
+	y = linspace(-h,h,Ny+1)
+
+	xa = where(mesh.coordinates()[:,0] == x_l)
+	plt.ion()
+
+	while t < T + DOLFIN_EPS:
+		#if t < 2.0:
+		#	pressure.amp = 1.
+		pressure.t=t
+		b = assemble(L)
+		err = 10
+		k_iter = 0
+		max_iter = 8
+		if BE:
+			while err > 1E-10 and k_iter < max_iter:
+				A = assemble(a)
+				[bc.apply(A,b) for bc in bcs]
+				solve(A,VP_.vector(),b,'lu')
+				u_,p_ = VP_.split(True)
+				err = errornorm(u_,u0,degree_rise=3)
+				k_iter += 1
+				u0.assign(u_)
+				#print 'k: ',k_iter, 'error: %.3e' %err
+		else:
+			A = assemble(a)
+			[bc.apply(A,b) for bc in bcs]
+			solve(A,VP_.vector(),b,'lu')
+			u_,p_ = VP_.split(True)
+			u_1.assign(u1)
+		ufile << u_
+		pfile << p_
+		u1.assign(u_)
+		print 't=%.4f'%t
+	
+		u_val = u_.compute_vertex_values()
+		'''
+		plt.plot(y,u_val[xa])
+		plt.plot(y,v_exact(x_l,y,t))
+		plt.plot(y,v_exact(x_l,y,dt))
+		plt.legend(['comp','exact', 't=dt'])
+		plt.axis([-h,h,-4,4])
+		plt.draw()
+		plt.clf()
+		'''
+		t+=dt
+
+	u_e = interpolate(v_analytical(t-dt),W)
+	
+	#E_sum = sqrt(1./Nx*sum((v_exact(xa,y,t-dt) - u_val[xa])**2))
+	#print 'ERROR:',E_sum
+	H1 = errornorm(u_,u_e,'h1',degree_rise=3)
+	L2 = errornorm(u_,u_e,degree_rise=3)
+	H.append(dt)#mesh.hmin())
+	E2.append(L2)
+	E1.append(H1)
+	R2 = log(E2[-2]/E2[-1])/log(H[-2]/H[-1])
+	R1 = log(E1[-2]/E1[-1])/log(H[-2]/H[-1])
+	dim = VP.dim()
+	print '%6d & %6d & %.2e & %.3f & %.2e & %.3f'%(dt,dim,L2,R2,H1,R1) +r' \\' + ' \hline' 
+
+print '    \hline' + '\n' + '  \end{tabular}' +'\n' +'\end{center}'
+
 '''
 A = assemble(a)
 b = assemble(L)

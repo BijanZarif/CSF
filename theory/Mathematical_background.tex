@@ -158,15 +158,22 @@ This is also the case of a free surface, except the shear forces are negligible 
 \begin{align}
 \sigma \cdot \mathbf{n} = -p_0 \mathbf{n} \,\,\, \text{ on } \Gamma_N
 \end{align}
-where $p_0$ is a known external pressure, for instance atmoshperic pressure at the ocean 
-surface. 
+where $p_0$ is a known external pressure, for instance atmoshperic pressure at the ocean surface. 
+\\
+\\
+A third option is the so called pseudo-traction boundary condition, where we set
+\begin{align}
+\mu \pdi{\mathbf{v}}{n} - p\mathbf{n} = -p_0\mathbf{n}
+\end{align}
+where $p_0$ is some prescribed pressure. This boundary condition is often associated with the laplace form of the Navier-Stokes equation as it is what naturally appears on the boundary when integrating the weak form of the Laplace term by 	 parts. 
+
 \section{Linear Elasticity}
 Linear elasticity is an approximation used for small deformations for elastic solids. As a rule of thumb the approximation of linear elasticity is usually valid for deformations up to 10\% relative to the solid. The stress tensor for a linear elastic medium is very similar to \eqref{Stress} describing an incompressible Newtonian fluid except there is no fluid pressure, and the stress is related to the total displacement $\mathbf{U}$ rather than the velocity $\mathbf{v}$. The stress tensor for such a material reads:
-$\sigma_s = 2\mu\epsilon(\mathbf{U}) + \lambda \nabla \cdot \mathbf{U}$
+$\sigma_s = 2\mu\epsilon(\mathbf{U}) + \lambda \text{tr}(\mathbf{U})$, where $\epsilon$ is as described earlier. 
 \begin{align} 
 \rho \pdi{^2\mathbf{U}}{t^2} = \nabla \cdot \sigma_s \label{LE}
 \end{align}
-The left hand side can also be expressed from the solid velocity $\mathbf{v}$ using that $\pdi{^2\mathbf{U}}{t^2} = \pdi{\mathbf{v}}{t} $. The advantage of using $\mathbf{v}$ as the unkown will be discussed in chapter xxx.
+The left hand side can also be expressed from the solid velocity $\mathbf{v}$ using that $\pdi{^2\mathbf{U}}{t^2} = \pdi{\mathbf{v}}{t} $. The advantage of using $\mathbf{v}$ as the unkown will be discussed in chapter 4.
 \\
 Therefore, the governing equation for the Linear Elasticity problem will be
 \begin{align}
@@ -407,7 +414,7 @@ By using \eqref{Spatial_referential}, the spatial time derivatives can be replac
 \end{align}
 Which shows that all one have to do in order to transform the Eulerian form of the balance equations into the ALE formulation is to replace the convective velocity with the relative velocity between the material and the mesh. 
 \subsection{Mesh updating}
-The velocity $\mathbf{w}$ can be seen as the mesh velocity when a computational mesh is used. In FSI, the ALE framework provides flexibility to combine the Lagrangian and Eulerian descriptions of motion. On the structural part, as well as on the fluid-structure interface we take a Lagrangian approach. The domain $\Omega_s$ consists of the same material particles at all times and moves exactly with the material points within the structure. That is, $\mathbf{v}_s = \mathbf{w}_s$. The fluid domain has to follow the changes on the fluid-structure interface. Other than that the mesh velocity in the fluid domain is arbitrary in principle, but the choice of mesh velocity in the fluid domain is important for the accuracy of the solver. In general, important aspects to consider is disortion and squeeze of each element in the fluid domain. \\
+The velocity $\mathbf{w}$ can be seen as the mesh velocity when a computational mesh is used. In FSI, the ALE framework provides flexibility to combine the Lagrangian and Eulerian descriptions of motion. On the structural part, as well as on the fluid-structure interface, the domain $\Omega_s$ consists of the same material particles at all times and moves exactly with the material points within the structure. That is, $\mathbf{v}_s = \mathbf{w}_s$. The fluid domain has to follow the changes on the fluid-structure interface. Other than that the mesh velocity in the fluid domain is arbitrary in principle, but the choice of mesh velocity in the fluid domain is important for the accuracy of the solver. In general, important aspects to consider is disortion and squeeze of each element in the fluid domain. \\
 \\
 A Laplacian smoothing algorithm is used to update the mesh, consisting of solving a Laplace (or Poisson) equation for the mesh displacement in the fluid. The method is a mesh regularization method where the lines in the mesh have equal potential. This method was first introduced by Winslow in 1963 \cite{Wins63}.
 \section{Fluid Structure Interaction}

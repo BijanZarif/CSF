@@ -14,7 +14,7 @@
 \contentsline {section}{\numberline {3.3}Linear Elasticity}{15}{section.3.3}
 \contentsline {section}{\numberline {3.4}Linear Poroelasticity}{15}{section.3.4}
 \contentsline {subsection}{\numberline {3.4.1}Fluid flow through a porous media}{15}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}Biot's equations}{16}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.2}Biot's equations}{17}{subsection.3.4.2}
 \contentsline {section}{\numberline {3.5}Descriptions of Motion}{17}{section.3.5}
 \contentsline {subsection}{\numberline {3.5.1}Lagrangian and Eulerian descriptions of motion}{17}{subsection.3.5.1}
 \contentsline {subsection}{\numberline {3.5.2}The Arbitrary Eulerian Lagrangian description}{19}{subsection.3.5.2}
@@ -31,16 +31,20 @@
 \contentsline {subsection}{\numberline {4.2.2}CFD tests}{32}{subsection.4.2.2}
 \contentsline {subsection}{\numberline {4.2.3}CSM tests}{33}{subsection.4.2.3}
 \contentsline {subsection}{\numberline {4.2.4}FSI tests}{36}{subsection.4.2.4}
-\contentsline {section}{\numberline {4.3}Fluid Structure Interaction using the Finite Element method}{37}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}A note on temporal discretization}{38}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Spatial discretization}{38}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}A discussion on functionspaces}{39}{subsection.4.3.3}
-\contentsline {subsection}{\numberline {4.3.4}Treatment of boundary conditions}{39}{subsection.4.3.4}
-\contentsline {subsection}{\numberline {4.3.5}FSI in FEniCS}{40}{subsection.4.3.5}
-\contentsline {section}{\numberline {4.4}A Discontinuous Galerkin method}{44}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Stokes flow}{45}{subsection.4.4.1}
-\contentsline {chapter}{\numberline {5}Material parameters}{47}{chapter.5}
-\contentsline {chapter}{\numberline {6}Simulating interaction between CSF and the Spinal Cord}{49}{chapter.6}
-\contentsline {section}{\numberline {6.1}Overview of previous studies}{49}{section.6.1}
-\contentsline {subsection}{\numberline {6.1.1}Pressure measurements in patients with syringomelia}{50}{subsection.6.1.1}
-\contentsline {section}{\numberline {6.2}Assessment of CSF velocities before and after decompression surgery}{51}{section.6.2}
+\contentsline {section}{\numberline {4.3}Fluid Structure Interaction using the Finite Element method}{39}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Temporal discretization}{39}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Spatial discretization}{39}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}A discussion on functionspaces}{40}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}Treatment of boundary conditions}{42}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.5}FSI in FEniCS}{43}{subsection.4.3.5}
+\contentsline {section}{\numberline {4.4}A Discontinuous Galerkin method}{47}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Stokes flow}{48}{subsection.4.4.1}
+\contentsline {section}{\numberline {4.5}Womersley Flow}{49}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}A penalty method for the boundary conditions}{52}{subsection.4.5.1}
+\contentsline {chapter}{\numberline {5}Material parameters}{55}{chapter.5}
+\contentsline {chapter}{\numberline {6}Simulating interaction between CSF and the Spinal Cord}{57}{chapter.6}
+\contentsline {section}{\numberline {6.1}Overview of previous studies}{57}{section.6.1}
+\contentsline {subsection}{\numberline {6.1.1}Pressure measurements in patients with syringomelia}{58}{subsection.6.1.1}
+\contentsline {section}{\numberline {6.2}Assessment of CSF velocities before and after decompression surgery}{59}{section.6.2}
+\contentsline {section}{\numberline {6.3}Linear Results}{60}{section.6.3}
+\contentsline {section}{\numberline {6.4}Nonlinear Results}{62}{section.6.4}

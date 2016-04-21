@@ -48,7 +48,7 @@ By the divergence theorem, a generalized concept of integration by parts we can 
 (\nabla v, \nabla \phi)_\Omega = (f,\phi)_\Omega + (g, \phi)_{\partial \Omega_N}& \quad \forall \, \phi \in \hat{V} \label{Weak_form}
 \end{align}
 \\
-Where we have used that $\pdi{v}{n} = g$ on $\partial \Omega_N$. \eqref{Weak_form} is known as the variational formulation of the Poisson problem.  The right hand side is known as the bilinear form while the left hand side is the linear form. In generic form the equation can be written
+Where we have used that $\pdi{v}{n} = g$ on $\partial \Omega_N$. \eqref{Weak_form} is known as the variational formulation of the Poisson problem.  The left hand side is known as the bilinear form while the right hand side is the linear form. In generic form the equation can be written
 \begin{align}
 a(v,\phi) = L(\phi) \label{Bilinear}
 \end{align}
@@ -57,6 +57,7 @@ The first derivative of $v$ appears in the variational form. A common choice is 
  V := \{ v \in H^1(\Omega) : v = v_0 \text{ on } \partial \Omega_D \} \\
  \hat{V} := \{ v \in H^1(\Omega) : v = 0 \text{ on } \partial \Omega_D \}
 \end{align}
+In other words, the trial and test functions are in the same function space, except on the boundary.
 
 
 
@@ -87,7 +88,7 @@ Now, let's return to the original problem \eqref{Poisson}-\eqref{Poisson_N} in s
 \begin{align}
 v_h = \sum_{i=0}^N c_i \phi_i \label{u_hsum}
 \end{align}
-The definitions of $v_h$ and $V$ now give rise to a linear system. Using the Einstein summation convention, $x_i\,y_i = \sum_0^N x_i y_i $, \eqref{Weak_form} is now written 
+The definitions of $v_h$ and $V$ now give rise to a linear system. Using the Einstein summation convention, $x_i\,y_i = \sum_0^N x_i y_i $, the discretized version of \eqref{Weak_form} is now written 
 \begin{align}
 -c_i(\nabla \phi_i, \nabla \phi_j)_\Omega = (f,\phi_j)_\Omega - (g, \phi_j)_{\partial \Omega_N} \label{|linear_system}
 \end{align}
@@ -191,7 +192,7 @@ The origin is set at the bottom left corner. We also set:
 \begin{align}
  \mathbf{v}_{\text{in}}(t,0,y)= \begin{cases}
 				\mathbf{v}_{\text{in}}(0,y)\frac{1-\cos(\frac{\pi}{2}t)}{2} & \quad \text{ if } t<2.0 \\
-				0 & \quad  \text{ otherwise }
+				\mathbf{v}_{\text{in}}(0,y) & \quad  \text{ otherwise }
 		 		\end{cases}
 \end{align}
 \\
@@ -225,10 +226,10 @@ For the CFD tests we perform tests treating the flag as a rigid object. This can
 \begin{table}[!ht]
 \begin{center}
   \begin{tabular}{|l | l | l | l|} \hline
-	Mesh & Cells & Drag & Lift \\ \hline
-    0  & 1334 & 13.9344 & 1.0980  \\   \hline
-    1 & 5336 & 14.1165 & 1.0836 \\ \hline
-    2 & 21334 & 14.1865 & 1.0944  \\ \hline \hline
+	cells & dofs & Drag & Lift \\ \hline
+    1334  & 6443 & 13.9344 & 1.0980  \\   \hline
+    5336 & 24892 & 14.1165 & 1.0836 \\ \hline
+    21344 & 97808 & 14.1865 & 1.0944  \\ \hline \hline
     \textbf{Ref.}  & & \textbf{14.29} & \textbf{1.119} \\ \hline 
     \hline
   \end{tabular}
@@ -239,10 +240,10 @@ For the CFD tests we perform tests treating the flag as a rigid object. This can
 \begin{table}[!ht]
 \begin{center}
   \begin{tabular}{|l | l | l | l|} \hline
-	Mesh & Cells & Drag & Lift \\ \hline
-    0  & 1334 & 130.092948352 & 10.9117261826 \\   \hline
-    1 & 5663 & 134.43022177 & 10.473965217 \\ \hline
-    2 & 21334 & 135.777285175 & 10.7118857057 \\ \hline \hline
+	cells & dofs & Drag & Lift \\ \hline
+    1334  & 6443 & 130.092948352 & 10.9117261826 \\   \hline
+    5336 & 24892& 134.43022177 & 10.473965217 \\ \hline
+    21344 & 97808& 135.777285175 & 10.7118857057 \\ \hline \hline
     \textbf{Ref.}  & & \textbf{136.7} & \textbf{10.53} \\ \hline 
     \hline
   \end{tabular}
@@ -251,26 +252,27 @@ For the CFD tests we perform tests treating the flag as a rigid object. This can
 \end{table}
 \begin{table}[!ht]
 \begin{center}
-  \begin{tabular}{|l | l | l | l|} \hline
-	Mesh & Cells & Drag & Lift \\ \hline
-    0  & 1334 &  & \\   \hline
-    1 & 1 & 1 & 1 \\ \hline
-    2 &.2 & 1 & 2   \\ \hline \hline
+	\begin{tabular}{|l | l | l | l|} \hline
+	cells & dofs & Drag & Lift \\ \hline
+    1334  & 6443& 391.305 $\pm$ 2.039 & -28.536 $\pm$ 200.149\\   \hline
+    5336 & 24892  & 428.769 $\pm$ 5.735 & -18.001 $\pm$ 429.410 \\ \hline
+    21344 & 97808& 1 & 2   \\ \hline \hline
     \hline
   \end{tabular}
   \begin{tabular}{|l | l | l | l|} \hline
-	Mesh & Cells & Drag & Lift \\ \hline
-    0  & 1 & 1 & 1 \\   \hline
-    1 & 1 & 1 & 1 \\ \hline
-    2 &.2 & 1 & 2   \\ \hline \hline
+	cells & dofs & Drag & Lift \\ \hline
+    755  & 6443  &  391.401 $\pm$ 2.460  & -22.652 $\pm$ 232.090\\   \hline
+    5336 & 24892 & 428.787 $\pm$ 5.773 & -14.575 $\pm$ 441.152 \\ \hline
+    21344 & 97808& 1 & 2   \\ \hline \hline
     \textbf{Ref.}  & & \textbf{439.45 $\pm$ 5.6183} & \textbf{-11.893 $\pm$ 437.81} \\ \hline 
     \hline
   \end{tabular}
 \end{center}
-\caption{Results for CFD3}
+\caption{Results for CFD3 for $\Delta t = 0.0005$ and $\Delta t = 0.0001$} 
 \end{table}
+
 \subsection{CSM tests}
-The structural tests are performmed by adding the gravitational force to the structural part only. The CSM3 test is computed as a time-dependent case, starting from the initial position while CSM1 and CSM2 are Steady State (SS) solutions. For CSM3, the total energy is not conserved as the Backward Euler scheme used to discretize in time sligthly recudes the amplitude for oscillating solutions. For this reason, a third parameter of interest is included in the results, namely the reduction of amplitude from one cycle to the next. From the reference results it appears that the flag bounces above the initial position in steady state, meaning that some energy must have been added due to their choice of scheme. This was not further discussed, and no time-dependent amplitude was reported.  
+The structural tests are performmed by adding the gravitational force to the structural part only. The CSM3 test is computed as a time-dependent case, starting from the initial position while CSM1 and CSM2 are Steady State (SS) solutions. For CSM3, the total energy is not conserved as the Backward Euler scheme used to discretize in time sligthly recudes the amplitude for oscillating solutions. For this reason, a third parameter of interest is included in the results, namely the reduction of amplitude from one cycle to the next. From the reference results it appears that the flag bounces above the initial position in steady state, meaning that some energy must have been added due to their choice of scheme. This is also clear when closely examining the attached plots. This was not further discussed, and no time-dependent amplitude was reported. The temporal discretization in the original benchmark proposal was done by the Cranck-Nicholson scheme, which in general have better conservation properties than the Backward-Euler scheme but is known to be less stable \cite{Hron06}
 \begin{table}[!ht]
 \begin{center}
   \begin{tabular}{|l | l | l | l|} \hline
@@ -288,10 +290,10 @@ The structural tests are performmed by adding the gravitational force to the str
 \begin{table}[!h]
 \begin{center}
   \begin{tabular}{|l | l | l | l|} \hline
-	Mesh & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$\\ \hline
-    0  & 738 & -12.410569 & -60.599246 \\   \hline
-    1 & 2952 & -12.419505 & -60.622920 \\ \hline
-    2 & 11808 & -12.422290 & -60.630433   \\ \hline \hline
+	cells & dofs & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$\\ \hline
+	738  & 4596  & -12.410569 & -60.599246 \\   \hline
+	2952 & 17305 & -12.419505 & -60.622920 \\ \hline
+	11808 & 67077 & -12.422290 & -60.630433   \\ \hline \hline
     \textbf{Ref.}  & & \textbf{-7.187} & \textbf{-66.10} \\ \hline 
     \hline
   \end{tabular}
@@ -302,10 +304,10 @@ The structural tests are performmed by adding the gravitational force to the str
 \begin{table}[!h]
 \begin{center}
   \begin{tabular}{|l | l | l | l|} \hline
-	Mesh & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$\\ \hline
-    0  & 738 & -0.92479395 & -16.853778 \\   \hline
-    1 & 2952 & -0.92558954 & -16.861757 \\ \hline
-    2 & 11808 & -0.92583356 & -16.864252   \\ \hline \hline
+	cells & dofs & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$\\ \hline
+   738  & 4596  & -0.92479395 & -16.853778 \\   \hline
+   2952 & 17305 & -0.92558954 & -16.861757 \\ \hline
+   11808 & 67077 & -0.92583356 & -16.864252   \\ \hline \hline
     \textbf{Ref.}  & & \textbf{-0.4690} & \textbf{-16.97} \\ \hline 
     \hline
   \end{tabular}
@@ -316,10 +318,10 @@ The structural tests are performmed by adding the gravitational force to the str
 \begin{table}[!h]
 \begin{center}
   \begin{tabular}{|l | l | l | l| l|} \hline
-	Mesh & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Amp reduction y (\%) \\ \hline
-    0  & 738 & -44.175 $\pm$ 44.007 & -72.712 $\pm$ 65.281 & 5.4  \\   \hline
-    1 & 2952 & -44.176 $\pm$ 44.001 & -72.720 $\pm$ 65.281 & 5.4 \\ \hline
-    2 & 11808 & -44.177 $\pm$ 44.001 & -72.720 $\pm$ 65.281 & 5.4  \\ \hline \hline
+	cells & dofs & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Amp reduction y (\%) \\ \hline
+    738  & 4596 & -44.175 $\pm$ 44.007 & -72.712 $\pm$ 65.281 & 5.4  \\   \hline
+    2952 & 17305 & -44.176 $\pm$ 44.001 & -72.720 $\pm$ 65.281 & 5.4 \\ \hline
+    11808 & 67077 & -44.177 $\pm$ 44.001 & -72.720 $\pm$ 65.281 & 5.4  \\ \hline \hline
     \textbf{Ref.}  & & -\textbf{14.305} $\pm$ \textbf{14.305} & -\textbf{63.607} $\pm$ \textbf{65.160} \\ \hline 
     \hline
   \end{tabular}
@@ -330,10 +332,10 @@ The structural tests are performmed by adding the gravitational force to the str
 \begin{table}[!h]
 \begin{center}
   \begin{tabular}{|l | l | l | l| l|} \hline
-	Mesh & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Amp reduction y (\%) \\ \hline
-    0  & 738 & -44.631 $\pm$ 44.628 & -69.702 $\pm$ 69.290 & 0.3  \\   \hline
-    1 & 2952 & -44.633 $\pm$ 44.629 & -69.701 $\pm$ 69.289 & 0.3 \\ \hline
-    2 & 11808 & -44.094 $\pm$ 44.091 & -69.703 $\pm$ 69.289 & 0.3  \\ \hline \hline
+	cells & dofs & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Amp reduction y (\%) \\ \hline
+    738  & 4596 & -44.631 $\pm$ 44.628 & -69.702 $\pm$ 69.290 & 0.3  \\   \hline
+    2952 & 17305& -44.633 $\pm$ 44.629 & -69.701 $\pm$ 69.289 & 0.3 \\ \hline
+    11808 & 67077& -44.094 $\pm$ 44.091 & -69.703 $\pm$ 69.289 & 0.3  \\ \hline \hline
     \textbf{Ref.}  & & -\textbf{14.305} $\pm$ \textbf{14.305} & -\textbf{63.607} $\pm$ \textbf{65.160} \\ \hline 
     \hline
   \end{tabular}
@@ -349,8 +351,6 @@ The structural tests are performmed by adding the gravitational force to the str
 \begin{subfigure}[b]{0.5\linewidth}
 \includegraphics[width=\linewidth]{figures/CSM3/CSM3_2_x}\caption{displacement x vs time}
 \end{subfigure}
-\end{figure}
-\begin{figure}[!ht]
 \begin{subfigure}[b]{0.5\linewidth}
 \includegraphics[width=\linewidth]{figures/CSM3/CSM3_Y_full}\caption{displacement y vs time}
 \end{subfigure}
@@ -359,8 +359,8 @@ The structural tests are performmed by adding the gravitational force to the str
 \end{subfigure}
 \end{figure}
 \clearpage
-\subsection{FSI tests}
 
+\subsection{FSI tests}
 \begin{table}[!h]
 \begin{center}
   \begin{tabular}{|l | l | l | l|} \hline
@@ -395,11 +395,11 @@ The structural tests are performmed by adding the gravitational force to the str
 \begin{table}[!h]
 \begin{center}
   \begin{tabular}{|l | l | l | l | l | l|} \hline
-	Mesh & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Drag & Lift\\ \hline
-    0  & 2698 & 0.015596 & 0.74221 & 14.0876279441 & 0.756130219216 \\   \hline
-    1 & 10792 & 0.017738 & 0.77686 & 14.1777783843 & 0.763145083966 \\ \hline
-    2 &  & $ $&  $ $ & $ $ & $ $   \\ \hline \hline
-    \textbf{Ref.}  & & 0.0227 & 0.8209 & 14.295 & 0.7638\\ \hline 
+	cells & dofs & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Drag & Lift\\ \hline
+    2698 & 15329 & 0.015596 & 0.74221 & 14.0876279441 & 0.756130219216 \\   \hline
+    10792 & 60336 & 0.017738 & 0.77686 & 14.1777783843 & 0.763145083966 \\ \hline
+    43168 & 239384 & 0.019824 & 0.79558  & 14.1869409712 & 0.758109277348  \\ \hline \hline
+    \textbf{Ref.}  & & \textbf{0.0227} & \textbf{0.8209} & \textbf{14.295} & \textbf{0.7638}\\ \hline 
     \hline
   \end{tabular}	
 \caption{Results for FSI1}
@@ -409,10 +409,10 @@ The structural tests are performmed by adding the gravitational force to the str
 \begin{table}[!h]
   \begin{center}
   \begin{tabular}{|l | l | l | l | l | l|} \hline
-	Mesh & Cells & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Drag & Lift\\ \hline
-    0  & 2698 & $ -4.33 \pm 4.54$ & $ 1.40 \pm 29.96$ & $441.45 \pm 33.15 $ & $-2.30 \pm 178.00$\\   \hline
-    1 & 10792 & $ $&  $ $ & $ $ & $ $\\ \hline
-    2 &  & $ $&  $ $ & $ $ & $ $   \\ \hline \hline
+	cells & dofs & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Drag & Lift\\ \hline
+   2698 & 15329 & $ -4.33 \pm 4.54$ & $ 1.40 \pm 29.96$ & $441.45 \pm 33.15 $ & $-2.30 \pm 178.00$\\   \hline
+   10792 & 60336 & -4.84 $\pm$ 4.62 &  1.27 $\pm$ 31.74 & 469.11 $\pm$ 44.50 & 0.92 $\pm$ 97.27\\ \hline
+   43168 & 239384 & $ $&  $ $ & $ $ & $ $   \\ \hline \hline
     \textbf{Ref.}  & & \textbf{-2.69} $\pm$ \textbf{2.53} & \textbf{1.48} $\pm$ \textbf{34.38} & \textbf{457.3} $\pm$ \textbf{22.66} & \textbf{2.22} $\pm$ \textbf{149.78}\\ \hline 
     \hline
 
@@ -421,11 +421,28 @@ The structural tests are performmed by adding the gravitational force to the str
   \end{center}
 \end{table}
 - note: Hron, Turek, $\Delta t = 0.0005$, we used $\Delta t = 0.0003$. \\ \\
+\begin{figure}[!ht]
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/medium/X_disp}\caption{displacement x vs time}
+\end{subfigure}
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/medium/Y_disp}\caption{displacement y vs time}
+\end{subfigure}
+\begin{subfigure}[b]{0.47\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/medium/Drag2}\caption{Drag vs time}
+\end{subfigure}
+\begin{subfigure}[b]{0.53\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/medium/Lift2}\caption{Lift vs time}
+\end{subfigure}
+\end{figure}
+
 Numbers for FSI3:
 Ux: Max = 0.0002099, Min = -0.008879 \\
 Uy: Max = 0.03136, Min = -0.02856 \\
 Drag: Max = 474.6, Min = 408.3 \\
 Lift: Max = 175.7, Min = -180.3 (174.4, -177.0\\
+
+Frequency, 0.1795 /s for medium mesh.
 \begin{center}
 \begin{figure}[!ht]
 \begin{subfigure}[b]{0.5\linewidth}
@@ -452,15 +469,15 @@ Lift: Max = 175.7, Min = -180.3 (174.4, -177.0\\
 \includegraphics[width=\linewidth]{figures/FSI3/coarse/FSI_mesh_6}
 \caption{t=11.03}
 \end{subfigure}
-\caption{The colormap shows the magnitude of the velocity around the flag at six different states of time in fully developed flow. Maximum velocity reaches 4.37. The mesh consists of a smooth curve at the interface, and the domains are separated beforehand in FEniCS}
+\caption{The colormap shows the magnitude of the velocity around the flag at six different states of time in fully developed flow on the coarsest mesh. Maximum velocity reaches 4.37. The mesh consists of a smooth curve at the interface, and the domains are separated beforehand in FEniCS}
 \end{figure}
 \end{center}
-
+\clearpage
 
 
 
 \section{Fluid Structure Interaction using the Finite Element method}
-The solver was implemented from scratch in Python using the DOLFIN library. FSI solvers within the FEniCS framework exists, e.g. under Unicorn or CBC.twist. For instance, Selin \cite{Seli11} implemented a partitioned solver in FEniCS in his PhD-thesis, using the already existing modules for solving fluid flow and structural deformations separately (CBC.Flow and CBC.Twist). However, the benefits of being in full control of the equations and all boundary conditions involved are obvious, especially in the process of understanding the complexity of the physical problem. In addition to this, it will be easier to adjust the solver with respect to the model. The equations can be changed whether we want the spinal cord to be porous, elastic, poroelastic or viscoelastic. The use of two separate solvers is also problematic for the monolithic approach, when all equations are solved simultaneously. On the other hand, solvers implemented by experienced and skilled research groups will probably be a lot more efficient and should already have been validated. 
+The solver was implemented from scratch in Python using the DOLFIN library. FSI solvers within the FEniCS framework exists, e.g. under Unicorn or CBC.twist. For instance, Selin \cite{Seli11} implemented a partitioned solver in FEniCS in his PhD-thesis, using the already existing modules for solving fluid flow and structural deformations separately (CBC.Flow and CBC.Twist). With the implementation presented here, it will be easier to adjust the solver with respect to the model. The equations can be changed whether we want the spinal cord to be porous, elastic, poroelastic or viscoelastic. The use of two separate solvers is also problematic for the monolithic approach, when all equations should be solved simultaneously. On the other hand, solvers implemented by experienced and skilled research groups will probably be a lot more efficient and should already have been validated. 
 \\
 \\
 In the rest of this section, we give a brief explanation to the mathematics and implementation in FEniCS. In the previous example we saw the close link between code and mathematics. :
@@ -477,16 +494,22 @@ L = inner(f,phi)*dx
 \end{center}
 In deriving variational forms, we try to keep this close link by recalling the symbols used for velocity ($\mathbf{v}$), total displacement ($\mathbf{U}$), pressure ($p$), and mesh velocity, ($\mathbf{w}$). Also recall that in the solid the mesh moves exactly with the velocty of the structure so $\mathbf{w}_s = \mathbf{v}_s$
 \\
-\subsection{A note on temporal discretization}
+\subsection{Temporal discretization}
 In order not to overload this thesis with notation and superscripts, we have used the notation $\mathbf{v} := \mathbf{v}^{n+1}$ to denote the value of a function at the next time-step. Similarly, we define $\mathbf{v^{(1)}} := \mathbf{v}^n$ to denote the (known) value of a function at the present time step. 
 \\
-\\The total displacement $\mathbf{U}$ can now be expressed as a function of the displacement from the previous time step, $\mathbf{U}^{(1)}$, and the mesh velocity $\mathbf{w}$. If we use an implicit scheme in time, i.e, $(\pdi{\mathbf{v}}{t})^{n+1} \approx \frac{\mathbf{v}^{n+1}-\mathbf{v}^{n}}{\Delta t} $, and $\mathbf{U} = \mathbf{U}^{(1)} + \Delta t \mathbf{w}$. 
 \\
-\\
+The total displacement $\mathbf{U}$ can be expressed as a function of the displacement from the previous time step, $\mathbf{U}^{(1)}$, and the mesh velocity $\mathbf{w}$. We have used an implicit scheme in time, i.e, $(\pdi{\mathbf{v}}{t})^{n+1} \approx \frac{\mathbf{v}^{n+1}-\mathbf{v}^{n}}{\Delta t} $, and $\mathbf{U} = \mathbf{U}^{(1)} + \Delta t \mathbf{w}$. 
+
+
+
+
+
+
+
 \subsection{Spatial discretization}
 When dealing with nonlinear equations, such as the Navier-Stokes equation, \textit{linearization} is needed in order to solve the equations. In the nonlinear terms, we simply replace one (or more) of the unknown $\mathbf{v}$'s with a "guess" to get an equation linear in $\mathbf{v}$. This guess is denoted as $\mathbf{v}^{(0)}$. Since we have three unknown functions, we use a mixed function space with three function spaces, $\Phi$, $\eta$ and $\Psi$. In the fluid we multiply the momentum equation with $\Phi$, the continuity equation with $\eta$ and the equation for mesh velocity with $\Psi$ and integrate over the domain in its \textit{current} configuration, $\Omega^t$. In the fluid, this yields
 \begin{align}
-\frac{\rho_f}{\Delta t}(\mathbf{v},\Phi)_{\Omega_f} + \rho_f(((\mathbf{v}-\mathbf{w})\cdot \nabla) \mathbf{v}^{(0)}, \Phi)_{\Omega_f^t} - (p,\nabla \cdot \Phi)_{\Omega_f^t} + 2\mu_f(\epsilon(\mathbf{v}), \epsilon(\Phi))_{\Omega_f^t} = \\ 
+\frac{\rho_f}{\Delta t}(\mathbf{v},\Phi)_{\Omega_f} + \rho_f(((\mathbf{v}-\mathbf{w})\cdot \nabla) \mathbf{v}^{(0)}, \Phi)_{\Omega_f^t} - (p,\nabla \cdot \Phi)_{\Omega_f^t} + 2\mu_f(\epsilon(\mathbf{v}), \nabla \Phi)_{\Omega_f^t} = \\ 
 \frac{\rho_f}{\Delta t}(\mathbf{v}^{(1)},\Phi)_{\Omega_f^t} - (\sigma_f(p,\mathbf{v})\cdot \mathbf{n}, \Phi)_{\partial \Omega_f^t} - (\sigma_f(p,\mathbf{v}) \cdot \mathbf{n}_f, \Phi)_{\Gamma^t} \label{VarMom}
 \end{align}
 \begin{align}
@@ -506,11 +529,78 @@ And in the solid
 \begin{align}
 \frac{1}{\delta}(\mathbf{v},\Psi)_{\Omega_s} - \frac{1}{\delta}(\mathbf{w},\Psi)_{\Omega_s} = 0 \label{VarMesh2}
 \end{align}
-The parameter $\delta $ should be small and ensures the importance of $\mathbf{v_s} = \mathbf{w_s}$ inside the solid. On the interface, we have distinguished between the normal vector with respect to the fluid and solid domain. In general $\mathbf{n}_f = -\mathbf{n}_s$. To be able to set up and assemble the matrices for this system, the equations should be added to form one bilinear form and one linear form. 
+The parameter $\delta $ should be small and ensures the importance of $\mathbf{v_s} = \mathbf{w_s}$ inside the solid. On the interface, we have distinguished between the normal vector with respect to the fluid and solid domain. In general $\mathbf{n}_f = -\mathbf{n}_s$. To be able to set up and assemble the matrices for this system, the equations should be added to form one bilinear form and one linear form.
+
+
+
+ 
 \subsection{A discussion on functionspaces}
-We have previously defined the $L^2$ (def. \ref{|l2}) and $H^1$ (def. \ref{H1}) spaces, as well as the linear continuous galerkin basis functions (section \ref{FinEle}). In order to have a well posed-problem, we need a triple $(\Phi,\eta, \Psi)$ to satisfy given conditions. \\
+We have previously defined the $L^2$ (def. \ref{|l2}) and $H^1$ (def. \ref{H1}) spaces, as well as the linear continuous galerkin basis functions (section \ref{FinEle}). In order to have a well posed-problem, we need a triple $(\Phi,\eta, \Psi)$ to satisfy a few given conditions. In the following, a brief justification of the choice of function spaces used in this study are given. \\
 \\
-For the incompressible Navier-Stokes equations, possible pairs $(\Phi, \eta)$ have been investigated 
+For the incompressible Navier-Stokes equations, much of the mathematical theory and understanding have been developed by investigation of the simplified Stokes flow where the acceleration term is neglected in the momentum equation, that is
+\begin{align}
+-\mu\nabla^2\mathbf{u} + \nabla p = \mathbf{F}
+\end{align} Numerous possible pairs $(\Phi, \eta)$ have been proposed over the years since the first report by Taylor and Hood \cite{Tayl73}. The discretization used by Taylor and Hood consists of quadratic piecewise polynomials for the velocity components and linear piecewise polynomials for the pressure and is still a very popular choice of basis functions. These types of elements are often referred to as Taylor-Hood elements or simply just P2-P1 elements. 
+\\
+\\
+As mentioned earlier, the final step in the finite element method consists of solving a linear system of equations. In the case of Stokes equations with body forces $\mathbf{f}$, a matrix system on the following form needs to be solved
+\begin{align}
+\begin{bmatrix}
+\mathbf{A} & \mathbf{B} \\
+\mathbf{B}^T & \mathbf{0}
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{v} \\
+\mathbf{p}
+\end{bmatrix}   = 
+\begin{bmatrix}
+\mathbf{f} \\
+\mathbf{0}
+\end{bmatrix}
+\end{align}
+Which means that
+\begin{align}
+\mathbf{A}\mathbf{v} + \mathbf{B}\mathbf{p} = \mathbf{f} \label{MatrixMom}
+\end{align}
+\begin{align}
+\mathbf{B}^T \mathbf{v} = \mathbf{0}   \label{MatrixCon}
+\end{align}
+To get an expression for $\mathbf{v}$, we multiply \eqref{MatrixMom} with $\mathbf{A}^{-1}$ to obtain
+\begin{align}
+\mathbf{v} = \mathbf{A}^{-1}(\mathbf{f} - \mathbf{B}\mathbf{p})
+\end{align}
+And insert this expression into \eqref{MatrixCon} to get an equation only involving the pressure
+\begin{align}
+\mathbf{B}^T \mathbf{A}^{-1}(\mathbf{f} - \mathbf{B}\mathbf{p}) = \mathbf{0}
+\end{align}
+or
+\begin{align}
+\mathbf{B}^T\mathbf{A}^{-1}\mathbf{B}\mathbf{p} = \mathbf{B}^T\mathbf{A}^{-1}\mathbf{f}
+\end{align}
+For the solution to be unique, the matrix $\mathbf{B}^T\mathbf{A}^{-1}\mathbf{B}$ often reffered to as the \textit{Schur complement} needs to be non-singular. A necessary and sufficient condition for this is that Ker($\mathbf{B}$) = \{0\}, or
+\begin{align}
+\sup_{\mathbf{v}_h}\int p_h \nabla \cdot \mathbf{v}_h > 0
+\end{align}
+For all discrete pressures $p_h \neq 0$. 
+This ensures solvability. For convergence, the famous Babuska-Brezzi (BB), or inf-sup condition needs to be satisfied \cite{Brez12}
+\begin{align}
+\inf_{p_h}\sup_{\mathbf{v}_h} \frac{\int_{\Omega}p_h \nabla \cdot \mathbf{v}_h}{||\mathbf{v}_h||_1 ||p_h||_0} \geq D > 0
+\end{align}
+Where D is a constant independent of the mesh resolution. 
+\\
+\\
+Provided this condition is satisfied the following error estimate should hold for the Stokes equations
+\begin{align}
+||\mathbf{v}_h-\mathbf{v}||_1 + ||p_h - p||_0 < C(h^k||\mathbf{v}||_{k+1} + h^{l+1}||p||_{l+1})
+\end{align}
+Where k and l are the degrees of polynomials used for velocity components and pressure, respectively. To obtain optimal convergence for the solution the polynomial degree should be one higher for the velocity components than for the pressure, that is, $k = l+1$. For instance, using P3-P1 elements, computer resources are "wasted" by introducing more degrees of freedom (dofs) without improving convergence. Several choices of element type combinations, for instance Linear elements (P1) both for velocity and pressure do not satisfy the BB condition, and as a consequence unphysical oscillations in pressure can be seen. 
+\\
+\\
+Elements not satisfying the BB condition can be used if a proper stabilization is introduced. Due to the drastical reduction in dofs, P1-P1 elements are often used when large systems are solved for instance in commercial software. This combination is default in COMSOL, while for 3D problems in FLUENT, a slightly different element, the "mini-element" is used as first developed by Fortin \cite{Fort81}. This element is linear but with an extra degree of freedom known as a bubble in the center. 
+\\
+\\
+In this study, P2-P1 elements are used for the material velocity and pressure. However, a function space is also needed for the domain velocity, $\mathbf{w}$. As discussed by Quaini \cite{Quai09}, P1-elements for the domain velocity will ensure the transformation of straight lines in the new domain. In the fluid momentum equation, the funciton $\mathbf{w}$ is only used in the term $((\mathbf{v}-\mathbf{w})\cdot \nabla) \mathbf{v}^{(0)}$ and since $\mathbf{v}$ is a polynomial of degree 2, $\mathbf{v}-\mathbf{w}$ will also be a polynomial of degree 2. Therefore, the 
+
 
 \subsection{Treatment of boundary conditions}
 In addition to the boundary conditions described in the original benchmark paper from Turek and Hron, homogenuous Dirichlet conditions are prescribed to the mesh displacement velocity on the domain boundary, i.e 
@@ -575,7 +665,7 @@ We need a function spaces for all three testfunctions, corresponding to $\mathbf
 \begin{cverbatim}
 V = VectorFunctionSpace(mesh,'CG',2)
 P = FunctionSpace(mesh,'CG',1)
-W = VectorFunctionSpace(mesh,'CG', 2)
+W = VectorFunctionSpace(mesh,'CG', 1)
 VPW = MixedFunctionSpace([V,P,W])
 v,p,w = TrialFunctions(VPW)
 phi,eta,psi = TestFunctions(VPW)
@@ -610,13 +700,22 @@ def sigma_s(U):
 def eps(v):
 	return 2*mu_f*sym(grad(v))
 \end{cverbatim}
+To be able to start the simulation some initial conditions are needed, and by setting
+\begin{cverbatim}
+U = Function(W)
+v1 = Function(V)
+v0 = Function(V)
+\end{cverbatim}
+The initial conditions are simply set to be zero both for velocity and displacement.
+\\
+\\
 The variational form is very similar to the mathematics. We define the bilinear and linear forms, a and L, for each separate equation, momentum, continuity and the movement of the domain in both the fluid and solid domain (except for continuity in the solid). For instance, aMF will denote the bilinear form, a, for the momentum equation in the fluid.
 \begin{cverbatim}
 # FLUID
 aMF = rho_f/k*inner(v,phi)*dx_f + \
 	rho_f*inner(grad(v0)*(v-w),phi)*dx_f - \
 	 inner(p,div(phi))*dx_f + \
-	2*mu_f*inner(eps(v),eps(phi))*dx_f
+	2*mu_f*inner(eps(v),grad(phi))*dx_f
 
 LMF = rho_f/k*inner(v1,phi)*dx_f
 
@@ -630,7 +729,7 @@ LF = LMF + LDF
 
 # SOLID
 aMS = rho_s/k*inner(v,phi)*dx_f + \
-	k*inner(sigma_s(u),grad(phi))*dx_f
+	k*inner(sigma_s(v),grad(phi))*dx_f
 
 LMS = rho_s/k*inner(v1,phi)*dx_f - \
 	inner(sigma_s(U),grad(phi))*dx_f
@@ -697,20 +796,257 @@ Discontinuous Galerkin (DG) methods is a relatively new tool for CFD simulations
 \begin{align} 
 \{\mathbf{v}\} = \frac{1}{2}(\mathbf{v}^+ + \mathbf{v}^-) \hspace{2 cm}  [\mathbf{v}]  =  \mathbf{v}^+ - \mathbf{v}^- \label{Avg_jump}
 \end{align}
-where $\mathbf{v}^+$ and $\mathbf{v}^-$ is the solution at two neighboring cells at cell $E^+$ and $E^-$. The normal vectors are denoted $\mathbf{n}^+$ and $\mathbf{n}^-$. If consistent, the choice of $\mathbf{n}$ is arbitrary. \cite{Rivi08}
+where $\mathbf{v}^+$ and $\mathbf{v}^-$ is the solution at two neighboring cells at cell $E^+$ and $E^-$. These definitions can be accessed easily in FEniCS as
+\begin{center}
+\begin{cverbatim}
+avg(v)
+jump(v)
+\end{cverbatim}
+\end{center}
+The normal vectors are denoted $\mathbf{n}^+$ and $\mathbf{n}^-$. If consistent, the choice of $\mathbf{n}$ is arbitrary. \cite{Rivi08}
 \subsection{Stokes flow}
-By integrating Stokes equation by parts, adding symmetry and penalty terms as in \cite{Rivi05} we end up with a DG-method ready for use. Since the method involves many terms we derive a weak formulation for each term. All sets of facets are denoted as $e$, interior facets as $\Gamma$ and exterior facets as $\partial \Omega$. Starting with the diffusion term $-\mu \nabla ^2 u$, we multiply with a test function and integrate by parts:
+Consider the following problem in $\Omega = [0,1]\times[0,1]$:
 \begin{align}
-	\mu \sum_{E \in e} (\nabla \mathbf{v}, \nabla \Phi)_E 
-   -\mu \sum_{E \in \Gamma}([\mathbf{v}], \{ \nabla \Phi \} \cdot \mathbf{n}_e)_E 
-   -\mu \sum_{E \in \Gamma}([\mathbf{v}], \{ \nabla \Phi \} \cdot \mathbf{n}_e)_E 
-	+ \frac{\alpha}{h} \sum_{E \in \Gamma}([\mathbf{v}],[\Phi])_E \nonumber \\
-	-\mu \sum_{E \in \partial \Omega}(\Phi,  \nabla \mathbf{v} \cdot \mathbf{n}_e)_E 
-   -\mu \sum_{E \in \partial \Omega}(\mathbf{v},  \nabla \Phi  \cdot \mathbf{n}_e)_E 
+-\nabla \cdot \sigma = 0 & \text{ in } \Omega \\
+\nabla \cdot \mathbf{v} =  0 & \text{ in } \Omega\\
+\mathbf{v} = 0 & \text{ on } \Omega_{\text{w}} \\
+p \mathbf{n} - \mu \pdi{\mathbf{v}}{n} = p_{\text{in}}\mathbf{n} & \text{ on } \Omega_{\text{in}} \\
+p \mathbf{n} - \mu \pdi{\mathbf{v}}{n} = p_{\text{out}}\mathbf{n} & \text{ on } \Omega_{\text{out}} \\
+\end{align}
+where $\sigma$ is the incompressible Newtonian fluid stress tensor as previously described. The inlet is at x=0, while the outlet is at x=1. The rigid walls are situated where y=0 and y=1. By choosing $p_{\text{in}} = 2$, $p_{\text{out}} = 0$, a steady Poiseuille flow should be obtained. The boundary condition on the inlet and outlet are Pseudo-traction as described in chapter 3. \\
+By integrating Stokes equation by parts, adding symmetry and penalty terms as in \cite{Rivi05} we end up with a consistent DG-method. Since the method involves many terms we derive the weak formulation term by term. The set of all elements are denoted as $e$, interior facets as $\Gamma$ and exterior facets as $\partial \Omega$. Starting with the diffusion term in divergence form, we multiply with a test function and integrate by parts:
+\begin{align}
+	2\mu \sum_{E \in e} (\epsilon(\mathbf{v}), \epsilon(\Phi))_E &
+   -2\mu \sum_{E \in \Gamma}(\{\epsilon(\mathbf{v}) \} \cdot \mathbf{n}_e, [ \nabla \Phi ])_E 
+   -2\mu \sum_{E \in \Gamma}(\{\epsilon(\mathbf{\Phi}) \} \cdot \mathbf{n}_e, [ \nabla \mathbf{v} ])_E \\
+	& + \frac{\beta}{h} \sum_{E \in \Gamma}([\mathbf{v}],[\Phi])_E 
+	-2\mu \sum_{E \in \partial \Omega}(\Phi,  \epsilon( \mathbf{v}) \cdot \mathbf{n}_e)_E \\
+   & -2\mu \sum_{E \in \partial \Omega}(\mathbf{v},  \epsilon( \Phi)  \cdot \mathbf{n}_e)_E 
 	+ \frac{\beta}{h} \sum_{E \in \partial \Omega}(\mathbf{v},\Phi)_E 
  \label {Diffusion}
 \end{align}
-Similiarly, the contributions from the term $\nabla p$ will be
+Similiarly, the contributions from the term $-\nabla p$ will be
 \begin{align}
-	- \sum_{E \in e}(p, \nabla \cdot \Phi)_E - \sum_{E \in \Gamma}
+	- \sum_{E \in e}(p, \nabla \cdot \Phi)_E + \sum_{E \in \Gamma}(\{p\},[\mathbf{\Phi}]\cdot \mathbf{n}) + \sum_{E \in \Gamma}(\{ \eta \},[\mathbf{v}]\cdot \mathbf{n})
 \end{align}
+With $DG_1\times DG_0$ elements for velocity and pressure the following results were obtained with the convergence rate computed as 
+\begin{align}
+\frac{\ln(\frac{e^{n+1}}{e^n})}{\ln(\frac{h^{n+1}}{h^n})},
+\end{align}
+N representing the number of cells in the $N\times N$ unit square and $h$ computed in FEniCS as mesh.hmin() for each refinement
+\begin{table}[!h]
+\begin{center}
+  \begin{tabular}{|l | l | l | l| l| l|} \hline
+	N & dofs & $||v-v_h||_{L^2}$&  $||p-p_h||_{L^2}$ & rate u & rate p\\ \hline
+    4 & 224 & 1.8318e-02 & 1.5590e-01 & -- & --\\   \hline
+    8 & 896 & 1.0732e-02 & 7.6566e-02 & 0.7713 & 1.0259 \\ \hline
+    16 & 3584 & 5.8110e-03 & 3.7890e-02 & 0.8851 & 1.0149 \\ \hline
+	32 & 14336 & 3.0221e-03 & 1.8895e-02 & 0.9432 & 1.0038 \\ \hline
+	64 & 57344 & 1.5410e-03 & 9.4481e-03 & 0.9717 & 0.9999 \\ \hline
+	128 & 229376 & 7.7808e-04 & 4.7267e-03 & 0.9859 & 0.9992 \\ \hline \hline
+  \end{tabular}
+\end{center}
+\end{table}
+
+\section{Womersley Flow}
+In the cardiovascular system, pressure pulses travel along different blood vessels such as veins, capillaries and the aorta. These types of pulsating flows have been given the name Womersley flow. In  The characteristics and velocity profile of the flow depends of several parameters such as the length of the tube or channel, pulsation frequency and fluid properties. In the end, the ratio between transient inertial forces and viscous forces is the fundamental difference separating flow patterns in pulsating flow. To this end the Womersley number, $\alpha$ is defined as follows:
+\begin{align}
+\alpha = \frac{\text{transient intertial force}}{\text{viscous force}} = \frac{\rho\omega V}{\mu V L^{-2}} = \frac{L^2 \omega \rho}{\mu}
+\end{align}
+Where, $\rho$ is the fluid denisty, $\mu$ is the dynamic viscosity, $L$ is a length scale and $\omega$ is the pulsation frequency. In the 2D-model presented here, the modeling of SAS around the spinal cord consists of two channels where the Womersley number
+\begin{align}
+\alpha = L\big{(}\frac{\omega \rho}{\mu}\big{)}^{\frac{1}{2}}
+\end{align}
+Would have a large impact on the flow characteristics. A low Womersley number (typically $\alpha < 1$ means the frequency is relatively low so the flow develops a velocity profile close to a parabola at each cycle. When $alpha$ is large ($\alpha > 10$) the inertial forces dominate and more complicated phenomena such as bidirectional flow, i.e. flow in opposite directions over a cross section, could occur. 
+\\
+\\
+Pulsating flow tends to give rise to some horizontal or radial flow with the boundary conditions previously described. We will return to this issue in the next subsection. In the analytical solution to these kinds of problems, no such velocity components exists due to the assumption on axial flow only at the inlet and outlet, that is, the following conditions should hold 
+\begin{align}
+\mathbf{v}\cdot \tau = 0 & \text{ on } \partial \Omega_{\text{in}} \\
+\mathbf{v}\cdot \tau = 0 & \text{ on } \partial \Omega_{\text{out}} \label{P_out}
+\end{align}
+Where $\tau$ is the tangential vector on the boundary surface.
+\\
+\\
+The problem consists of solving
+\begin{alignat}{4}
+\pdi{\mathbf{v}}{t} + (\mathbf{v} \cdot \nabla ) \mathbf{v} & = -\nabla \cdot \sigma \quad & \text{ in } \Omega \\
+\nabla \cdot \mathbf{u} & = 0 \quad & \text{ in } \Omega\\
+\mathbf{v} & =0 \quad & \text{ on } \Omega_{\text{w}} \\
+p = p_{\text{in}}(t) \text{ and } \mathbf{v}\cdot \tau & = 0 \quad & \text{ on } \Omega_{\text{in}} \\
+p = p_{\text{out}}(t) \text{ and } \mathbf{v}\cdot \tau & = 0 \quad &  \text{ on } \Omega_{\text{out}} \label{Womersley}
+\end{alignat}
+\\
+\\
+Exact solutions exists to both the channel and pipe cases. Langlois and Deville \cite{Lang64} have derived several solutions to equations of viscous flow, including channel flow with a pulsatile pressure gradient as above. We now add a oscillating pressure gradient so that
+\begin{align}
+-\frac{1}{\rho}\pdi{p}{x} = -C\cos(\omega t)
+\end{align}
+\begin{center}
+\begin{figure}[!ht]
+\includegraphics[width=\linewidth]{figures/Womersley}
+\caption{Schematic of Womersley flow with dimensions as in the spinal cord}
+\end{figure}
+\end{center}
+
+where C is a constant describing the strength of the pulse. Due to the assumption of axial flow only, the momentum equation in x-direction gives:
+\begin{align}
+\pdi{v_1}{t} = -\frac{1}{\rho}\pdi{p}{x_1} + \nu \pdi{^2v_1}{x_2^2} \label{NS_easy}
+\end{align}
+The presented solution did not correspond to the simulations at all, therefore an opportunity to utilize the symbolic python package sympy arised. The solution presented by Langlois and Deville was
+\begin{align}
+v_1 = -\frac{C}{\omega}\Bigg{[}\Big{(}1 - \frac{f_1(\omega,x_3)}{f_3(kh)}\Big{)}\sin(\omega t) - \frac{f_2(\omega,x_3)}{f_3(kh)}\cos(\omega t)\Bigg{]}
+\end{align}
+where
+\begin{align}
+k & = \sqrt{\frac{\omega}{2\nu}} \\
+cc(x) & = \cos(x)\cosh(x) \\
+ss(x) & = \sin(x)\sinh(x) \\
+f_1(\omega,x_3) & = cc(kx_3)cc(kh) + ss(kx_3)ss(kh) \\
+f_2(\omega,x_3) & = cc(kx_3)ss(kh) - ss(kx_3)cc(kh) \\
+f_3(\omega) & = cc^2(\omega) + ss^2(\omega)
+\end{align}
+In sympy, even a complicated solution like this is easy to verify. The package lets the user define symbols to work with. Regular multiplication and general python functions can also be used. 
+\begin{cverbatim}
+from sympy import *
+x3, C, x, h, t, w, nu = symbols('x3 C x h t w nu')
+k = sqrt(w/(2*nu))
+def cc(x):
+	return cos(x)*cosh(x)
+.
+.
+.
+
+f3 = cc(w)**2 + ss(w)**2 
+
+u = -C/w*((1-f1/f3)*sin(w*t) - f2/f3*cos(w*t))   # presented solution
+d2u = nu*diff(diff(u,x3),x3)
+dt = diff(u,t)
+
+print simplify(d2u-dt)
+\end{cverbatim}
+
+From \eqref{NS_easy} the code snippet should print the pressure gradient divided by the density
+\begin{align}
+\frac{1}{\rho}\pdi{p}{x_3} = C\cos(\omega t)
+\end{align}
+This was not the case. Some error with the sign of the solution must have been made. 
+\\
+The solution
+\begin{align}
+v_1 = -\frac{C}{\omega}\Bigg{[}\Big{(}1 - \frac{f_1(\omega,x_3)}{f_3(kh)}\Big{)}\sin(\omega t) + \frac{f_2(\omega,x_3)}{f_3(kh)}\cos(\omega t)\Bigg{]} \label{Womersley}
+\end{align}
+Where the sign before the cos-term has been changed, yielded the correct pressure gradient, and hence this solution was used when error-estimates were investigated. 
+
+
+\subsection{A penalty method for the boundary conditions}
+To understand the problems arising with Neumann Conditions on both inlet and outlet we first consider the convection-diffusion equation. 
+\begin{alignat}{3}
+-\mu \nabla ^2 u + \mathbf{v}\cdot\nabla u & = f && \text{ in } \Omega \\
+u & = u_0 && \text{ on } \partial \Omega_D \\
+\mu \pdi{u}{n} & = g && \text{ on } \partial \Omega_N \label{ConvDiff}
+\end{alignat}
+Where $u$ is an unknown function, $\mathbf{v}$ is a prescribed velocity, $\mu$ is a diffusion constant and $f$ is a source term. The weak formulation reads:
+\\
+\\
+\textit{Find } $u \in H^1_{u_0}$
+\begin{align}
+\mu (\nabla u, \nabla \phi)_\Omega+ (\mathbf{v} \cdot \nabla u, \phi)_\Omega = (f,\phi)_\Omega + (g,\phi)_{\partial \Omega_N} \text{ for all } \phi \in H^1_{0}.
+\end{align}
+Where the subscript on the two H-spaces indicate the values for functions on $\partial \Omega_D$ for these spaces. 
+\\
+\\
+What has not been mentioned so far is the existence and uniqueness of the finite element solutions. To establish some concepts addressing these questions we let V denote a function space (in particular, V is a Hilbert space which has to satisfy given conditions on the associated inner product), and the inner product is denoted $(\cdot,\cdot)_V$ and the norm $||\cdot||_V$, (see e.g. Elman et al \cite{Elma14}) and define the following
+\begin{definition}{(Coercivity)} \\
+A bilinear form $a(\cdot,\cdot)$ is said to be \textit{coercive} with respect to the norm $||\cdot||_V$ if there is a positive constant $\gamma$ such that 
+\[ a(u,u) \geq \gamma ||u||_V^2 \text{ for all } u \in V \]
+\end{definition}
+\begin{definition}{(Continuity)} \\
+A bilinear form $a(\cdot,\cdot)$ is \textit{continuous} with respect to the norm $||\cdot||_V$ if there is a positive constant $\Gamma$ such that 
+\[ a(u,u) \leq \Gamma ||u||_V||\phi||_V \text{ for all } u,\phi \in V \]
+
+A linear functional L($\phi$) is \textit{continuous} with respect to $||\cdot||_V$ if there is a constant $\Lambda$ such that
+\[ L(\phi) \leq \Gamma ||\phi||_V \text{ for all } \phi \in V \]
+\end{definition}
+In order to have a well posed problem, and ensure the existence of a unique solution $u \in V$ satisfying
+\begin{align}
+a(u,\phi) = L(\phi) \text{ for all } \phi \in V
+\end{align}
+ $a(\cdot,\cdot)$ and $L(\cdot)$ have to satisfy these criteria. This is commonly known as the Lax-Milgram lemma.\\
+The convection term
+\begin{align}
+c(u,\phi) = (\mathbf{v}\cdot \nabla u, \phi)_\Omega \label{Conv}
+\end{align}
+makes this problem very different from the Poission-problem \eqref{Poisson},\eqref{Poisson_D}, \eqref{Poisson_N}, used when introducing the finite element method. 
+In the light of the previous definitions we apply Green's theorem to \eqref{Conv}
+\begin{align}
+c(u,\phi) & = \int_\Omega \phi\mathbf{v} \cdot \nabla u \mathrm{d}x \\
+& = - \int_\Omega u \mathbf{v} \cdot \nabla \phi  \mathrm{d}x - \int_\Omega u \phi \nabla \cdot \mathbf{v} \mathrm{d}x  + \int_{\partial \Omega_N} u \phi \mathbf{v} \cdot \mathbf{n} \mathrm{d}S \\
+& = - c(\phi,u) + \int_{\partial \Omega_N} u \phi \mathbf{v} \cdot \mathbf{n} \mathrm{d}S
+\end{align}
+
+Where the last step follows from the assumption of incompressibility. From this
+\begin{align}
+c(u,u) = \frac{1}{2}\int_{\Omega_N} u^2 \mathbf{v} \cdot \mathbf{n} \mathrm{d}S
+\end{align}
+It is obvious that a Neumann condition on the inflow boundary, where $\mathbf{v}$ and $\mathbf{n}$ points in opposite directions, makes a negative contribution to the bilinear form $a(u,u)$. Therefore coercivity can not be completely ensured, and it typically depends on the magnitude of the velocity at the inlet. 
+\\
+\\
+In several problems, prescribing Neumann conditions are simpler than providing inlet velocities. The pressure is set as a scalar value and can be assumed to have no spatial variation over the boundaries if the model has flat surfaces with normals aligned with the longitudional axis on the inlet and outlet. 
+\\
+\\
+Barth and Carey \cite{Bart07} have described a penalty method for imposing the boundary conditions \eqref{P_out}. This was needed as horizontal flow at, and close to the boundaries caused problems interacting with the elastic spinal cord. The penalty method consists of adding a term at the relevant boundaries, penalizing parts where the boundary condition do not hold. For the velocity, we want $\mathbf{v} - (\mathbf{v}\cdot \mathbf{n})\mathbf{n}$ on the boundary, therefore the first variation of the least squares penalty functional is added to the original variational formulation
+\begin{align}
+I(\mathbf{v}) = \frac{1}{2\epsilon}\int_{\partial \Omega_p}\big{[}\mathbf{v} - (\mathbf{v}\cdot \mathbf{n})\mathbf{n}\big{]}\cdot\big{[}\mathbf{v} - (\mathbf{v}\cdot \mathbf{n})\mathbf{n}\big{]} \mathrm{d}s
+\end{align}
+where $0<\epsilon<<1$ is the penalty parameter. The contribution from the first variation will be
+\begin{align}
+I'(\mathbf{v})(\mathbf{\Phi}) = \frac{1}{\epsilon}\int_{\partial \Omega_p}\big{[}\mathbf{v} - (\mathbf{v}\cdot \mathbf{n})\mathbf{n}\big{]}\cdot\big{[}\mathbf{\Phi} - (\mathbf{\Phi}\cdot \mathbf{n})\mathbf{n}\big{]} \mathrm{d}s
+\end{align}
+This term will clearly contribute positively to the bilinear form and the penalty parameter should ensure that this contribution is large.
+The method is tested on the coupled CFD solver, first with one time step of the Backwards Scheme and gradually refinement of the rectangular mesh. The time step is small, so the error introduced by the time discretization is negligible.
+\begin{table}[!ht]
+  \begin{center}
+  \begin{tabular}{l | l | l | l | l | l}
+    N & dofs &  $||v-v_h||_{L^2}$ & rate & $||v-v_h||_{H^1}$ & rate \\ \hline
+     4 &    187 & 1.00e+00 & -- & 6.65e+00 & -- \\ \hline
+     8 &    659 & 1.50e-01 & 2.739 & 1.95e+00 & 1.768 \\ \hline
+    16 &   2467 & 1.91e-02 & 2.977 & 4.95e-01 & 1.981 \\ \hline
+    32 &   9539 & 2.39e-03 & 2.997 & 1.24e-01 & 1.997 \\ \hline
+    64 &  37507 & 2.99e-04 & 2.998 & 3.10e-02 & 1.999 \\ \hline
+    \hline 
+  \end{tabular}
+  \caption{Errors P2-P1 elements}
+  \end{center}
+\end{table}
+
+
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{l | l | l | l | l | l}
+
+    N & dofs & $||v-v_h||_{L^2}$ & rate & $||v-v_h||_{H^1}$ & rate \\ \hline
+     4 &    419 & 1.42e+01 & -- & 1.43e+02 & -- \\ \hline
+     8 &   1539 & 7.84e-01 & 4.180 & 1.57e+01 & 3.186 \\ \hline
+    16 &   5891 & 4.75e-02 & 4.045 & 1.90e+00 & 3.047 \\ \hline
+    32 &  23043 & 2.97e-03 & 3.999 & 2.38e-01 & 3.000 \\ \hline
+    64 &  91139 & 1.86e-04 & 3.999 & 2.97e-02 & 2.999 \\ \hline
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{Errors P3-P2 elements}
+\end{table}
+
+
+C = 1000 \\
+dt = 0.001 \\
+T = 0.1 \\
+Backward Euler 1st order \\
+\begin{figure}[!ht]
+\begin{center}
+\includegraphics[width=0.48\linewidth]{figures/Womersley_no_penalty_BE_01}\hspace{0.04\linewidth}\includegraphics[width=0.48\linewidth]{figures/Womersley_penalty_BE_01}
+\caption{Velocity distribution in y-direction at t=0.1 without (left) and with the penalty method at the outlet. These velocities are of several orders lower than in the x-direction, but accumulates over time without the penalty method}
+\end{center}
+\end{figure}
+
+

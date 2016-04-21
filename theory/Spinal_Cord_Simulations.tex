@@ -72,3 +72,60 @@ CSF flow was measured with PCMR on three different stages: Pre-operative, 2 mont
 \caption{Levels C1-C2, C2, C2-C3, C3, C3-C4 and C4-C5}
 \end{center}
 \end{figure}
+
+\section{Linear Results}
+For all Spinal Cord simulations we apply pressure boundary conditions on the inlet and outlet as described under Womersley Flow in chapter 4. First, a sinusodial varying pressure was applied to the boundaries with a maximum of 20 Pa difference between top and bottom. This applied pressure gradient has previously been reported to result in peak velocities of around 6 cm/s assuming a rigid, but porous cord. \cite{Dros11} The Simulations were run 10 cycles where a steady state was reached. Quantities of interest are the peak velocity in the SAS, max$|\mathbf{v}|$, the peak velocity inside the syrinx in the spinal canal, max$|\mathbf{v}_{sc}|$ and the maximum displacemen,t max$|\mathbf{U}|$ in both x- and y-direction.
+\\
+\\
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{l | l | l | l | l | l | l }
+    $N_x$ & $N_y$ & dofs & max$|\mathbf{v}|$[cm/s] & max$|\mathbf{v}_{sc}|$[cm/s] & max$|\mathbf{U}_x|$[mm] & max$|\mathbf{U}_y|$[mm] \\ \hline
+    18  & 30 & 6281 & 6.11 & 0.79 & 0.34 & 0.07 \\ \hline
+	36  & 60 & 24437 & 6.02 & 0.83 & 0.33 & 0.02 \\ \hline
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{$E = 16 kPa, \Delta t = 0.002s, T = 10, \rho_s = 2\rho_f$}
+\end{table}
+
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{l | l | l | l | l | l | l }
+    $N_x$ & $N_y$ & dofs & max$|\mathbf{v}|$[cm/s] & max$|\mathbf{v}_{sc}|$[cm/s] & max$|\mathbf{U}_x|$[mm] & max$|\mathbf{U}_y|$[mm] \\ \hline
+    18  & 30 & 6281 & 7.75 & 2.30 & 1.30 & 0.16 \\ \hline
+
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{$E = 5 kPa, \Delta t = 0.002s, T = 10s, \rho_s = 2\rho_f$}
+\end{table}
+
+\section{Nonlinear Results}
+New simulations. Non-linear addition in both $\sigma$ and convection. $\rho_s =1.75 \rho_f$
+Else, same
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{l | l | l | l | l | l | l }
+    $N_x$ & $N_y$ & dofs & max$|\mathbf{v}|$[cm/s] & max$|\mathbf{v}_{sc}|$[cm/s] & max$|\mathbf{U}_x|$[mm] & max$|\mathbf{U}_y|$[mm] \\ \hline
+    18  & 30 & 6281 & 7.10 & 2.28 & 0.96  & 0.06 \\ \hline
+	36 & 60 & 24437 & 6.71 & 2.07 & 0.86 & 0.06 \\ \hline
+
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{$E = 5 kPa, \Delta t = 0.002s, T = 10s, \rho_s = 1.75 \rho_f$}
+\end{table}
+
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{l | l | l | l | l | l | l }
+    $N_x$ & $N_y$ & dofs & max$|\mathbf{v}|$[cm/s] & max$|\mathbf{v}_{sc}|$[cm/s] & max$|\mathbf{U}_x|$[mm] & max$|\mathbf{U}_y|$[mm] \\ \hline
+    18  & 30 & 6281 & 5.93 & 0.96 & 0.35 & 0.02 \\ \hline
+
+    \hline
+  \end{tabular}
+  \end{center}
+  \caption{$E = 16 kPa, \Delta t = 0.002s, T = 10, \rho_s = 2\rho_f$}
+\end{table}
+

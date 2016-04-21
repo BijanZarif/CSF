@@ -44,7 +44,7 @@ J.~N. Newman, {\em Marine Hydrodynamics}.
 \newblock The MIT Press, 1977.
 
 \bibitem{Kund2012}
-C.~I.~M. Kundu, P.~K. and D.~R. Dowling, {\em Fluid Mechanics}.
+P.~K. Kundu, I.~M. Cohen, and D.~R. Dowling, {\em Fluid Mechanics}.
 \newblock Elsevier, Academic Press, 5~ed., 2012.
 
 \bibitem{Wang00}
@@ -90,9 +90,34 @@ A.~Y. Tang and N.~Amin, ``Some numerical approaches to solve fluid structure
   interaction problems in blood flow,'' in {\em Abstract and Applied Analysis},
   vol.~2014, Hindawi Publishing Corporation, 2014.
 
+\bibitem{Hron06}
+J.~Hron and S.~Turek, {\em A monolithic FEM/multigrid solver for an ALE
+  formulation of fluid-structure interaction with applications in
+  biomechanics}.
+\newblock Springer, 2006.
+
 \bibitem{Seli11}
 K.~Selim, ``Adaptive finite element methods for fluid–structure interaction
   and incompressible flow,'' 2011.
+
+\bibitem{Tayl73}
+C.~Taylor and P.~Hood, ``A numerical solution of the navier-stokes equations
+  using the finite element technique,'' {\em Computers \& Fluids}, vol.~1,
+  no.~1, pp.~73--100, 1973.
+
+\bibitem{Brez12}
+F.~Brezzi and M.~Fortin, {\em Mixed and hybrid finite element methods},
+  vol.~15.
+\newblock Springer Science \& Business Media, 2012.
+
+\bibitem{Fort81}
+M.~Fortin, ``Old and new finite elements for incompressible flows,'' {\em
+  International Journal for numerical methods in fluids}, vol.~1, no.~4,
+  pp.~347--364, 1981.
+
+\bibitem{Quai09}
+A.~Quaini, ``Algorithms for fluid-structure interaction problems arising in
+  hemodynamics,'' 2009.
 
 \bibitem{Rivi08}
 B.~Rivi{\`e}re, {\em Discontinuous Galerkin methods for solving elliptic and
@@ -104,9 +129,53 @@ B.~Rivi{\`e}re and I.~Yotov, ``Locally conservative coupling of stokes and
   darcy flows,'' {\em SIAM Journal on Numerical Analysis}, vol.~42, no.~5,
   pp.~1959--1977, 2005.
 
+\bibitem{Lang64}
+W.~E. Langlois and M.~O. Deville, {\em Slow viscous flow}.
+\newblock Springer, 1964.
+
+\bibitem{Elma14}
+H.~C. Elman, D.~J. Silvester, and A.~J. Wathen, {\em Finite elements and fast
+  iterative solvers: with applications in incompressible fluid dynamics}.
+\newblock Oxford University Press (UK), 2014.
+
+\bibitem{Bart07}
+W.~L. Barth and G.~F. Carey, ``On a boundary condition for pressure-driven
+  laminar flow of incompressible fluids,'' {\em International journal for
+  numerical methods in fluids}, vol.~54, no.~11, pp.~1313--1325, 2007.
+
+\bibitem{Smit07}
+J.~H. Smith and J.~A. Humphrey, ``Interstitial transport and transvascular
+  fluid exchange during infusion into brain and tumor tissue,'' {\em
+  Microvascular research}, vol.~73, no.~1, pp.~58--73, 2007.
+
+\bibitem{Hung81}
+T.-K. Hung, G.-L. Chang, H.-S. Lin, F.~R. Walter, and L.~Bunegin,
+  ``Stress-strain relationship of the spinal cord of anesthetized cats,'' {\em
+  Journal of biomechanics}, vol.~14, no.~4, pp.~269--276, 1981.
+
+\bibitem{Ben12}
+F.~Ben-Hatira, K.~Saidane, and A.~Mrabet, ``A finite element modeling of the
+  human lumbar unit including the spinal cord,'' {\em Journal of Biomedical
+  Science and Engineering}, vol.~5, no.~3, p.~150, 2012.
+
+\bibitem{Ozaw04}
+H.~Ozawa, T.~Matsumoto, T.~Ohashi, M.~Sato, and S.~Kokubun, ``Mechanical
+  properties and function of the spinal pia mater,'' {\em Journal of
+  Neurosurgery}, vol.~1, no.~1, pp.~122--127, 2004.
+
+\bibitem{Chen08}
+S.~Cheng, E.~C. Clarke, and L.~E. Bilston, ``Rheological properties of the
+  tissues of the central nervous system: a review,'' {\em Medical engineering
+  \& physics}, vol.~30, no.~10, pp.~1318--1337, 2008.
+
 \bibitem{Clar10}
 E.~C. Clarke, ``Spinal cord mechanical properties,'' in {\em Neural Tissue
   Biomechanics}, pp.~25--40, Springer, 2010.
+
+\bibitem{Pers10}
+C.~Persson, J.~L. Summers, and R.~M. Hall, ``Modelling of spinal cord
+  biomechanics: In vitro and computational approaches,'' in {\em Neural Tissue
+  Biomechanics}, pp.~181--201, Springer, 2010.
 
 \bibitem{Kwon02}
 B.~K. Kwon, T.~R. Oxland, and W.~Tetzlaff, ``Animal models used in spinal cord
