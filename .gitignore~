@@ -65,3 +65,4 @@ target/
 *.pvd
 *.png
 *.xdmf
+*.h5
