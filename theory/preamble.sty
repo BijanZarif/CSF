@@ -7,6 +7,7 @@
 \usepackage{subcaption}
 \usepackage{hyperref}
 \usepackage{mathtools}
+\usepackage[toc,page]{appendix}
 \mathtoolsset{showonlyrefs}
 \hypersetup{
     colorlinks=true,
@@ -30,6 +31,7 @@
 \newcommand{\includecode}[2][c]{\lstinputlisting[caption=#2, escapechar=, style=custom#1]{#2}}
 \newcommand{\ol}{\overline}
 \newcommand{\pdi}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\mdi}[2]{\frac{\mathrm{d} #1}{\mathrm{d} #2}}
 \newcommand{\textbi}[1]{\mathbf{\textit{ #1}}}
 \newtheorem{theorem}{Theorem}
 \newtheorem{acknowledgement}[theorem]{Acknowledgement}

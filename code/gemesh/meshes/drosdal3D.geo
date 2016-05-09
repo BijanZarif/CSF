@@ -1,0 +1,44 @@
+a = 0.002*1000;
+x0 = 0.005*1000;
+x1 = 0.009*1000;
+h = 0.06*1000;
+
+
+Point(1) = {0, 0, 0, a};
+
+Point(2) = {x0, 0, 0,a};
+Point(3) = {0, x0, 0, a};
+Point(4) = {-x0,0,0,a};
+Point(5) = {0,-x0,0,a};
+Circle(1) = {3, 1, 4};
+Circle(2) = {4,1,5};
+Circle(3) = {5,1,2};
+Circle(4) = {2,1,3};
+
+Point(6) = {x1, 0, 0, a};
+Point(7) = {0, x1, 0, a};
+Point(8) = {-x1,0,0,a};
+Point(9) = {0,-x1,0,a};
+Circle(5) = {6, 1, 7};
+Circle(6) = {7,1,8};
+Circle(7) = {8,1,9};
+Circle(8) = {9,1,6};
+
+Line Loop(9) = {1,2,3,4};
+Plane Surface(10) = {9};
+
+
+Line Loop(11) = {5,6,7,8};
+Plane Surface(12) = {11, 9};
+
+Extrude {0,0,h} {
+  Surface{12};
+}Extrude {0,0,h} {
+  Surface{10};
+}
+
+Line Loop(57) = {15, 16, 17, 14};
+Line Loop(58) = {37, 38, 39, 36};
+
+Physical Volume(0) = (1);
+Physical Volume(0) = (2);

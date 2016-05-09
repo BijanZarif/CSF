@@ -62,4 +62,6 @@ target/
 
 #vtu
 *.vtu
-
+*.pvd
+*.png
+*.xdmf

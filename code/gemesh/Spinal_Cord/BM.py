@@ -48,7 +48,9 @@ print 'len(mesh.coord)', LEN
 SD = MeshFunction('size_t', mesh, mesh.topology().dim())
 SD.set_all(0)
 Solid().mark(SD,1)
-CSC().mark(SD,1)
+#CSC().mark(SD,1)
+
+
 
 
 # DEFINING BOUNDARIES
@@ -62,7 +64,6 @@ Solid_out().mark(boundaries,5)
 Interface().mark(boundaries,6)
 Fluid_walls().mark(boundaries,7)
 CSC_bnd().mark(boundaries,8)
-
 
 
 dt = 0.002   # use 0.0003 for oscillations
@@ -85,8 +86,37 @@ hmesh = mesh.hmin()
 
 # FLUID
 noslip = Constant((0.0,0.0))
+#pressure = Expression(('amp*sin(2*pi*t)'),t=0,amp=1)
+t_pres,pres = loadtxt('Eide_normalized.txt')
+pres -= 0.12   # pres -= 0.2 gives too much cranial
+pres *= 1.3
+applied_p = Spline.UnivariateSpline(t_pres,pres,k=5)
+'''
+t = linspace(0,t_pres[-1],201)
+plt.plot(t_pres,4*pres,'o',t,applied_p(t)*4,t,20*plt.sin(2*pi*t/t_pres[-1]))
+plt.xlabel('time [s]')
+plt.ylabel('pressure [Pa]')
+plt.legend(['Eide','Spline','20sin(2$\pi$ t/T)'])
+plt.show()
+sys.exit()
+'''
 
-pressure = Expression(('amp*sin(2*pi*t)'),t=0,amp=1)
+class applied_pres(Expression):
+	def __init__(self):
+		self.t = 0
+		self.amp = 1
+	def eval(self,value,x):
+		period = 1.1
+		cycle_t = self.t
+		while cycle_t>=period:
+			if cycle_t > period:
+				cycle_t -= period
+		
+		value[0] = self.amp*applied_p(cycle_t)
+
+
+#pressure = applied_pres()
+pressure = Expression('amp*sin(2*pi*t)',amp=1,t=0)
 
 
 bcv3 = DirichletBC(VPW.sub(0),noslip,boundaries,3) # Solid in
@@ -164,12 +194,12 @@ aS = aMS + aDS
 LS = LMS
 
 # FLUID
-penalty = 0.05*hmesh
+penalty = 0.01*hmesh
 
 
 aMF = rho_f/k*inner(v,phi)*dx_f \
 	+ rho_f*inner(grad(v0)*(v-w),phi)*dx_f \
-	+ inner(p,div(phi))*dx_f + \
+	- inner(p,div(phi))*dx_f + \
 	2*mu_f*inner(sym(grad(v)),grad(phi))*dx_f \
 	- mu_f*inner(grad(v).T*n,phi)*ds(1) \
 	- mu_f*inner(grad(v).T*n,phi)*ds(2) \
@@ -183,8 +213,11 @@ LMF = rho_f/k*inner(v1,phi)*dx_f - \
 	inner(pressure*n,phi)*ds(2) + \
 	inner(pressure*n,phi)*ds(4)
 
-aDF = k*inner(grad(w),grad(psi))*dx_f
-LDF = -inner(grad(U),grad(psi))*dx_f
+aDF = k*inner(grad(w),grad(psi))*dx_f \
+	+ k*inner(grad(w('-'))*n('-'),psi('-'))*dS(6)
+
+LDF = -inner(grad(U),grad(psi))*dx_f \
+	+ inner(grad(U('-'))*n('-'),psi('-'))*dS(6)
 
 aCF = -inner(div(v),eta)*dx_f
 
@@ -198,6 +231,7 @@ t = dt
 count = 0
 
 
+solver = LUSolver('mumps')
 
 while t < T + DOLFIN_EPS:# and (abs(FdC) > 1e-3 or abs(FlC) > 1e-3):
 
@@ -213,13 +247,13 @@ while t < T + DOLFIN_EPS:# and (abs(FdC) > 1e-3 or abs(FlC) > 1e-3):
 	    A.ident_zeros()
 	    [bc.apply(A,b) for bc in bcv]
 	    [bc.apply(A,b) for bc in bcw]
-	    solve(A,VPW_.vector(),b,'lu')
+	    solve(A,VPW_.vector(),b)
 	    v_,p_,w_ = VPW_.split(True)
 	    eps = errornorm(v_,v0,degree_rise=3)
 	    k_iter += 1
 	    print 'k: ',k_iter, 'error: %.3e' %eps
 	    v0.assign(v_)
-	if count%10==0:
+	if count%5==0:
 		ufile << v_
 		pfile << p_
 		dfile << w_

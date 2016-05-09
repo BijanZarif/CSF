@@ -17,9 +17,9 @@ E2 = [1]
 print r'\begin{center}'+ '\n'  +r'  \begin{tabular}{l | l | l | l | l | l}' + '\n'
 print r'    N & dofs & L2 error & rate & H1 error & rate \\ \hline'
 
-for j in range(4,5):
-	Nx = 2**3*4
-	Ny = 2**3*4
+for j in range(1,5):
+	Nx = 2**4*4
+	Ny = 2**4*4
 
 	mesh = RectangleMesh(P1,P2,Nx,Ny)
 
@@ -102,9 +102,9 @@ for j in range(4,5):
 
 	ufile = File('results_channel/v.pvd')
 	pfile = File('results_channel/p.pvd')
-	dt = 1e-2
+	dt = 0.1*2**-j
 	VP_ = Function(VP)
-	BE = False
+	BE = True
 	if BE:
 		u1 = interpolate(v_analytical(0,h=h,om=om,C=C),V)
 	else:
@@ -189,7 +189,7 @@ for j in range(4,5):
 		ufile << u_
 		pfile << p_
 		u1.assign(u_)
-		print 't=%.4f'%t
+		#print 't=%.4f'%t
 	
 		u_val = u_.compute_vertex_values()
 		'''

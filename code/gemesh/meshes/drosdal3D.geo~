@@ -1,7 +1,7 @@
-a = 0.001;
-x0 = 0.005;
-x1 = 0.009;
-h = 0.06;
+a = 0.002*1000;
+x0 = 0.005*1000;
+x1 = 0.009*1000;
+h = 0.06*1000;
 
 
 Point(1) = {0, 0, 0, a};
@@ -29,6 +29,16 @@ Plane Surface(10) = {9};
 
 
 Line Loop(11) = {5,6,7,8};
-Plane Surface(12) = {11};
+Plane Surface(12) = {11, 9};
 
+Extrude {0,0,h} {
+  Surface{12};
+}Extrude {0,0,h} {
+  Surface{10};
+}
 
+Line Loop(57) = {15, 16, 17, 14};
+Line Loop(58) = {37, 38, 39, 36};
+
+Physical Volume('fluid') = (1);
+Physical Volume('solid') = (2);

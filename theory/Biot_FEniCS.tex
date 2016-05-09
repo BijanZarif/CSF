@@ -1,0 +1,52 @@
+\chapter{Numerical Methods for the Biot Problem}
+The equations describing the Biot problem are quite similar to the elasticity case, but from the modeling point of view, some problems arise. We have previously taken advantage of the continous Galerkin elements in the sense that the fluid velocity is continous with the structural velocity. The boundary condition
+\begin{align}
+\mathbf{v}_f = \mathbf{v}_s + \mathbf{q} \label{BiotFlux}
+\end{align}
+Will not allow us to have one continuous function describing fluid velocity $\mathbf{v}$, in the fluid domain and skeleton velocity $\mathbf{v}_s$, in the poroelastic medium. The right hand side of the boundary condition describes the total (macroscopic) velocity in the poroelastic medium. In the following we show a workaround for this problem, and it should now be stressed that the notation have to change in a way to implement the problem in FEniCS. We now use the following
+\\
+\\
+$\mathbf{v}$ -- fluid velocity in the fluid domain. Total velocity (darcy flux + skeleton velocity) in the poroelastic domain.
+\\
+\\
+$\mathbf{w}$ -- domain (or mesh) velocity in the fluid domain. Skeleton velocity in the poroelastic domain.
+\\
+\\
+$p$ -- fluid pressure in the fluid domain. Pore pressure in the poroelastic domain. 
+\\
+\\
+$\mathbf{U}$ -- domain (or mesh) displacement in the fluid domain. Skeleton displacement in the poroelastic domain. 
+
+\clearpage
+
+\section{Weak form of the equations}
+The weak form is obtained in a similar way as for the FSI-problem. The notation has changed slightly and the equations in the poroelastic domain are slightly different. By omiting the inertia term $\mdi{\mathbf{q}}{t}$, the momentum equation \eqref{MomentumSF} for the fluid phase can be written
+\begin{align}
+\mathbf{q} = -K\nabla p  - \rho_p\mdi{w}{t} 
+\end{align}
+And inserting this into equation \eqref{BiotFlux}, now using $\mathbf{w}$ as the skeleton velocity gives 
+\begin{align}
+\mathbf{v} = \mathbf{w} - K\nabla p - \rho_p \mdi{w}{t}
+\end{align}
+The weak form reads:
+\begin{align}
+\frac{\rho_f}{\Delta t}(\mathbf{v},\Phi)_{\Omega_f} + \rho_f(((\mathbf{v}-\mathbf{w})\cdot \nabla) \mathbf{v}^{(0)}, \Phi)_{\Omega_f^t} - (p,\nabla \cdot \Phi)_{\Omega_f^t} + 2\mu_f(\epsilon(\mathbf{v}), \nabla \Phi)_{\Omega_f^t} = \\ 
+\frac{\rho_f}{\Delta t}(\mathbf{v}^{(1)},\Phi)_{\Omega_f^t} - (\sigma_f(p,\mathbf{v})\cdot \mathbf{n}, \Phi)_{\partial \Omega_f^t} - (\sigma_f(p,\mathbf{v}) \cdot \mathbf{n}_f, \Phi)_{\Gamma^t} \label{VarMom}
+\end{align}
+\begin{align}
+-(\nabla \cdot \mathbf{v},\eta)_{\Omega_f^t} = 0 \label{VarCon}
+\end{align}
+\begin{align}
+\Delta t(\nabla \mathbf{w}, \nabla \Psi)_{\Omega_f^t} = - (\nabla \mathbf{U}^{(1)}, \nabla \Psi)_{\Omega_f^t} & + ([\nabla \mathbf{U}^{(1)} + \Delta t \nabla \mathbf{w}] \cdot \mathbf{n}, \Psi)_{\partial \Omega_f^t} \\ 
+& + ([\nabla \mathbf{U}^{(1)} + \Delta t \nabla \mathbf{w}] \cdot \mathbf{n}_f, \Psi)_{\Gamma^t} \label{VarMesh}
+\end{align}
+\\
+And in the poroelastic medium
+\begin{align}
+\frac{\rho_s}{\Delta t}(\mathbf{w},\Phi)_{\Omega_s} + \rho_s((\mathbf{w}\cdot \nabla)\mathbf{w}^0,\Phi) + & \Delta t (\sigma_s (\mathbf{w}), \nabla(\Phi))_{\Omega_s}  = \frac{\rho_s}{\Delta t}(\mathbf{w}^{(1)},\Phi)_{\Omega_s} \\ - (\sigma_s(\mathbf{U}^{(1)}), \nabla \Phi)_{\Omega_s} & - ([\sigma_s(\mathbf{U}^{(1)}) + \Delta t \sigma_s(\mathbf{w})]\cdot \mathbf{n}, \Phi)_{\partial \Omega_s^t} \\
+& - ([\sigma_s(\mathbf{U}^{(1)}) + \Delta t \sigma_s(\mathbf{w})]\cdot \mathbf{n}_s, \Phi)_{\Gamma^t} \label{VarMom2}
+\end{align}
+\begin{align}
+\frac{1}{\delta}(\mathbf{v},\Psi)_{\Omega_s} - \frac{1}{\delta}(\mathbf{w},\Psi)_{\Omega_s} + \frac{K}{\delta}(\nabla p, \psi) + \rho_f\frac{K}{\delta \, \Delta t}(\mathbf{w},\Psi) = \rho_f\frac{K}{\delta \, \Delta t}(\mathbf{w}^0,\Psi) \label{VarMesh2}
+\end{align}
+

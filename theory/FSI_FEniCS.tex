@@ -1,0 +1,627 @@
+\chapter{Numerical methods for FSI}
+
+\section{A bencmark FSI-problem}
+
+Within CFD, a benchmark is a configuration or a test case which should help test and compare different numerical methods and code implementations. A classical Fluid Dynamics problem regarding flow around a circular cylinder has been under vast research the last 50 years, working as a test case for both laminar and turbulent flows. One of the most cited benchmark proposals for this case is the problem described by Michael Schafer et. al in 1996 \cite{Scha96}. The research group still focus on these kinds of problems and one of the co-authors of the 1996 paper, Stefan Turek, together with Jaroslav Hron has proposed a similar benchmark for FSI solvers, consisting of the exact same domain and rigid cylinder, but now with an elastic flag attached to it \cite{Ture06}. 
+\\ The first results presented will contain a validation of the present FSI-solver implemented in FEniCS compared to the results of Turek and Hron in their benchmark proposal. 
+\begin{figure}
+\includegraphics[scale=0.3]{figures/Hron_Turek_geometry}
+\caption{The Domain as published in \cite{Ture06}}
+\label{fig:Geometry}
+\end{figure}
+\\
+A proper validation of a FSI solver requires separate verification of the fluid and structural parts as well as coupled tests. In the present study we solve the system of equations with a \textit{monolithic} approach, i.e. full coupling between the fluid and solid. The alternative would be a \textit{partitioned} approach, where the fluid and solid equations are solved separately. For instance, one can solve the fluid equations independently and then proceed by solving the solid equation with prescribed stress on the interface computed from the fluid solution. Iteration back and forth would be needed until convergence. \\
+The fully coupled monolithic scheme is usually preferred with respect to accuracy and stability. Also, when the systems are strongly coupled in nature, i.e. the solid movement is affected by the fluid movement and vice versa, a monolithic scheme would be advantageous. The partitioned approach, on the other hand, can benefit from numeruous previous studies where efficiency and stability for various solution techniques have been investigated. See e.g. \cite{Tang14} for a short review. In addition, solving many smaller matrix systems will be way faster than solving one large system with the same number of unknowns.
+\\
+\\
+\subsection{Domain, Initial- and boundary conditions}
+The origin is set at the bottom left corner. We also set:
+\\ - The channel height, H = 0.41
+\\ - The channel length, L = 2.5
+\\ - The circle center C = (0.2,0.2)
+\\ - The right bottom corner of the elastic structure has position (0.6,0.19) 
+\\ - The elastic structure has length, l=0.35 and heigth h=0.02
+\\
+\\
+- At the left boundary, the inlet, of the channel, we set a prescribed parabolic velocity profile
+\begin{align}
+\mathbf{v}_{\text{in}}(0,y) = 1.5\bar{v_0}\frac{y(H-y)}{(\frac{H}{2})^2}
+\end{align}
+- In the case of unsteady flow a smooth increase in time is used:
+\begin{align}
+ \mathbf{v}_{\text{in}}(t,0,y)= \begin{cases}
+				\mathbf{v}_{\text{in}}(0,y)\frac{1-\cos(\frac{\pi}{2}t)}{2} & \quad \text{ if } t<2.0 \\
+				\mathbf{v}_{\text{in}}(0,y) & \quad  \text{ otherwise }
+		 		\end{cases}
+\end{align}
+\\
+- On the outlet, the condition $\sigma \cdot \mathbf{n} = 0$) is applied
+- On rigid walls the no-slip condition is used
+- On the interface, $\Gamma^t$, the previously described coupling conditions are applied:
+\begin{align}
+\begin{rcases}
+\sigma_f \cdot \mathbf{n} & =  \sigma_s \cdot \mathbf{n} \\
+\mathbf{v}_f & = \mathbf{v}_s
+\end{rcases}
+\text{ on } \Gamma^t
+\end{align}
+In addition to the interface, $\Gamma^t$, it may be convenient to define the fluid boundary, $\partial \Omega_f^t$ consisting of the outer rectangle and the part of the circle in contact with the fluid, and the solid boundary, $\partial \Omega_s^t$ consisting of the circle in contact with the solid. 
+\clearpage
+
+
+
+\section{Fluid Structure Interaction using the Finite Element method}
+A solver was implemented from scratch in Python using the DOLFIN library. FSI solvers within the FEniCS framework exists, e.g. under Unicorn or CBC.twist. For instance, Selin \cite{Seli11} implemented a partitioned solver in FEniCS in his PhD-thesis, using the already existing modules for solving fluid flow and structural deformations separately (CBC.Flow and CBC.Twist). With the implementation presented here, it will be easier to adjust the solver with respect to the model. The equations can be changed whether we want the spinal cord to be porous, elastic, poroelastic or viscoelastic. The use of two separate solvers is also problematic for the monolithic approach, when all equations should be solved simultaneously. On the other hand, solvers implemented by experienced and skilled research groups will probably be a lot more efficient and should already have been validated. 
+\\
+\\
+In the rest of this section, we give a brief explanation to the mathematics and implementation in FEniCS. In the previous example we saw the close link between code and mathematics. :
+\begin{align*}
+a(\mathbf{v},\Phi) = (\nabla \mathbf{v}, \nabla \Phi)_\Omega \\
+L(\mathbf{v}) = (\mathbf{f},\Phi)_\Omega
+\end{align*}
+Translates to
+\begin{center}
+\begin{cverbatim}
+a = inner(grad(v),grad(phi)*dx
+L = inner(f,phi)*dx
+\end{cverbatim}
+\end{center}
+In deriving variational forms, we try to keep this close link by recalling the symbols used for velocity ($\mathbf{v}$), total displacement ($\mathbf{U}$), pressure ($p$), and mesh velocity, ($\mathbf{w}$). Also recall that in the solid the mesh moves exactly with the velocty of the structure so $\mathbf{w}_s = \mathbf{v}_s$
+\\
+\subsection{Temporal discretization}
+In order not to overload this thesis with notation and superscripts, we have used the notation $\mathbf{v} := \mathbf{v}^{n+1}$ to denote the value of a function at the next time-step. Similarly, we define $\mathbf{v^{(1)}} := \mathbf{v}^n$ to denote the (known) value of a function at the present time step. 
+\\
+\\
+The total displacement $\mathbf{U}$ can be expressed as a function of the displacement from the previous time step, $\mathbf{U}^{(1)}$, and the mesh velocity $\mathbf{w}$. We have used an implicit scheme in time, i.e, $(\pdi{\mathbf{v}}{t})^{n+1} \approx \frac{\mathbf{v}^{n+1}-\mathbf{v}^{n}}{\Delta t} $, and $\mathbf{U} = \mathbf{U}^{(1)} + \Delta t \mathbf{w}$. 
+
+
+
+
+
+
+
+\subsection{Spatial discretization}
+When dealing with nonlinear equations, such as the Navier-Stokes equation, \textit{linearization} is needed in order to solve the equations. In the nonlinear terms, we simply replace one (or more) of the unknown $\mathbf{v}$'s with a "guess" to get an equation linear in $\mathbf{v}$. This guess is denoted as $\mathbf{v}^{(0)}$. Since we have three unknown functions, we use a mixed function space with three function spaces, $\Phi$, $\eta$ and $\Psi$. In the fluid we multiply the momentum equation with $\Phi$, the continuity equation with $\eta$ and the equation for mesh velocity with $\Psi$ and integrate over the domain in its \textit{current} configuration, $\Omega^t$. In the fluid, this yields
+\begin{align}
+\frac{\rho_f}{\Delta t}(\mathbf{v},\Phi)_{\Omega_f} + \rho_f(((\mathbf{v}-\mathbf{w})\cdot \nabla) \mathbf{v}^{(0)}, \Phi)_{\Omega_f^t} - (p,\nabla \cdot \Phi)_{\Omega_f^t} + 2\mu_f(\epsilon(\mathbf{v}), \nabla \Phi)_{\Omega_f^t} = \\ 
+\frac{\rho_f}{\Delta t}(\mathbf{v}^{(1)},\Phi)_{\Omega_f^t} - (\sigma_f(p,\mathbf{v})\cdot \mathbf{n}, \Phi)_{\partial \Omega_f^t} - (\sigma_f(p,\mathbf{v}) \cdot \mathbf{n}_f, \Phi)_{\Gamma^t} \label{VarMom}
+\end{align}
+\begin{align}
+-(\nabla \cdot \mathbf{v},\eta)_{\Omega_f^t} = 0 \label{VarCon}
+\end{align}
+\begin{align}
+\Delta t(\nabla \mathbf{w}, \nabla \Psi)_{\Omega_f^t} = - (\nabla \mathbf{U}^{(1)}, \nabla \Psi)_{\Omega_f^t} & + ([\nabla \mathbf{U}^{(1)} + \Delta t \nabla \mathbf{w}] \cdot \mathbf{n}, \Psi)_{\partial \Omega_f^t} \\ 
+& + ([\nabla \mathbf{U}^{(1)} + \Delta t \nabla \mathbf{w}] \cdot \mathbf{n}_f, \Psi)_{\Gamma^t} \label{VarMesh}
+\end{align}
+\\
+And in the solid
+\begin{align}
+\frac{\rho_s}{\Delta t}(\mathbf{v},\Phi)_{\Omega_s} + \rho_s((\mathbf{v}\cdot \nabla)\mathbf{v}^0,\Phi) + & \Delta t (\sigma_s (\mathbf{v}), \nabla(\Phi))_{\Omega_s}  = \frac{\rho_s}{\Delta t}(\mathbf{v}^{(1)},\Phi)_{\Omega_s} \\ - (\sigma_s(\mathbf{U}^{(1)}), \nabla \Phi)_{\Omega_s} & - ([\sigma_s(\mathbf{U}^{(1)}) + \Delta t \sigma_s(\mathbf{v})]\cdot \mathbf{n}, \Phi)_{\partial \Omega_s^t} \\
+& - ([\sigma_s(\mathbf{U}^{(1)}) + \Delta t \sigma_s(\mathbf{v})]\cdot \mathbf{n}_s, \Phi)_{\Gamma^t} \label{VarMom2}
+\end{align}
+\begin{align}
+\frac{1}{\delta}(\mathbf{v},\Psi)_{\Omega_s} - \frac{1}{\delta}(\mathbf{w},\Psi)_{\Omega_s} = 0 \label{VarMesh2}
+\end{align}
+The parameter $\delta $ should be small and ensures the importance of $\mathbf{v_s} = \mathbf{w_s}$ inside the solid. On the interface, we have distinguished between the normal vector with respect to the fluid and solid domain. In general $\mathbf{n}_f = -\mathbf{n}_s$. To be able to set up and assemble the matrices for this system, the equations should be added to form one bilinear form $a(\mathbf{v},p,\mathbf{w},\Phi,\eta,\Psi)$ and one linear form $L(\Phi,\eta,\Psi)$.
+
+
+
+ 
+\subsection{A discussion on functionspaces}
+We have previously defined the $L^2$ (def. \ref{|l2}) and $H^1$ (def. \ref{H1}) spaces, as well as the linear continuous galerkin basis functions (section \ref{FinEle}). In order to have a well posed-problem, we need a triple $(\Phi,\eta, \Psi)$ to satisfy a few given conditions. In the following, a brief justification of the choice of function spaces used in this study are given. \\
+\\
+For the incompressible Navier-Stokes equations, much of the mathematical theory and understanding have been developed by investigation of the simplified Stokes flow where the acceleration term is neglected in the momentum equation, that is
+\begin{align}
+-\mu\nabla^2\mathbf{u} + \nabla p = \mathbf{f}
+\end{align} Numerous possible pairs $(\Phi, \eta)$ have been proposed over the years since the first report by Taylor and Hood \cite{Tayl73}. The discretization used by Taylor and Hood consists of quadratic piecewise polynomials for the velocity components and linear piecewise polynomials for the pressure and is still a very popular choice of basis functions. These types of elements are often referred to as Taylor-Hood elements or simply just P2-P1 elements. 
+\\
+\\
+As mentioned earlier, the final step in the finite element method consists of solving a linear system of equations. In the case of Stokes equations with body forces $\mathbf{f}$, a matrix system on the following form needs to be solved
+\begin{align}
+\begin{bmatrix}
+\mathbf{A} & \mathbf{B} \\
+\mathbf{B}^T & \mathbf{0}
+\end{bmatrix}
+\begin{bmatrix}
+\mathbf{v} \\
+\mathbf{p}
+\end{bmatrix}   = 
+\begin{bmatrix}
+\mathbf{f} \\
+\mathbf{0}
+\end{bmatrix}
+\end{align}
+Which means that
+\begin{align}
+\mathbf{A}\mathbf{v} + \mathbf{B}\mathbf{p} = \mathbf{f} \label{MatrixMom}
+\end{align}
+\begin{align}
+\mathbf{B}^T \mathbf{v} = \mathbf{0}   \label{MatrixCon}
+\end{align}
+To get an expression for $\mathbf{v}$, we multiply \eqref{MatrixMom} with $\mathbf{A}^{-1}$ to obtain
+\begin{align}
+\mathbf{v} = \mathbf{A}^{-1}(\mathbf{f} - \mathbf{B}\mathbf{p})
+\end{align}
+And insert this expression into \eqref{MatrixCon} to get an equation only involving the pressure
+\begin{align}
+\mathbf{B}^T \mathbf{A}^{-1}(\mathbf{f} - \mathbf{B}\mathbf{p}) = \mathbf{0}
+\end{align}
+or
+\begin{align}
+\mathbf{B}^T\mathbf{A}^{-1}\mathbf{B}\mathbf{p} = \mathbf{B}^T\mathbf{A}^{-1}\mathbf{f}
+\end{align}
+For the solution to be unique, the matrix $\mathbf{B}^T\mathbf{A}^{-1}\mathbf{B}$ often reffered to as the \textit{Schur complement} needs to be non-singular. A necessary and sufficient condition for this is that Ker($\mathbf{B}$) = \{0\}, or
+\begin{align}
+\sup_{\mathbf{v}_h}\int p_h \nabla \cdot \mathbf{v}_h > 0
+\end{align}
+For all discrete pressures $p_h \neq 0$. 
+This ensures solvability. For convergence, the famous Babuska-Brezzi (BB), or inf-sup condition needs to be satisfied \cite{Brez12}
+\begin{align}
+\inf_{p_h}\sup_{\mathbf{v}_h} \frac{\int_{\Omega}p_h \nabla \cdot \mathbf{v}_h}{||\mathbf{v}_h||_1 ||p_h||_0} \geq D > 0
+\end{align}
+Where D is a constant independent of the mesh resolution. 
+\\
+\\
+Provided this condition is satisfied the following error estimate should hold for the Stokes equations
+\begin{align}
+||\mathbf{v}_h-\mathbf{v}||_1 + ||p_h - p||_0 < C(h^k||\mathbf{v}||_{k+1} + h^{l+1}||p||_{l+1})
+\end{align}
+Where k and l are the degrees of polynomials used for velocity components and pressure, respectively. To obtain optimal convergence for the solution the polynomial degree should be one higher for the velocity components than for the pressure, that is, $k = l+1$. For instance, using P3-P1 elements, computer resources are "wasted" by introducing more degrees of freedom (dofs) without improving convergence. Several choices of element type combinations, for instance Linear elements (P1) both for velocity and pressure do not satisfy the BB condition, and as a consequence unphysical oscillations in pressure can be seen. 
+\\
+\\
+Elements not satisfying the BB condition can be used if a proper stabilization is introduced. Due to the drastical reduction in dofs, P1-P1 elements are often used when large systems are solved for instance in commercial software. This combination is default in COMSOL, while for 3D problems in FLUENT, a slightly different element, the "mini-element" is used as first developed by Fortin \cite{Fort81}. This element is linear but with an extra degree of freedom known as a bubble in the center. 
+\\
+\\
+In this study, P2-P1 elements are used for the material velocity and pressure. However, a function space is also needed for the domain velocity, $\mathbf{w}$. As discussed by Quaini \cite{Quai09}, P1-elements for the domain velocity will ensure the transformation of straight lines in the new domain. In the fluid momentum equation, the funciton $\mathbf{w}$ is only used in the term $((\mathbf{v}-\mathbf{w})\cdot \nabla) \mathbf{v}^{(0)}$ and since $\mathbf{v}$ is a polynomial of degree 2, $\mathbf{v}-\mathbf{w}$ will also be a polynomial of degree 2. Therefore, the 
+
+
+\subsection{Treatment of boundary conditions}
+In addition to the boundary conditions described in the original benchmark paper from Turek and Hron, homogenuous Dirichlet conditions are prescribed to the mesh displacement velocity on the domain boundary, i.e 
+\begin{align} 
+\mathbf{w} = 0 \text{ on } \partial \Omega_f^t \cup \partial \Omega_s^t
+\end{align}
+Except for the fluid velocity on the outlet, the domain boundaries (not interface) have prescribed Dirichlet conditions on both $\mathbf{u}$ and $\mathbf{w}$. Therefore the test functions $\Phi$ and $\Psi$ will be zero on these boundaries. \\ \\
+If we add all the equations in the previous section together, the contributions to the boundary integral on the interface gives:
+\begin{align}- (\sigma_f(p,\mathbf{v}) \cdot \mathbf{n}_f, \Phi)_{\Gamma^t} - ([\sigma_s(\mathbf{U}^{(1)}) + \Delta t \sigma_s(\mathbf{w})]\cdot \mathbf{n}_s, \Phi)_{\Gamma^t}
+\end{align}
+By leaving this out of the variational form, we weakly impose
+\begin{align} \sigma_f(p,\mathbf{v}) \cdot \mathbf{n} = \sigma_s(\mathbf{U}) \cdot \mathbf{n}
+\end{align}
+On the interface. The choice of $\mathbf{n}$ ($\mathbf{n} = \mathbf{n}_f$ or $\mathbf{n} = \mathbf{n}_s$) is arbitrary, but the same for each side of the equation. \\
+\\
+Because we use the same function for fluid velocity and solid velocity, the no-slip condition is naturally incorporated for the fluid on the structure
+\begin{align}
+\mathbf{v}_f = \mathbf{v}_s \text{ on } \Gamma^t
+\end{align}
+Because the functions $\mathbf{v}_f$ and $\mathbf{v}_s$ share nodes on the interface.
+\\
+\\
+The additional equation for $\mathbf{w}$ in the fluid also gives rise to boundary conditions on $\pdi{\mathbf{U}}{n}$ on the interface. To this end we set 
+\begin{align}
+\pdi{\mathbf{U}}{n} = 0
+\end{align}
+and rather let the parameter $\delta$ underline the importance of $\mathbf{w} = \mathbf{v}$ \textit{inside} the solid, whereas $\mathbf{w}$ in the fluid should just ensure a smooth mesh displacement. \\
+\\
+On the outlet, we assign the stress-free condition $\sigma_f(p,\mathbf{v}) \cdot \mathbf{n} = 0$ so the boundary integral also vanish on the outlet for the momentum equation in the fluid. 
+\\
+\\
+This means that all integrals involving boundaries will vanish in the variational form. The Dirichlet conditions are imposed in FEniCS as previously described.
+
+
+\subsection{FSI in FEniCS} \label{sec:FEniCS}
+There will be some changes and a great leap in complexity compared to the previous example using FEniCS. The main differences and additions are explained here. One thing to highlight is the always ongoing changes and updates in the dolfin library. Therefore, if a solver was to be used by someone other than the writer, it will constantly need updates and fixes. This thesis do not intend to present a full solver with great complexity and many dependencies, but rather outline the most important lines of code and explain difficulties behind the FSI problem in FEniCS. The explanation here intends that a reader somewhat familiar with FEniCS should be able to implement such a code within a short amount of time. 
+\\
+\\
+The computational mesh is constructed in gmsh with a straight boundary dividing the fluid and the solid. This way, the class MeshFunction can be utilized by dividing the mesh in two subdomains. We now assume we have classes describing the solid and fluid region, implemented with functions simliary to the boundary functions in the Poisson example. 
+\begin{cverbatim}
+mesh = Mesh('FSI_mesh.xml')
+SD = MeshFunction('uint', mesh, mesh.topology().dim())
+SD.set_all(0)
+Elastic().mark(SD,1)
+\end{cverbatim}
+where 
+\begin{cverbatim}
+class Elastic(SubDomain):
+	def inside(self,x,on_bnd):
+		# returns True if vector x in solid.
+\end{cverbatim}
+'uint' means that the MeshFunction has values of nonnegative integers. The last argument ensures the MeshFunction to have the same dimension as the mesh. \\
+Using the MeshFunction, the fluid domain have been marked 0, and the solid domain have been marked 1. Integration over the two domains can be separated by passing this number to dx in the variational formulation. A similar class, the FacetFunction
+\begin{cverbatim}
+boundaries = FacetFunction("size_t",mesh)
+\end{cverbatim}
+is used to mark the boundaries and, if needed, separate integration over specific parts of the boundary.
+\\
+\\'uint' means that the MeshFunction has values of nonnegative integers. 'size\_t' means the same for the FacetFunction. The last argument to MeshFunction ensures the MeshFunction to have the same dimension as the mesh. 
+\\ \\	
+We need a function spaces for all three testfunctions, corresponding to $\mathbf{v}, p$ and $\mathbf{w}$, and in this case we can use a handy FEniCS class to create a mixed function space. Test -and trial functions should also be created from this mixed space.
+\begin{cverbatim}
+V = VectorFunctionSpace(mesh,'CG',2)
+P = FunctionSpace(mesh,'CG',1)
+W = VectorFunctionSpace(mesh,'CG', 1)
+VPW = MixedFunctionSpace([V,P,W])
+v,p,w = TrialFunctions(VPW)
+phi,eta,psi = TestFunctions(VPW)
+\end{cverbatim}
+All Dirichlet boundary conditions need to be specified, and the functions need to be in the space of the respective trial function where the condition is set. For instance, the top boundary of the domain have been marked 2 with the FacetFunction, and we want to presribe the no-slip condition on the fluid velocity.
+\begin{cverbatim}
+noslip = Constant((0.0,0.0))
+bcv2 = DirichletBC(VPW.sub(0),noslip,boundaries,2) # Top
+\end{cverbatim}
+All the Dirichlet boundary conditions are put together in a list, bcs.\\ \\
+When the Mesh -and FacetFunctions have been properly marked, we need to map the information from these classes to the different measures, dx, ds and dS representing integration over cells, exterior facets and interior facets, respectively. This is done by:
+\begin{cverbatim}
+dS = Measure('dS')[boundaries]
+dx = Measure('dx')[SD]
+ds = Measure('ds')[boundaries]
+
+dx_f = dx(0,subdomain_data=SD)
+dx_s = dx(1,subdomain_data=SD)
+\end{cverbatim}
+The last two lines simplifies the integrands in the variational form and make it more clear which expressions are to be used in the fluid domain and which should be used in the solid domain.
+\\
+Sometimes, it can be convinient to define the constants used in FEniCS as instances of the class Constant, to avoid re-compiling if the value of the constant is changed. e.g.
+\begin{cverbatim}
+dt = 0.0003
+k = Constant(dt)
+\end{cverbatim}
+We can now attention our focus to the variational form. Regular Python functions can be used in the variational formulation, and by defining these two
+\begin{cverbatim}
+def sigma_s(U):
+	return 2*mu_s*sym(grad(U)) + lamda*tr(sym(grad(U)))*Identity(2)
+
+def eps(v):
+	return sym(grad(v))
+\end{cverbatim}
+To be able to start the simulation some initial conditions are needed, and by setting
+\begin{cverbatim}
+U = Function(W)
+v1 = Function(V)
+v0 = Function(V)
+\end{cverbatim}
+The initial conditions are simply set to be zero both for velocity and displacement.
+\\
+\\
+The variational form is very similar to the mathematics. We define the bilinear and linear forms, a and L, for each separate equation, momentum, continuity and the movement of the domain in both the fluid and solid domain (except for continuity in the solid). For instance, aMF will denote the bilinear form, a, for the momentum equation in the fluid.
+\begin{cverbatim}
+# FLUID
+aMF = rho_f/k*inner(v,phi)*dx_f \
+	+ rho_f*inner(grad(v0)*(v-w),phi)*dx_f \
+	- inner(p,div(phi))*dx_f \
+	+ 2*mu_f*inner(eps(v),grad(phi))*dx_f
+
+LMF = rho_f/k*inner(v1,phi)*dx_f
+
+aCF = -inner(div(v),eta)*dx_f
+
+aDF = k*inner(grad(w),grad(psi))*dx_f
+LDF = -inner(grad(U),grad(psi))*dx_f
+
+aF = aMF + aCF + aDF
+LF = LMF + LDF
+
+# SOLID
+aMS = rho_s/k*inner(v,phi)*dx_s \
+	+ rho_s*inner(grad(v0)*v,phi)*dx_s
+	+ k*inner(sigma_s(v),grad(phi))*dx_s
+
+LMS = rho_s/k*inner(v1,phi)*dx_s \
+	- inner(sigma_s(U),grad(phi))*dx_s
+
+aDS = 1/delta*inner(v,w)*dx_s \
+	- 1/delta*inner(d,w)*dx_s
+
+aS = aMS + aDS
+LS = LMS
+
+\end{cverbatim}
+We can now add the forms together to obtain one biliear and one linear form
+\begin{cverbatim}
+a = aS + aF 
+L = LS + LF
+\end{cverbatim}
+Before the time loop starts we define a function for holding the solution:
+\begin{cverbatim}
+VPW_ = Function(VPW)
+\end{cverbatim}
+This function will consist of all values for $\mathbf{v}$, $p$ and $\mathbf{w}$.
+\\
+\\
+The time loop runs until the current time exceeds the specified end time, T. The forms change in time, and thus needs to be assembled to be updated to use the correct values for $\mathbf{v}^{(1)}, \mathbf{w}^{(1)}, \mathbf{U}^{(1)}$ and $\mathbf{v}^{(0)}$. The linear form needs an update each time step, while the bilinear form needs to be updated every single iteration inside the time loop. For the iterative method, we have chosen the Picard iteration based on the simplicity of the algorithm compared to Newton's method, especially when dealing with a mixed function space consisting of three separate spaces. (In fact, Balaban \cite{Bala12}, wrote a thesis on Newton's method for this problem, but to the authors knowledge the algorithms have not been updated to be compatible with newer versions of Dolfin). The iteration runs until the $L^2$ norm of $(\mathbf{v}-\mathbf{v}^{(0)})$ is less than a given number, $\tau$, or if the number of iterations becomes to large. 
+
+\begin{cverbatim}
+while t < T:
+	...
+	b = assemble(L)
+	...
+	while error > tau and k_iter < max_iter:
+		A = assemble(a)
+		A = ident.zeros()
+		[bc.apply(A,b) for bc in bcs]
+		solve(A,VPW_.vector,b,'lu')
+		v_,p_,w_ = VPW_.split(True)
+		eps = errornorm(v_,v0,degree_rise=3)	
+		k_iter += 1
+		
+		v0.assign(v_)
+\end{cverbatim}
+The second statement within the iteration loop is needed because the lack of an equation for $p$ within the solid. The \textit{ident.zeros()} function replaces zeros with ones on the diagonal of the matrix block, and the solution vector for $p$ will be zero inside the solid. In FEniCS, a Function has to be defined over the whole mesh, and adjusting the linear system as described is a way to overcome this issue in the present version of DOLFIN (1.6.0). To assign a new value for v0, and later be able to calculate drag and lift, we split the solution vector with the argument True. The solver is 'lu' by default, but in this case it is written explicitly. Iterative solvers are in general way faster, but in this case no Krylov Solver was found to converge. 
+\\
+\\
+The next problem to address is how the mesh should be updated. The domain should now move with velocity $\mathbf{w}$, so we want to move the mesh with $\Delta t \mathbf{w}$ from one time step to the next. For the total displacement, the update $\mathbf{U} = U^{(1)} + \Delta t \mathbf{w}$ should also be taken into account. The actual update of the mesh is done with the functions \textit{ALE.move()} and \textit{bounding\_box\_tree().build()}
+\begin{cverbatim}
+	w_vector()[:] *= float(k)
+	U_.vector()[:] += w_vector()[:]
+	ALE.move(mesh,w_)
+	mesh.bounding_box_tree().build(mesh)
+	
+	v1.assign(v_)
+\end{cverbatim}
+The final line is to update the velocity, so we can move to the next time step. Note that the velocity in both the fluid and the solid is updated by this call. \\
+
+\section{Benchmark Results}
+\subsection{CFD tests}
+For the CFD tests we perform tests treating the flag as a rigid object. This can be done by changing the structural parameters, or simply by adjust the mesh to include the fluid domain only. In this validation we choose the latter. We show convergence with Mesh, where mesh 0 is the coarsest version. The \textbf{Ref.} are the reference values as given in the original benchmark paper. 
+
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{|l | l | l | l|} \hline
+	Parameter & CFD1 & CFD2 & CFD3 \\ \hline
+    $\rho_f\, [10^3\frac{\text{kg}}{\text{m}^3}]$  & 1 & 1 & 1 \\   \hline
+    $\nu_f\, [10^{-3}\frac{\text{m}^2}{\text{s}}]$ & 1 & 1 & 1 \\ \hline
+    $\bar{v_0}$ & 0.2 & 1 & 2   \\ \hline \hline
+    $\text{Re} = \frac{Ud}{\nu_f}$ & 20 & 100 & 200 \\ \hline 
+    \hline
+  \end{tabular}
+  \caption{Parameters for the CFD test cases}
+\end{center}
+\end{table}
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{|l | l | l | l|} \hline
+	cells & dofs & Drag & Lift \\ \hline
+    1334  & 6443 & 13.9344 & 1.0980  \\   \hline
+    5336 & 24892 & 14.1165 & 1.0836 \\ \hline
+    21344 & 97808 & 14.1865 & 1.0944  \\ \hline \hline
+    \textbf{Ref.}  & & \textbf{14.29} & \textbf{1.119} \\ \hline 
+    \hline
+  \end{tabular}
+\end{center}
+\caption{Results for CFD1}
+\end{table}
+
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{|l | l | l | l|} \hline
+	cells & dofs & Drag & Lift \\ \hline
+    1334  & 6443 & 130.092948352 & 10.9117261826 \\   \hline
+    5336 & 24892& 134.43022177 & 10.473965217 \\ \hline
+    21344 & 97808& 135.777285175 & 10.7118857057 \\ \hline \hline
+    \textbf{Ref.}  & & \textbf{136.7} & \textbf{10.53} \\ \hline 
+    \hline
+  \end{tabular}
+\end{center}
+\caption{Results for CFD2}
+\end{table}
+\begin{table}[!ht]
+\begin{center}
+	\begin{tabular}{|l | l | l | l|} \hline
+	cells & dofs & Drag & Lift \\ \hline
+    1334  & 6443& 391.305 $\pm$ 2.039 & -28.536 $\pm$ 200.149\\   \hline
+    5336 & 24892  & 428.769 $\pm$ 5.735 & -18.001 $\pm$ 429.410 \\ \hline
+    21344 & 97808& 1 & 2   \\ \hline \hline
+    \hline
+  \end{tabular}
+  \begin{tabular}{|l | l | l | l|} \hline
+	cells & dofs & Drag & Lift \\ \hline
+    755  & 6443  &  391.401 $\pm$ 2.460  & -22.652 $\pm$ 232.090\\   \hline
+    5336 & 24892 & 428.787 $\pm$ 5.773 & -14.575 $\pm$ 441.152 \\ \hline
+    21344 & 97808& 1 & 2   \\ \hline \hline
+    \textbf{Ref.}  & & \textbf{439.45 $\pm$ 5.6183} & \textbf{-11.893 $\pm$ 437.81} \\ \hline 
+    \hline
+  \end{tabular}
+\end{center}
+\caption{Results for CFD3 for $\Delta t = 0.0005$ and $\Delta t = 0.0001$} 
+\end{table}
+
+\subsection{CSM tests}
+The structural tests are performmed by adding the gravitational force to the structural part only. The CSM3 test is computed as a time-dependent case, starting from the initial position while CSM1 and CSM2 are Steady State (SS) solutions. For CSM3, the total energy is not conserved as the Backward Euler scheme used to discretize in time sligthly recudes the amplitude for oscillating solutions. For this reason, a third parameter of interest is included in the results, namely the reduction of amplitude from one cycle to the next. From the reference results it appears that the flag bounces above the initial position in steady state, meaning that some energy must have been added due to their choice of scheme. This is also clear when closely examining the attached plots. This was not further discussed, and no time-dependent amplitude was reported. The temporal discretization in the original benchmark proposal was done by the Cranck-Nicholson scheme, which in general have better conservation properties than the Backward-Euler scheme but is known to be less stable \cite{Hron06}
+\begin{table}[!ht]
+\begin{center}
+  \begin{tabular}{|l | l | l | l|} \hline
+	Parameter & CSM1 & CSM2 & CSM3 \\ \hline
+    $\rho_s\, [10^3\frac{\text{kg}}{\text{m}^3}]$  & 1 & 1 & 1 \\   \hline
+    $\nu_s $ & 0.4 & 0.4 & 0.4 \\ \hline
+    $\mu_s \,[10^{6}\frac{\text{m}^2}{\text{s}}]$ & 0.5 & 2 & 0.5   \\ \hline
+    $g \, [\frac{\text{m}^2}{s}]$ & 2 & 2 & 2 \\ \hline
+    \hline
+  \end{tabular}
+\end{center}
+\caption{Parameters for the CSM test cases}
+\end{table}
+
+\begin{table}[!h]
+\begin{center}
+  \begin{tabular}{|l | l | l | l|} \hline
+	cells & dofs & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$\\ \hline
+	738  & 4596  & -12.410569 & -60.599246 \\   \hline
+	2952 & 17305 & -12.419505 & -60.622920 \\ \hline
+	11808 & 67077 & -12.422290 & -60.630433   \\ \hline \hline
+    \textbf{Ref.}  & & \textbf{-7.187} & \textbf{-66.10} \\ \hline 
+    \hline
+  \end{tabular}
+\end{center}
+\caption{Results for CSM1}
+\end{table}
+
+\begin{table}[!h]
+\begin{center}
+  \begin{tabular}{|l | l | l | l|} \hline
+	cells & dofs & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$\\ \hline
+   738  & 4596  & -0.92479395 & -16.853778 \\   \hline
+   2952 & 17305 & -0.92558954 & -16.861757 \\ \hline
+   11808 & 67077 & -0.92583356 & -16.864252   \\ \hline \hline
+    \textbf{Ref.}  & & \textbf{-0.4690} & \textbf{-16.97} \\ \hline 
+    \hline
+  \end{tabular}
+\end{center}
+\caption{Results for CSM2}
+\end{table}
+
+\begin{table}[!h]
+\begin{center}
+  \begin{tabular}{|l | l | l | l| l|} \hline
+	cells & dofs & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Amp reduction y (\%) \\ \hline
+    738  & 4596 & -44.175 $\pm$ 44.007 & -72.712 $\pm$ 65.281 & 5.4  \\   \hline
+    2952 & 17305 & -44.176 $\pm$ 44.001 & -72.720 $\pm$ 65.281 & 5.4 \\ \hline
+    11808 & 67077 & -44.177 $\pm$ 44.001 & -72.720 $\pm$ 65.281 & 5.4  \\ \hline \hline
+    \textbf{Ref.}  & & -\textbf{14.305} $\pm$ \textbf{14.305} & -\textbf{63.607} $\pm$ \textbf{65.160} \\ \hline 
+    \hline
+  \end{tabular}
+\end{center}
+\end{table}
+
+
+\begin{table}[!h]
+\begin{center}
+  \begin{tabular}{|l | l | l | l| l|} \hline
+	cells & dofs & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Amp reduction y (\%) \\ \hline
+    738  & 4596 & -44.631 $\pm$ 44.628 & -69.702 $\pm$ 69.290 & 0.3  \\   \hline
+    2952 & 17305& -44.633 $\pm$ 44.629 & -69.701 $\pm$ 69.289 & 0.3 \\ \hline
+    11808 & 67077& -44.094 $\pm$ 44.091 & -69.703 $\pm$ 69.289 & 0.3  \\ \hline \hline
+    \textbf{Ref.}  & & -\textbf{14.305} $\pm$ \textbf{14.305} & -\textbf{63.607} $\pm$ \textbf{65.160} \\ \hline 
+    \hline
+  \end{tabular}
+\end{center}
+\caption{Results for CSM3, $\Delta t= 0.01, 0.001$}
+\end{table}
+
+
+\begin{figure}[!ht]
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/CSM3/CSM3_Full_x}\caption{displacement x vs time}
+\end{subfigure}
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/CSM3/CSM3_2_x}\caption{displacement x vs time}
+\end{subfigure}
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/CSM3/CSM3_Y_full}\caption{displacement y vs time}
+\end{subfigure}
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/CSM3/CSM3_2_y}\caption{displacement y vs time}
+\end{subfigure}
+\end{figure}
+\clearpage
+
+\subsection{FSI tests}
+\begin{table}[!h]
+\begin{center}
+  \begin{tabular}{|l | l | l | l|} \hline
+	Parameter & FS1 & FSI2 & FSI3 \\ \hline
+    $\rho_f\, [10^3\frac{\text{kg}}{\text{m}^3}]$  & 1 & 1 & 1 \\   \hline
+    $\nu_f\, [10^{-3}\frac{\text{m}^2}{\text{s}}]$ & 1 & 1 & 1 \\ \hline
+    $\bar{v_0}$ & 0.2 & 1 & 2   \\ \hline \hline
+    $\text{Re} = \frac{Ud}{\nu_f}$ & 20 & 100 & 200 \\ \hline
+    \hline
+  \end{tabular}
+\end{center}
+\end{table}
+
+\begin{table}[!h]
+\begin{center}
+  \begin{tabular}{|l | l | l | l|} \hline
+	Parameter & FSI1 & FSI2 & FSI3 \\ \hline
+    $\rho_s \,[10^3\frac{\text{kg}}{\text{m}^3}]$  & 1 & 10 & 1 \\   \hline
+    $\nu_s $ & 0.4 & 0.4 & 0.4 \\ \hline
+    $\mu_s \,[10^{6}\frac{\text{m}^2}{\text{s}}]$ & 0.5 & 0.5 & 2   \\ \hline \hline
+  \end{tabular}
+\end{center}
+\end{table}
+\begin{center}
+\begin{figure}[!h]
+\includegraphics[width=\linewidth]{figures/FSI1_mesh_med}
+\caption{Steady State displacement in y-direction for the FSI1 test case for the medium refinement version of the mesh. Note that the mesh around the structural part also has been slightly adjusted}
+\end{figure}
+\end{center}
+
+
+\begin{table}[!h]
+\begin{center}
+  \begin{tabular}{|l | l | l | l | l | l|} \hline
+	cells & dofs & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Drag & Lift\\ \hline
+    2698 & 15329 & 0.015596 & 0.74221 & 14.0876279441 & 0.756130219216 \\   \hline
+    10792 & 60336 & 0.017738 & 0.77686 & 14.1777783843 & 0.763145083966 \\ \hline
+    43168 & 239384 & 0.019824 & 0.79558  & 14.1869409712 & 0.758109277348  \\ \hline \hline
+    \textbf{Ref.}  & & \textbf{0.0227} & \textbf{0.8209} & \textbf{14.295} & \textbf{0.7638}\\ \hline 
+    \hline
+  \end{tabular}	
+\caption{Results for FSI1}
+\end{center}
+\end{table}
+
+\begin{table}[!h]
+  \begin{center}
+  \begin{tabular}{|l | l | l | l | l | l|} \hline
+	cells & dofs & $U_x$ of A $[10^{-3}]$ & $U_y$ of A $[10^{-3}]$ & Drag & Lift\\ \hline
+   2698 & 15329 & $ -4.33 \pm 4.54$ & $ 1.40 \pm 29.96$ & $441.45 \pm 33.15 $ & $-2.30 \pm 178.00$\\   \hline
+   10792 & 60336 & -4.84 $\pm$ 4.62 &  1.27 $\pm$ 31.74 & 469.11 $\pm$ 44.50 & 0.92 $\pm$ 97.27\\ \hline
+   43168 & 239384 & $ $&  $ $ & $ $ & $ $   \\ \hline \hline
+    \textbf{Ref.}  & & \textbf{-2.69} $\pm$ \textbf{2.53} & \textbf{1.48} $\pm$ \textbf{34.38} & \textbf{457.3} $\pm$ \textbf{22.66} & \textbf{2.22} $\pm$ \textbf{149.78}\\ \hline 
+    \hline
+
+  \end{tabular}
+	  \caption{Results for FSI3}
+  \end{center}
+\end{table}
+- note: Hron, Turek, $\Delta t = 0.0005$, we used $\Delta t = 0.0003$. \\ \\
+\begin{figure}[!ht]
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/medium/X_disp}\caption{displacement x vs time}
+\end{subfigure}
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/medium/Y_disp}\caption{displacement y vs time}
+\end{subfigure}
+\begin{subfigure}[b]{0.47\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/medium/Drag2}\caption{Drag vs time}
+\end{subfigure}
+\begin{subfigure}[b]{0.53\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/medium/Lift2}\caption{Lift vs time}
+\end{subfigure}
+\end{figure}
+
+Numbers for FSI3:
+Ux: Max = 0.0002099, Min = -0.008879 \\
+Uy: Max = 0.03136, Min = -0.02856 \\
+Drag: Max = 474.6, Min = 408.3 \\
+Lift: Max = 175.7, Min = -180.3 (174.4, -177.0\\
+
+Frequency, 0.1795 /s for medium mesh.
+\begin{center}
+\begin{figure}[!ht]
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/coarse/FSI_mesh_1}
+\caption{t=10.88}
+\end{subfigure}
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/coarse/FSI_mesh_2}
+\caption{t=10.91}
+\end{subfigure} \\
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/coarse/FSI_mesh_3}
+\caption{t=10.94}
+\end{subfigure}
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/coarse/FSI_mesh_4}
+\caption{t=10.97}
+\end{subfigure} \\
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/coarse/FSI_mesh_5}
+\caption{t=11.00}
+\end{subfigure}
+\begin{subfigure}[b]{0.5\linewidth}
+\includegraphics[width=\linewidth]{figures/FSI3/coarse/FSI_mesh_6}
+\caption{t=11.03}
+\end{subfigure}
+\caption{The colormap shows the magnitude of the velocity around the flag at six different states of time in fully developed flow on the coarsest mesh. Maximum velocity reaches 4.37. The mesh consists of a smooth curve at the interface, and the domains are separated beforehand in FEniCS}
+\end{figure}
+\end{center}

@@ -20,10 +20,7 @@ if initial_files:
 	boundaries = MeshFunction('size_t',mesh,'%s/facet_func.xml'%folder)
 
 else:
-	mesh = Mesh('50pBlock.xml')#cord_w_csc_mm.xml')
-	P1 = Point(-9,0)
-	P2 = Point(-5,60)
-	mesh1 = RectangleMesh(P1,P2,18,200)
+	mesh = Mesh('Chiari_cord.xml')#cord_w_csc_mm.xml')
 	
 	#mesh = refine(mesh)
 	#mesh = refine(mesh)
@@ -46,9 +43,6 @@ else:
 	#Top_walls().mark(boundaries,9)
 	Fluid_in_l().mark(boundaries,1)
 	Fluid_in_r().mark(boundaries,2)
-	plot(boundaries)
-	interactive()
-	sys.exit()
 
 # Pr = 0.479
 # x max for U is 3.17*10^-5 for E = 5*10^6 and rho = 0.001*rho_f at time 0.4 (timestep 40 for dt = 0.01)
@@ -163,10 +157,10 @@ bcv4 = DirichletBC(VPW.sub(0),noslip,boundaries,4) # Fluid out
 bcv5 = DirichletBC(VPW.sub(0),noslip,boundaries,5) # Solid out
 bcv6 = DirichletBC(VPW.sub(0),noslip,boundaries,6) # Interface
 bcv7 = DirichletBC(VPW.sub(0),noslip,boundaries,7) # Fluid walls
-bcv9 = DirichletBC(VPW.sub(0),noslip,boundaries,9) # Fluid walls
+#bcv9 = DirichletBC(VPW.sub(0),noslip,boundaries,9) # Fluid walls
 
 
-bcv = [bcv3, bcv5, bcv7, bcv9] # don't use bcv6 for FSI
+bcv = [bcv3, bcv5, bcv7] # don't use bcv6 for FSI
 
 
 # SOLID
@@ -245,13 +239,19 @@ LS = LMS
 
 # FLUID
 
+penalty = 0.05*mesh.hmin()
+
 aMF = rho_f/k*inner(v,phi)*dx_f + \
 	rho_f*inner(grad(v0)*(v-w),phi)*dx_f - \
 	 inner(p,div(phi))*dx_f + \
 	2*mu_f*inner(sym(grad(v)),sym(grad(phi)))*dx_f - \
 	mu_f*inner(grad(v).T*n,phi)*ds(4) - \
 	mu_f*inner(grad(v).T*n,phi)*ds(1) -\
-	mu_f*inner(grad(v).T*n,phi)*ds(2)
+	mu_f*inner(grad(v).T*n,phi)*ds(2) \
+	+ penalty**-2*(inner(v,phi)-inner(dot(v,n),dot(phi,n)))*ds(1) \
+	+ penalty**-2*(inner(v,phi)-inner(dot(v,n),dot(phi,n)))*ds(2) \
+	+ penalty**-2*(inner(v,phi)-inner(dot(v,n),dot(phi,n)))*ds(4)
+
 
 LMF = rho_f/k*inner(v1,phi)*dx_f - \
 	inner(pressure*n,phi)*ds(1) - \
@@ -265,7 +265,7 @@ aCF = -inner(div(v),eta)*dx_f
 LFQ = Constant(0)*eta*dx_f
 
 aF = aMF + aDF + aCF
-LF = LMF + LDF + LFQ
+LF = LMF + LDF
 
 a = aS+aF
 L = LS+LF
@@ -320,8 +320,8 @@ nt = as_vector((ny,-nx))
 while t < T + DOLFIN_EPS:# and (abs(FdC) > 1e-3 or abs(FlC) > 1e-3):
 	vf_l.t=t
 	vf_r.t=t
-	if t < 2.0:
-		pressure.amp=t/2
+	if t < 1.0:
+		pressure.amp=10*t
 	pressure.t = t
 	b = assemble(L)
 	eps = 10
@@ -339,7 +339,7 @@ while t < T + DOLFIN_EPS:# and (abs(FdC) > 1e-3 or abs(FlC) > 1e-3):
 	    k_iter += 1
 	    print 'k: ',k_iter, 'error: %.3e' %eps
 	    v0.assign(v_)
-	if count%1==0:
+	if count%10==0:
 		ufile << v_
 		pfile << p_
 		dfile << w_
