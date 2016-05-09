@@ -67,3 +67,4 @@ target/
 *.xdmf
 *.h5
 *.pvtu
+*.pyc
